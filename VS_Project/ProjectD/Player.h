@@ -1,18 +1,19 @@
 #pragma once
-#include "Constant.h"
-#include "Components.h"
+#include <memory>
 
-class Player:
-	public Constant,
-	Transform
+class Brutus;
+class Os;
+// プレイヤークラス
+class Player
 {
 public:
 	Player();
 	~Player();
 
 	void Update();
-	void Draw() const;
+	void Draw();
 private:
-
+	std::shared_ptr<Brutus> m_pBrutus;
+	std::shared_ptr<Os> m_pOs;
 };
 

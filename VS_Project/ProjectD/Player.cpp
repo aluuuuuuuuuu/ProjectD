@@ -1,10 +1,11 @@
 #include "Player.h"
-#include "DxLib.h"
+#include "Brutus.h"
+#include "Os.h"
 
 Player::Player()
 {
-	// ‰ŠúˆÊ’u‚Ìİ’è
-	Position = Vec3{ 0.0f,0.0f,0.0f };
+	m_pBrutus = make_shared<Brutus>();
+	m_pOs = make_shared<Os>();
 }
 
 Player::~Player()
@@ -15,7 +16,6 @@ void Player::Update()
 {
 }
 
-void Player::Draw() const
+void Player::Draw()
 {
-	DrawSphere3D(Position.VGet(), 16, 16, 0xff0000, 0xff0000, true);
 }

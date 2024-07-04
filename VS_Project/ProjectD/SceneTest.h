@@ -1,5 +1,9 @@
 #pragma once
 #include "SceneBase.h"
+#include <memory>
+
+class Player;
+// テストシーン
 class SceneTest :
     public SceneBase
 {
@@ -9,5 +13,9 @@ public:
 
     void Update();
     void Draw() const;
+private:
+
+    // プレイヤーのポインタ
+    std::shared_ptr<Player> m_pPlayer;
 };
 
