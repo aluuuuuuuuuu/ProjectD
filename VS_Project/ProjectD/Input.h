@@ -3,6 +3,7 @@
 #include "DxLib.h"
 #include "Singleton.h"
 #include "Vec3.h"
+#include "Constant.h"
 
 // 各ボタンの定数
 #define INPUT_A 0
@@ -38,11 +39,15 @@
 // };
 
 // インプット情報を提供するシングルトンクラス
-class Input : public Singleton<Input>
+class Input : public Singleton<Input>,
+	public Constant
 {
 	friend class Singleton<Input>;
 
 public:
+
+	void Init();
+
 	// 更新処理
 	void Update();
 

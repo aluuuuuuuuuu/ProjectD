@@ -12,6 +12,8 @@ public:
 
 	void Update();
 	void Draw() const;
+
+	void Control();
 private:
 
 };

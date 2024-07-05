@@ -1,5 +1,6 @@
 #include "Brutus.h"
 #include "DxLib.h"
+#include "Input.h"
 
 Brutus::Brutus()
 {
@@ -17,5 +18,14 @@ void Brutus::Update()
 
 void Brutus::Draw() const
 {
-	DrawSphere3D(Position.VGet(), 16, 16, 0x0000ff, 0x0000ff, true);
+	DrawSphere3D(Position.VGet(), 8, 16, 0x0000ff, 0x0000ff, true);
+}
+
+void Brutus::Control()
+{
+	// インプットのインスタンスを取得
+	auto& input = Input::getInstance();
+	if (input.GetStickVectorLength(INPUT_LEFT_STICK) > input.Constants["STICK_INVALID_VALUE"]) {
+
+	}
 }

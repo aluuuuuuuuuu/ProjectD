@@ -16,7 +16,7 @@ public:
 	Vec3 Scale;
 
 	// ‰ñ“]
-	float AngleY;
+	Vec3 Angle;
 
 private:
 

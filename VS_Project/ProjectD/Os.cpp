@@ -17,3 +17,7 @@ void Os::Update()
 void Os::Draw() const
 {
 }
+
+void Os::Control()
+{
+}

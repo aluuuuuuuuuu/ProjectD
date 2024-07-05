@@ -5,7 +5,7 @@ StaticObject::StaticObject(Vec3 pos, Vec3 Scale, float angle, int model, int tex
 {
 	m_transform.Position = pos;
 	m_transform.Scale = Scale;
-	m_transform.AngleY = angle;
+	m_transform.Angle.y = angle;
 	m_model.InitModel(MV1DuplicateModel(model),texture);
 
 	m_model.UpdateModel(m_transform);

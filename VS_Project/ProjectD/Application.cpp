@@ -60,6 +60,9 @@ void Application::Run()
 	// インプットのインスタンスを取得
 	auto& input = Input::getInstance();
 
+	// インプットの初期処理
+	input.Init();
+
 	// ゲームループ
 	while (ProcessMessage() != -1)
 	{

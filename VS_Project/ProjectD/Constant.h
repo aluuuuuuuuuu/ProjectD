@@ -6,6 +6,6 @@ using namespace std;
 
 class Constant
 {
-protected:
+public:
 	map<string, float> Constants;
 };

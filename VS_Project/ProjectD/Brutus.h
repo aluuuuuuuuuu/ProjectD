@@ -4,7 +4,7 @@
 
 class Brutus:
 	public Constant,
-	Transform
+	public Transform
 {
 public:
 	Brutus();
@@ -12,6 +12,8 @@ public:
 
 	void Update();
 	void Draw() const;
+
+	void Control();
 private:
 
 };

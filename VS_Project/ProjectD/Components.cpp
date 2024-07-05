@@ -5,8 +5,7 @@
 
 // トランスフォーム
 
-Transform::Transform() :
-	AngleY(0.0f)
+Transform::Transform()
 {
 }
 
@@ -47,7 +46,7 @@ void Model::UpdateModel(Transform& transform)
 	MATRIX scaleMtx = MGetScale(transform.Scale.VGet());
 
 	// モデルの回転を設定
-	MATRIX rotMtx = MGetRotY(transform.AngleY);
+	MATRIX rotMtx = MGetRotY(transform.Angle.y);
 
 	// 行列を乗算する
 	modelMtx = MMult(scaleMtx, rotMtx);
