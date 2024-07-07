@@ -7,8 +7,8 @@
 
 SceneTest::SceneTest()
 {
-	Camera::getInstance().Init();
 	m_pPlayer = make_shared<Player>();
+	Camera::getInstance().Init(m_pPlayer->GetPos());
 }
 
 SceneTest::~SceneTest()

@@ -1,10 +1,8 @@
 #pragma once
-#include "Constant.h"
-#include "Components.h"
+#include "CharactorBase.h"
 
 class Os :
-	public Constant,
-	Transform
+	public CharactorBase
 {
 public:
 	Os();
@@ -13,7 +11,10 @@ public:
 	void Update();
 	void Draw() const;
 
+	// ‘€ì‚ğ•ÏX‚µ‚½‚Æ‚«‚Ì‰Šúˆ—
+	void ChangeInit();
+
 	void Control();
 private:
-
+	
 };

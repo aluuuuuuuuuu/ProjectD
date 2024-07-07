@@ -1,9 +1,8 @@
 #include "Os.h"
+#include "Camera.h"
 
 Os::Os()
 {
-	// 初期位置の設定
-	Position = Vec3{ 0.0f,0.0f,0.0f };
 }
 
 Os::~Os()
@@ -16,6 +15,12 @@ void Os::Update()
 
 void Os::Draw() const
 {
+}
+
+void Os::ChangeInit()
+{
+	// ブルータス操作時のカメラの座標がそのままオズの初期座標になる
+	Position = Camera::getInstance().Position;
 }
 
 void Os::Control()

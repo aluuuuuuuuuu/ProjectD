@@ -1,10 +1,8 @@
 #pragma once
-#include "Constant.h"
-#include "Components.h"
+#include "CharactorBase.h"
 
 class Brutus:
-	public Constant,
-	public Transform
+	public CharactorBase
 {
 public:
 	Brutus();

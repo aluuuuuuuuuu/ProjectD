@@ -1,6 +1,7 @@
 #include "Player.h"
 #include "Brutus.h"
 #include "Os.h"
+#include "Input.h"
 
 Player::Player():
 
@@ -16,6 +17,13 @@ Player::~Player()
 
 void Player::Update()
 {
+	// 操作変更ボタンが押されたらオズとブルータスの操作を変更する(現状Yボタン)
+	if (Input::getInstance().IsTrigger(INPUT_Y)) {
+
+		// 現在の操作フラグを反転する
+		m_osFlug = !m_osFlug;
+	}
+
 	// 操作切り替え
 	if (m_osFlug) {
 		m_pOs->Control();

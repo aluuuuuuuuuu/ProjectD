@@ -14,16 +14,26 @@ class Camera :
 public:
 	~Camera();
 
-	void Init();
+	void Init(Vec3 pos);
 	void Update(Vec3 pos);
 
 private:
 	Camera() {};
 
-	// 回転
-	void Rotate(Vec3 pos);
+	// 関数ポインタ
+	using m_modeFunc_t = void (Camera::*)(Vec3 pos);
+	m_modeFunc_t m_modeFunc = nullptr;
 
-	// 動く前の座標
-	Vec3 m_beforePos;
+	// ブルータスモード
+	void BrutusMode(Vec3 pos);
+
+	// オズモード
+	void OsMode(Vec3 pos);
+
+	// 回転
+	void RotateBrutus(Vec3 pos);
+
+	// オズモードとブルータスモードを変更する
+	void ChangeMode(bool osFlug);
 };
 
