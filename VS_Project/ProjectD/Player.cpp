@@ -2,13 +2,18 @@
 #include "Brutus.h"
 #include "Os.h"
 #include "Input.h"
+#include "Camera.h"
 
-Player::Player():
-
+Player::Player() :
 	m_osFlug(false)
 {
+	// 各ポインタの作成
 	m_pBrutus = make_shared<Brutus>();
 	m_pOs = make_shared<Os>();
+
+	// 関数ポインタの初期化
+	m_updateMode = &Player::BrutusUpdate;
+	m_drawMode = &Player::BrutusDraw;
 }
 
 Player::~Player()
@@ -22,33 +27,71 @@ void Player::Update()
 
 		// 現在の操作フラグを反転する
 		m_osFlug = !m_osFlug;
+
+		// オズの初期処理
+		m_pOs->ChangeInit();
+
+		// モード変更
+		ChangeMode();
+
+		// カメラのモードも合わせる
+		Camera::getInstance().ChangeMode(m_osFlug);
 	}
 
 	// 操作切り替え
-	if (m_osFlug) {
-		m_pOs->Control();
-		m_pBrutus->Update();
-		m_pOs->Update();
-	}
-	else {
-		m_pBrutus->Control();
-		m_pBrutus->Update();
-	}
+	(this->*m_updateMode)();
 }
 
 void Player::Draw() const
 {
-	// 操作切り替え
-	if (m_osFlug) {
-		m_pBrutus->Draw();
-		m_pOs->Draw();
-	}
-	else {
-		m_pBrutus->Draw();
-	}
+	// 描画切り替え
+	(this->*m_drawMode)();
 }
 
 Vec3 Player::GetPos() const
 {
-	return m_pBrutus->Position;
+	// 操作モードによって返す値が変わる
+	if (m_osFlug) {
+		return m_pOs->Position;
+	}
+	else {
+		return m_pBrutus->Position;
+	}
+}
+
+void Player::BrutusUpdate()
+{
+	m_pBrutus->Control();
+	m_pBrutus->Update();
+}
+
+void Player::BrutusDraw() const
+{
+	m_pBrutus->Draw();
+}
+
+void Player::OsUpdate()
+{
+	m_pOs->Control();
+	m_pBrutus->Update();
+	m_pOs->Update();
+}
+
+void Player::OsDraw() const
+{
+	m_pBrutus->Draw();
+	m_pOs->Draw();
+}
+
+void Player::ChangeMode()
+{
+	// 呼ばれたときのオズフラグでモードを変更する
+	if (m_osFlug) {
+		m_updateMode = &Player::OsUpdate;
+		m_drawMode = &Player::OsDraw;
+	}
+	else {
+		m_updateMode = &Player::BrutusUpdate;
+		m_drawMode = &Player::BrutusDraw;
+	}
 }

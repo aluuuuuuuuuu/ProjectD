@@ -27,6 +27,8 @@ void Brutus::Control()
 	// インプットのインスタンスを取得
 	auto& input = Input::getInstance();
 	if (input.GetStickVectorLength(INPUT_LEFT_STICK) > input.Constants["STICK_INVALID_VALUE"]) {
+
+		// 移動ベクトルにスティックの値をそのまま代入する
 		m_moveVec = input.GetStickUnitVector(INPUT_LEFT_STICK);
 
 		// カメラの回転を得る

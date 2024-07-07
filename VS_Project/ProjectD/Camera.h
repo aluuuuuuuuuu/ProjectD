@@ -17,6 +17,9 @@ public:
 	void Init(Vec3 pos);
 	void Update(Vec3 pos);
 
+	// オズモードとブルータスモードを変更する
+	void ChangeMode(bool osFlug);
+
 private:
 	Camera() {};
 
@@ -31,9 +34,7 @@ private:
 	void OsMode(Vec3 pos);
 
 	// 回転
-	void RotateBrutus(Vec3 pos);
-
-	// オズモードとブルータスモードを変更する
-	void ChangeMode(bool osFlug);
+	void RotateBrutus(Vec3 pos);	// ブルータスモードでの回転処理
+	Vec3 RotateOs(Vec3 pos);	// オズモードでの回転処理
 };
 

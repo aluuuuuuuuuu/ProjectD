@@ -16,11 +16,25 @@ void Camera::Init(Vec3 pos)
 	SetCameraNearFar(Constants["CAMERA_NEAR"], Constants["CAMERA_FAR"]);
 
 	Position = Vec3{ pos.x + Constants["CAMERA_BASE_POS_X"],pos.y + Constants["CAMERA_BASE_POS_Y"], pos.z + Constants["CAMERA_BASE_POS_Z"], };
+
+	// モードの初期化
+	m_modeFunc = &Camera::BrutusMode;
 }
 
 void Camera::Update(Vec3 pos)
 {
 	(this->*m_modeFunc)(pos);
+}
+
+void Camera::ChangeMode(bool osFlug)
+{
+	// フラグがtrueのときはオズモードに変更
+	if (osFlug) {
+		m_modeFunc = &Camera::OsMode;
+	}
+	else {
+		m_modeFunc = &Camera::BrutusMode;
+	}
 }
 
 void Camera::BrutusMode(Vec3 pos)
@@ -34,6 +48,15 @@ void Camera::BrutusMode(Vec3 pos)
 
 void Camera::OsMode(Vec3 pos)
 {
+
+	// 座標をオズの位置に合わせる
+	Position = pos;
+
+	// 回転
+	VECTOR target =  RotateOs(pos).VGet();
+
+	// カメラの位置をセットする
+	SetCameraPositionAndTarget_UpVecY(target, Position.VGet());
 }
 
 void Camera::RotateBrutus(Vec3 pos)
@@ -78,13 +101,44 @@ void Camera::RotateBrutus(Vec3 pos)
 	Position = VAdd(VGet(pos.x, 0.0f, pos.z), basePos);
 }
 
-void Camera::ChangeMode(bool osFlug)
+Vec3 Camera::RotateOs(Vec3 pos)
 {
-	// フラグがtrueのときはオズモードに変更
-	if (osFlug) {
-		m_modeFunc = &Camera::OsMode;
+	// インプットのインスタンスを取得
+	auto& input = Input::getInstance();
+
+	// 右スティックで回転
+	if (input.GetStickVectorLength(INPUT_RIGHT_STICK) > input.Constants["STICK_INVALID_VALUE"]) {
+
+		// スティックを傾けた方向の回転の値を増減させる
+		if (input.GetStickVector(INPUT_RIGHT_STICK).x != 0) {
+			Angle.y += Constants["CAMERA_ANGLE_VARIATION"] * (input.GetStickThumbX(INPUT_RIGHT_STICK));
+		}
+		if (input.GetStickVector(INPUT_RIGHT_STICK).z != 0) {
+			Angle.z += Constants["CAMERA_ANGLE_VARIATION"] * (input.GetStickThumbY(INPUT_RIGHT_STICK));
+		}
 	}
-	else {
-		m_modeFunc = &Camera::BrutusMode;
+
+	// 最大値と最低値を調整する
+	if (Angle.z <= -Constants["CAMERA_ANGLE_RANGE"]) {
+		Angle.z = -Constants["CAMERA_ANGLE_RANGE"];
 	}
+	else if (Angle.z >= Constants["CAMERA_ANGLE_RANGE"]) {
+		Angle.z = Constants["CAMERA_ANGLE_RANGE"];
+	}
+
+	// 基準となるカメラの座標
+	VECTOR basePos = VGet(Constants["CAMERA_BASE_POS_X"], Constants["CAMERA_BASE_POS_Y"], Constants["CAMERA_BASE_POS_Z"]);
+
+	// 回転行列を作成
+	MATRIX rotMtxX, rotMtxZ;
+	rotMtxX = MGetRotY(Angle.y);
+	rotMtxZ = MGetRotX(Angle.z);
+
+
+	// 基準座標を行列で変換
+	basePos = VTransform(basePos, rotMtxZ);
+	basePos = VTransform(basePos, rotMtxX);
+
+	// カメラ座標はプレイヤー座標から変換した座標を足したところ
+	Position = VAdd(VGet(pos.x, 0.0f, pos.z), basePos);
 }
