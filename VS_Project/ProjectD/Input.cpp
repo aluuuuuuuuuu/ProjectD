@@ -1,11 +1,10 @@
 #include "Input.h"
-#include "StaticFunction.h"
 #include <cassert>
 
 void Input::Init()
 {
 	// 外部ファイルから定数を取得する
-	assert(Function::ConstantsFileLoad("data/constant/Input.csv", Constants) == 1);
+	assert(ConstantsFileLoad("data/constant/Input.csv", Constants) == 1);
 }
 
 void Input::Update()

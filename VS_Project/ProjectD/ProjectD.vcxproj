@@ -28,6 +28,7 @@
     <ClCompile Include="EnemyBase.cpp" />
     <ClCompile Include="EnemyManager.cpp" />
     <ClCompile Include="EnemyTest.cpp" />
+    <ClCompile Include="GraphicManager.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Os.cpp" />
@@ -50,6 +51,7 @@
     <ClInclude Include="EnemyBase.h" />
     <ClInclude Include="EnemyManager.h" />
     <ClInclude Include="EnemyTest.h" />
+    <ClInclude Include="GraphicManager.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="Os.h" />
     <ClInclude Include="Player.h" />

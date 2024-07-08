@@ -10,7 +10,7 @@ Camera::~Camera()
 void Camera::Init(Vec3 pos)
 {
 	// 外部ファイルから定数を取得する
-	assert(Function::ConstantsFileLoad("data/constant/Camera.csv", Constants) == 1);
+	assert(ConstantsFileLoad("data/constant/Camera.csv", Constants) == 1);
 
 	// カメラのニアファーの設定
 	SetCameraNearFar(Constants["CAMERA_NEAR"], Constants["CAMERA_FAR"]);

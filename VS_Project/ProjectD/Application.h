@@ -2,8 +2,6 @@
 #include "Singleton.h"
 #include "Constant.h"
 
-using namespace std;
-
 // アプリケーション全体の管理を行うシングルトンクラス
 class Application :
 	public Singleton<Application>,

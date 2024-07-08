@@ -3,14 +3,14 @@
 #include "DxLib.h"
 #include "Input.h"
 #include "SceneTest.h"
-#include "StaticFunction.h"
 #include <cassert>
+#include "GraphicManager.h"
 
 // 初期化処理
 bool Application::Init()
 {
 	// 外部ファイルから定数を取得する
-	assert(Function::ConstantsFileLoad("data/constant/Application.csv", Constants) == 1);
+	assert(ConstantsFileLoad("data/constant/Application.csv", Constants) == 1);
 
 	// ウィンドウモードの設定
 	ChangeWindowMode(true);
@@ -18,7 +18,7 @@ bool Application::Init()
 	// ウィンドウ名の設定
 	SetWindowText("ProjectD");
 
-	//// 画面サイズの設定
+	// 画面サイズの設定
 	SetGraphMode(static_cast<int>(Constants["SCREEN_WIDTH"]),
 		static_cast<int>(Constants["SCREEN_HEIGHT"]),
 		static_cast<int>(Constants["COLRO_BIT"]));
@@ -44,6 +44,9 @@ bool Application::Init()
 
 	// カーソルの表示設定
 	SetMouseDispFlag(true);
+
+	// 画像のロード
+	assert(GraphicManager::getInstance().LoadGraphics() == 1);
 
 	return true;
 }

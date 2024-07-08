@@ -2,7 +2,6 @@
 #include "Camera.h"
 #include "Input.h"
 #include "DxLib.h"
-#include "StaticFunction.h"
 #include <cassert>
 #include <memory>
 #include "EnemyManager.h"
@@ -13,7 +12,7 @@
 Os::Os()
 {
 	// 外部ファイルから定数を取得する
-	assert(Function::ConstantsFileLoad("data/constant/Os.csv", Constants) == 1);
+	assert(ConstantsFileLoad("data/constant/Os.csv", Constants) == 1);
 }
 
 Os::~Os()

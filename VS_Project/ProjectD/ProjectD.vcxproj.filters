@@ -25,6 +25,9 @@
     <Filter Include="Object">
       <UniqueIdentifier>{b30e6be7-315a-4d3a-9ad8-64def7dae6f3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Manager">
+      <UniqueIdentifier>{85b5e46d-456a-48bf-a7ed-a79121c6c38b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -39,13 +42,7 @@
     <ClCompile Include="Constant.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
-    <ClCompile Include="SceneManager.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
     <ClCompile Include="StaticFunction.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="StaticObjectManager.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
     <ClCompile Include="Components.cpp">
@@ -81,11 +78,20 @@
     <ClCompile Include="EnemyTest.cpp">
       <Filter>Charactor</Filter>
     </ClCompile>
-    <ClCompile Include="EnemyManager.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="UI.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="StaticObjectManager.cpp">
+      <Filter>Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyManager.cpp">
+      <Filter>Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphicManager.cpp">
+      <Filter>Manager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -101,13 +107,7 @@
     <ClInclude Include="Constant.h">
       <Filter>Engine</Filter>
     </ClInclude>
-    <ClInclude Include="SceneManager.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
     <ClInclude Include="StaticFunction.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="StaticObjectManager.h">
       <Filter>Engine</Filter>
     </ClInclude>
     <ClInclude Include="Vec3.h">
@@ -146,11 +146,20 @@
     <ClInclude Include="EnemyTest.h">
       <Filter>Charactor</Filter>
     </ClInclude>
-    <ClInclude Include="EnemyManager.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="UI.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="StaticObjectManager.h">
+      <Filter>Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphicManager.h">
+      <Filter>Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyManager.h">
+      <Filter>Manager</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

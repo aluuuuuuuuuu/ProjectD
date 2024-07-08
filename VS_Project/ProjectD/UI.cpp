@@ -1,5 +1,6 @@
 #include "UI.h"
 #include "DxLib.h"
+#include "GraphicManager.h"
 
 void UI::Update()
 {
@@ -24,7 +25,11 @@ void UI::SetEnemyInteractFlug(bool flug)
 void UI::DrawInteract() const
 {
 	if (m_enemyInteractFlug) {
+
+		// ワールド座標を画面座標に変換する
+		Vec3 pos = ConvWorldPosToScreenPos(m_enemyInteractPos.VGet());
+
 		// エネミーの上にボタンを表示する
-		DrawString(ConvWorldPosToScreenPos(m_enemyInteractPos.VGet()).x, ConvWorldPosToScreenPos(m_enemyInteractPos.VGet()).y,"X",0xffffff);
+		DrawRotaGraph(pos.intX(), pos.intY(), 1.0, 0, GraphicManager::getInstance().GetGraph("ButtonX"), true, false);
 	}
 }

@@ -8,8 +8,8 @@ Player::Player() :
 	m_osFlug(false)
 {
 	// 各ポインタの作成
-	m_pBrutus = make_shared<Brutus>();
-	m_pOs = make_shared<Os>();
+	m_pBrutus = std::make_shared<Brutus>();
+	m_pOs = std::make_shared<Os>();
 
 	// 関数ポインタの初期化
 	m_updateMode = &Player::BrutusUpdate;

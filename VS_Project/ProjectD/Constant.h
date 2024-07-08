@@ -2,10 +2,13 @@
 #include <map>
 #include <string>
 
-using namespace std;
-
 class Constant
 {
 public:
-	map<string, float> Constants;
+
+	// ファイルから定数をロードする
+	int ConstantsFileLoad(const char* fileName, std::map<std::string, float>& constants);
+
+	// 定数マップ
+	std::map < std::string, float > Constants;
 };
