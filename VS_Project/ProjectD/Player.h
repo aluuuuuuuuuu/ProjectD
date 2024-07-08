@@ -39,5 +39,9 @@ private:
 
 	// オズを操作しているかどうか
 	bool m_osFlug;
+
+	// 操作変更したときのカメラの位置と角度を保存する
+	Vec3 m_changePos;
+	Vec3 m_changeAngle;
 };
 

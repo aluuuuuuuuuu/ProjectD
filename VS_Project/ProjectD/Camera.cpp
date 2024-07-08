@@ -56,7 +56,7 @@ void Camera::OsMode(Vec3 pos)
 	VECTOR target =  RotateOs(pos).VGet();
 
 	// カメラの位置をセットする
-	SetCameraPositionAndTarget_UpVecY(target, Position.VGet());
+	SetCameraPositionAndTarget_UpVecY(Position.VGet(),target);
 }
 
 void Camera::RotateBrutus(Vec3 pos)
@@ -126,8 +126,8 @@ Vec3 Camera::RotateOs(Vec3 pos)
 		Angle.z = Constants["CAMERA_ANGLE_RANGE"];
 	}
 
-	// 基準となるカメラの座標
-	VECTOR basePos = VGet(Constants["CAMERA_BASE_POS_X"], Constants["CAMERA_BASE_POS_Y"], Constants["CAMERA_BASE_POS_Z"]);
+	// 基準となるターゲットの座標
+	VECTOR basePos = VGet(Constants["CAMERA_TARGET_POS_X"], Constants["CAMERA_TARGET_POS_Y"], Constants["CAMERA_TARGET_POS_Z"]);
 
 	// 回転行列を作成
 	MATRIX rotMtxX, rotMtxZ;
@@ -139,6 +139,8 @@ Vec3 Camera::RotateOs(Vec3 pos)
 	basePos = VTransform(basePos, rotMtxZ);
 	basePos = VTransform(basePos, rotMtxX);
 
-	// カメラ座標はプレイヤー座標から変換した座標を足したところ
-	Position = VAdd(VGet(pos.x, 0.0f, pos.z), basePos);
+	// ターゲット座標はカメラ座標から変換した座標を足したところ
+	return VAdd(Position.VGet(), basePos);
+
+	DrawSphere3D(VAdd(Position.VGet(), basePos), 16, 16, 0xff0000, 0xff0000, true);
 }

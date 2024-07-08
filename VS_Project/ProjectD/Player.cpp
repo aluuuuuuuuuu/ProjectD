@@ -28,9 +28,6 @@ void Player::Update()
 		// 現在の操作フラグを反転する
 		m_osFlug = !m_osFlug;
 
-		// オズの初期処理
-		m_pOs->ChangeInit();
-
 		// モード変更
 		ChangeMode();
 
@@ -89,9 +86,20 @@ void Player::ChangeMode()
 	if (m_osFlug) {
 		m_updateMode = &Player::OsUpdate;
 		m_drawMode = &Player::OsDraw;
+
+		// オズに変更するときは初期処理を呼ぶ
+		m_pOs->ChangeInit(m_pBrutus->Position);
+
+		// 変更時のカメラの位置と角度を保存しておく
+		m_changePos = Camera::getInstance().Position;
+		m_changeAngle = Camera::getInstance().Angle;
 	}
 	else {
 		m_updateMode = &Player::BrutusUpdate;
 		m_drawMode = &Player::BrutusDraw;
+
+		// ブルータスに変更するときは保存した座標にカメラを置く
+		Camera::getInstance().Position = m_changePos;
+		Camera::getInstance().Angle = m_changeAngle;
 	}
 }

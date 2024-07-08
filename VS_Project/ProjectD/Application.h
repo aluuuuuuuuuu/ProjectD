@@ -7,7 +7,7 @@ using namespace std;
 // アプリケーション全体の管理を行うシングルトンクラス
 class Application :
 	public Singleton<Application>,
-	Constant
+	public Constant
 {
 	friend class Singleton<Application>;
 

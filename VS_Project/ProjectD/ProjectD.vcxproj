@@ -25,6 +25,9 @@
     <ClCompile Include="CharactorBase.cpp" />
     <ClCompile Include="Components.cpp" />
     <ClCompile Include="Constant.cpp" />
+    <ClCompile Include="EnemyBase.cpp" />
+    <ClCompile Include="EnemyManager.cpp" />
+    <ClCompile Include="EnemyTest.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Os.cpp" />
@@ -35,6 +38,7 @@
     <ClCompile Include="StaticFunction.cpp" />
     <ClCompile Include="StaticObject.cpp" />
     <ClCompile Include="StaticObjectManager.cpp" />
+    <ClCompile Include="UI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -43,6 +47,9 @@
     <ClInclude Include="CharactorBase.h" />
     <ClInclude Include="Components.h" />
     <ClInclude Include="Constant.h" />
+    <ClInclude Include="EnemyBase.h" />
+    <ClInclude Include="EnemyManager.h" />
+    <ClInclude Include="EnemyTest.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="Os.h" />
     <ClInclude Include="Player.h" />
@@ -53,6 +60,7 @@
     <ClInclude Include="StaticFunction.h" />
     <ClInclude Include="StaticObject.h" />
     <ClInclude Include="StaticObjectManager.h" />
+    <ClInclude Include="UI.h" />
     <ClInclude Include="Vec3.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
