@@ -20,7 +20,7 @@ public:
 private:
 	// インタラクトする敵を探す関数
 	std::shared_ptr<EnemyBase> FindEnemy();
-	
+
 	// ブルータスの座標
 	Vec3 m_brutusPos;
 };

@@ -5,161 +5,179 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="ヘッダー ファイル">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
-    <Filter Include="リソース ファイル">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
-    <Filter Include="Scene">
-      <UniqueIdentifier>{9935f42c-a0f4-40f7-a16a-bc954ad0a98c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine">
-      <UniqueIdentifier>{7ad6489b-4800-4650-a572-9f84d46e372b}</UniqueIdentifier>
+    <Filter Include="CSV">
+      <UniqueIdentifier>{b7afb529-6189-4f56-8d85-7cf79cfbf650}</UniqueIdentifier>
     </Filter>
     <Filter Include="Charactor">
-      <UniqueIdentifier>{6157ac63-3a4d-43a5-962e-43685bf3b0df}</UniqueIdentifier>
+      <UniqueIdentifier>{ac749009-98db-497c-a51a-d119a2474427}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Object">
-      <UniqueIdentifier>{b30e6be7-315a-4d3a-9ad8-64def7dae6f3}</UniqueIdentifier>
+    <Filter Include="Engine">
+      <UniqueIdentifier>{004ea9d3-b7a1-4e0e-9707-31cc0073b5fa}</UniqueIdentifier>
     </Filter>
     <Filter Include="Manager">
-      <UniqueIdentifier>{85b5e46d-456a-48bf-a7ed-a79121c6c38b}</UniqueIdentifier>
+      <UniqueIdentifier>{33535267-863e-4d9b-8b68-681c53c21192}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene">
+      <UniqueIdentifier>{85a76196-4064-4bea-818f-0cf2e88d37a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object">
+      <UniqueIdentifier>{5ea2f623-da17-4dd4-b1dc-417720c98c48}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="cpp\Application.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="cpp\Brutus.cpp">
+      <Filter>Charactor</Filter>
+    </ClCompile>
+    <ClCompile Include="cpp\Camera.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="cpp\CharactorBase.cpp">
+      <Filter>Charactor</Filter>
+    </ClCompile>
+    <ClCompile Include="cpp\Components.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="cpp\Constant.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="cpp\EnemyBase.cpp">
+      <Filter>Charactor</Filter>
+    </ClCompile>
+    <ClCompile Include="cpp\EnemyManager.cpp">
+      <Filter>Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="cpp\EnemyTest.cpp">
+      <Filter>Charactor</Filter>
+    </ClCompile>
+    <ClCompile Include="cpp\GraphicManager.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="cpp\Input.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="cpp\Os.cpp">
+      <Filter>Charactor</Filter>
+    </ClCompile>
+    <ClCompile Include="cpp\Player.cpp">
+      <Filter>Charactor</Filter>
+    </ClCompile>
+    <ClCompile Include="cpp\SceneBase.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="cpp\SceneManager.cpp">
+      <Filter>Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="cpp\SceneTest.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="cpp\StaticFunction.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="cpp\StaticObject.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="cpp\StaticObjectManager.cpp">
+      <Filter>Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="cpp\UI.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="cpp\Sequence.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="SceneTest.cpp">
-      <Filter>Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Application.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="Constant.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="StaticFunction.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="Components.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="Input.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneBase.cpp">
-      <Filter>Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Brutus.cpp">
-      <Filter>Charactor</Filter>
-    </ClCompile>
-    <ClCompile Include="CharactorBase.cpp">
-      <Filter>Charactor</Filter>
-    </ClCompile>
-    <ClCompile Include="Os.cpp">
-      <Filter>Charactor</Filter>
-    </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Charactor</Filter>
-    </ClCompile>
-    <ClCompile Include="StaticObject.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Camera.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
-    <ClCompile Include="EnemyBase.cpp">
-      <Filter>Charactor</Filter>
-    </ClCompile>
-    <ClCompile Include="EnemyTest.cpp">
-      <Filter>Charactor</Filter>
-    </ClCompile>
-    <ClCompile Include="UI.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="StaticObjectManager.cpp">
-      <Filter>Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneManager.cpp">
-      <Filter>Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="EnemyManager.cpp">
-      <Filter>Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="GraphicManager.cpp">
-      <Filter>Manager</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="SceneTest.h">
-      <Filter>Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Application.h">
+    <None Include="data\GraphicCSV\Graphics.csv">
+      <Filter>CSV</Filter>
+    </None>
+    <None Include="data\constant\Camera.csv">
+      <Filter>CSV</Filter>
+    </None>
+    <None Include="data\constant\Input.csv">
+      <Filter>CSV</Filter>
+    </None>
+    <None Include="data\constant\Os.csv">
+      <Filter>CSV</Filter>
+    </None>
+    <None Include="data\constant\Application.csv">
+      <Filter>CSV</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="h\Application.h">
       <Filter>Engine</Filter>
     </ClInclude>
-    <ClInclude Include="Components.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Constant.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="StaticFunction.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Vec3.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneBase.h">
-      <Filter>Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h">
+    <ClInclude Include="h\Brutus.h">
       <Filter>Charactor</Filter>
     </ClInclude>
-    <ClInclude Include="Os.h">
-      <Filter>Charactor</Filter>
-    </ClInclude>
-    <ClInclude Include="Brutus.h">
-      <Filter>Charactor</Filter>
-    </ClInclude>
-    <ClInclude Include="StaticObject.h">
+    <ClInclude Include="h\Camera.h">
       <Filter>Object</Filter>
     </ClInclude>
-    <ClInclude Include="Singleton.h">
+    <ClInclude Include="h\CharactorBase.h">
+      <Filter>Charactor</Filter>
+    </ClInclude>
+    <ClInclude Include="h\Components.h">
       <Filter>Engine</Filter>
     </ClInclude>
-    <ClInclude Include="Input.h">
+    <ClInclude Include="h\Constant.h">
       <Filter>Engine</Filter>
     </ClInclude>
-    <ClInclude Include="Camera.h">
+    <ClInclude Include="h\EnemyBase.h">
+      <Filter>Charactor</Filter>
+    </ClInclude>
+    <ClInclude Include="h\EnemyManager.h">
+      <Filter>Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="h\EnemyTest.h">
+      <Filter>Charactor</Filter>
+    </ClInclude>
+    <ClInclude Include="h\GraphicManager.h">
+      <Filter>Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="h\Input.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="h\Os.h">
+      <Filter>Charactor</Filter>
+    </ClInclude>
+    <ClInclude Include="h\Player.h">
+      <Filter>Charactor</Filter>
+    </ClInclude>
+    <ClInclude Include="h\SceneBase.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="h\SceneTest.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="h\SceneManager.h">
+      <Filter>Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="h\Singleton.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="h\StaticFunction.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="h\StaticObject.h">
       <Filter>Object</Filter>
     </ClInclude>
-    <ClInclude Include="CharactorBase.h">
-      <Filter>Charactor</Filter>
+    <ClInclude Include="h\StaticObjectManager.h">
+      <Filter>Manager</Filter>
     </ClInclude>
-    <ClInclude Include="EnemyBase.h">
-      <Filter>Charactor</Filter>
-    </ClInclude>
-    <ClInclude Include="EnemyTest.h">
-      <Filter>Charactor</Filter>
-    </ClInclude>
-    <ClInclude Include="UI.h">
+    <ClInclude Include="h\UI.h">
       <Filter>Engine</Filter>
     </ClInclude>
-    <ClInclude Include="StaticObjectManager.h">
-      <Filter>Manager</Filter>
+    <ClInclude Include="h\Vec3.h">
+      <Filter>Engine</Filter>
     </ClInclude>
-    <ClInclude Include="SceneManager.h">
-      <Filter>Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="GraphicManager.h">
-      <Filter>Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="EnemyManager.h">
-      <Filter>Manager</Filter>
+    <ClInclude Include="h\Sequence.h">
+      <Filter>Engine</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

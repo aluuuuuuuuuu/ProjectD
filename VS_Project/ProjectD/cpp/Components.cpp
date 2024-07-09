@@ -91,9 +91,9 @@ void Animation::InitAnimation(Model& model, int tag)
 {
 	m_defaultTag = tag;
 
-	m_loopFlug = true;
+	m_loopFlag = true;
 
-	m_endAnimFlug = false;
+	m_endAnimFlag = false;
 
 	m_attachIndex1 = MV1AttachAnim(model.ModelHandle, tag);
 	m_attachIndex2 = MV1AttachAnim(model.ModelHandle, tag);
@@ -106,7 +106,7 @@ void Animation::InitAnimation(Model& model, int tag)
 void Animation::UpdateAnimation(Model& model)
 {
 	// 前のフレームでアニメーションが終了していたらデフォルトに戻す
-	if (m_endAnimFlug) {
+	if (m_endAnimFlag) {
 		ChangeAnimation(model, m_defaultTag, true);
 	}
 
@@ -129,19 +129,19 @@ void Animation::UpdateAnimation(Model& model)
 	if (m_flameCount >= m_maxFlame) {
 
 		// コネクトフラグがtrueだったら次のアニメーションをスタートさせる
-		if (m_connectFlug) {
+		if (m_connectFlag) {
 			m_animationState++;
-			m_connectFlug = false;
+			m_connectFlag = false;
 			ChangeAnimation(model, m_connectAnimation[m_animationState], true);
 			m_connectAnimation.clear();
 		}
 		// ループフラグがtrueだったらループさせる
-		else if (m_loopFlug) {
+		else if (m_loopFlag) {
 			m_flameCount = 0.0f;
 		}
 		// 完全に終了したらフラグを立てる
 		else {
-			m_endAnimFlug = true;
+			m_endAnimFlag = true;
 		}
 	}
 
@@ -158,7 +158,7 @@ void Animation::ChangeAnimation(Model& model, int tag, bool loop)
 		MV1DetachAnim(model.ModelHandle, m_attachIndex2);
 
 		// ループフラグを保存
-		m_loopFlug = loop;
+		m_loopFlag = loop;
 
 		// 再生時間を最初に戻す
 		m_flameCount = 0.0f;
@@ -176,7 +176,7 @@ void Animation::ChangeAnimation(Model& model, int tag, bool loop)
 		m_playAnimation = tag;
 
 		// アニメーション終了フラグをfalseに
-		m_endAnimFlug = false;
+		m_endAnimFlag = false;
 
 		// ブレンドレートを初期化する
 		m_blendRate = 0.0f;
@@ -186,16 +186,16 @@ void Animation::ChangeAnimation(Model& model, int tag, bool loop)
 // アニメーションを連続させたいときの変更関数
 void Animation::ChangeAnimationConnect(Model& model, int tag1, int tag2)
 {
-	m_endAnimFlug = false;
-	m_connectFlug = true;
+	m_endAnimFlag = false;
+	m_connectFlag = true;
 	m_connectAnimation.push_back(tag1);
 	m_connectAnimation.push_back(tag2);
 	ChangeAnimation(model, m_connectAnimation[m_animationState], false);
 }
 
-bool Animation::GetEndAnimFlug()
+bool Animation::GetEndAnimFlag()
 {
-	return m_endAnimFlug;
+	return m_endAnimFlag;
 }
 
 // カプセル

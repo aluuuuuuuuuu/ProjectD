@@ -21,14 +21,16 @@ Os::~Os()
 
 void Os::Update()
 {
+	// 近くのエネミーを探してインタラクトボタンを表示する
 	auto enemy = FindEnemy();
 	if (enemy == nullptr) {
-		UI::getInstance().SetEnemyInteractFlug(false);
+		UI::getInstance().SetEnemyInteractFlag(false);
 	}
 	else {
-		UI::getInstance().SetEnemyInteractFlug(true);
+		UI::getInstance().SetEnemyInteractFlag(true);
 		UI::getInstance().SetEnemyInteractPos(enemy->Position);
 	}
+
 }
 
 void Os::Draw() const

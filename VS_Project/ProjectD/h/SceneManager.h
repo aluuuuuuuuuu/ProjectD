@@ -33,6 +33,6 @@ private:
 	std::list<std::shared_ptr<SceneBase>> m_pScene;
 
 	// ゲーム終了フラグ
-	bool m_endFlug = false;
+	bool m_endFlag = false;
 };
 

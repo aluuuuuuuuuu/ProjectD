@@ -12,7 +12,9 @@ public:
     void Draw() const;
 
     void SetEnemyInteractPos(Vec3 pos);
-    void SetEnemyInteractFlug(bool flug);
+    void SetEnemyInteractFlag(bool flag);
+
+    bool GetEnemyInteractFlag();
 private:
     // プライベートコンストラクタ
     UI() {};
@@ -21,7 +23,7 @@ private:
     void DrawInteract() const;
 
     // エネミーインタラクトを表示するフラグ
-    bool m_enemyInteractFlug = false;
+    bool m_enemyInteractFlag = false;
 
     // エネミーインタラクトを表示する座標
     Vec3 m_enemyInteractPos;

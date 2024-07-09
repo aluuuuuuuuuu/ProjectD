@@ -33,12 +33,15 @@ private:
 	// 操作モードを変更する関数
 	void ChangeMode();
 
+	// インタラクトボタンが押されたときの処理
+	void InteractFunc();
+
 	// ブルータスとオズのポインタ
 	std::shared_ptr<Brutus> m_pBrutus;
 	std::shared_ptr<Os> m_pOs;
 
 	// オズを操作しているかどうか
-	bool m_osFlug;
+	bool m_osFlag;
 
 	// 操作変更したときのカメラの位置と角度を保存する
 	Vec3 m_changePos;

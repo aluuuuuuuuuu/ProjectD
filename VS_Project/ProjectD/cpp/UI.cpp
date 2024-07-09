@@ -17,14 +17,19 @@ void UI::SetEnemyInteractPos(Vec3 pos)
 	m_enemyInteractPos = pos;
 }
 
-void UI::SetEnemyInteractFlug(bool flug)
+void UI::SetEnemyInteractFlag(bool flug)
 {
-	m_enemyInteractFlug = flug;
+	m_enemyInteractFlag = flug;
+}
+
+bool UI::GetEnemyInteractFlag()
+{
+	return m_enemyInteractFlag;
 }
 
 void UI::DrawInteract() const
 {
-	if (m_enemyInteractFlug) {
+	if (m_enemyInteractFlag) {
 
 		// ワールド座標を画面座標に変換する
 		Vec3 pos = ConvWorldPosToScreenPos(m_enemyInteractPos.VGet());

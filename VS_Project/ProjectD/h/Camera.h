@@ -3,6 +3,10 @@
 #include "Singleton.h"
 #include "Constant.h"
 
+#define OS_MODE 0
+#define BRUTUS_MODE 1
+#define SEQUENCE_MODE 2
+
 // カメラクラス
 class Camera :
 	public Transform,
@@ -18,7 +22,7 @@ public:
 	void Update(Vec3 pos);
 
 	// オズモードとブルータスモードを変更する
-	void ChangeMode(bool osFlug);
+	void ChangeMode(int mode);
 
 private:
 	Camera() {};
@@ -32,6 +36,9 @@ private:
 
 	// オズモード
 	void OsMode(Vec3 pos);
+
+	// シーケンスモード
+	void SequMode(Vec3 pos);
 
 	// 回転
 	void RotateBrutus(Vec3 pos);	// ブルータスモードでの回転処理

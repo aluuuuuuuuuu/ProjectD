@@ -28,11 +28,11 @@ void SceneManager::SceneDraw() const
 // ゲーム終了フラグをtrueにする
 void SceneManager::GameEnd()
 {
-	m_endFlug = true;
+	m_endFlag = true;
 }
 
 // ゲーム終了フラグを返す
 bool SceneManager::GetGameEnd()
 {
-	return m_endFlug;
+	return m_endFlag;
 }

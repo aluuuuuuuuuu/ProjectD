@@ -39,7 +39,8 @@
 // };
 
 // インプット情報を提供するシングルトンクラス
-class Input : public Singleton<Input>,
+class Input : 
+	public Singleton<Input>,
 	public Constant
 {
 	friend class Singleton<Input>;

@@ -7,6 +7,7 @@
 #include "EnemyManager.h"
 #include "EnemyTest.h"
 #include "UI.h"
+#include "Sequence.h"
 
 SceneTest::SceneTest()
 {
@@ -24,31 +25,15 @@ SceneTest::~SceneTest()
 
 void SceneTest::Update()
 {
-	// エネミーの更新
-	EnemyManager::getInstance().Update();
-
-	// プレイヤーの更新
-	m_pPlayer->Update();
-
-	// カメラの更新
-	Camera::getInstance().Update(m_pPlayer->GetPos());
-
-	// UIの更新
-	UI::getInstance().Update();
+	(this->*m_updateFunc)();
 }
 
 void SceneTest::Draw() const
 {
+	// グリッドの表示
 	DrawGrid();
 
-	// エネミーの描画
-	EnemyManager::getInstance().Draw();
-
-	// プレイヤーの描画
-	m_pPlayer->Draw();
-
-	// UIの描画
-	UI::getInstance().Draw();
+	(this->*m_drawFunc)();
 }
 
 void SceneTest::DrawGrid() const
@@ -86,4 +71,56 @@ void SceneTest::DrawGrid() const
 	{
 		DrawStringF(dispPos.x, dispPos.y, "Z-", 0xffffff);
 	}
+}
+
+void SceneTest::NormalUpdate()
+{
+	// エネミーの更新
+	EnemyManager::getInstance().Update();
+
+	// プレイヤーの更新
+	m_pPlayer->Update();
+
+	// カメラの更新
+	Camera::getInstance().Update(m_pPlayer->GetPos());
+
+	// UIの更新
+	UI::getInstance().Update();
+
+	// シーケンス移行処理
+	if (Sequence::getInstance().IsPlaySequ()) {
+		m_updateFunc = &SceneTest::SeqUpdate;
+		m_drawFunc = &SceneTest::SeqDraw;
+	}
+}
+
+void SceneTest::NormalDraw() const
+{
+	// エネミーの描画
+	EnemyManager::getInstance().Draw();
+
+	// プレイヤーの描画
+	m_pPlayer->Draw();
+
+	// UIの描画
+	UI::getInstance().Draw();
+}
+
+void SceneTest::SeqUpdate()
+{
+	Sequence::getInstance().Update();
+}
+
+void SceneTest::SeqDraw() const
+{
+	// エネミーの描画
+	EnemyManager::getInstance().Draw();
+
+	// プレイヤーの描画
+	m_pPlayer->Draw();
+
+	// UIの描画
+	UI::getInstance().Draw();
+
+	Sequence::getInstance().Draw();
 }

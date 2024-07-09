@@ -3,9 +3,10 @@
 #include "Os.h"
 #include "Input.h"
 #include "Camera.h"
+#include "UI.h"
 
 Player::Player() :
-	m_osFlug(false)
+	m_osFlag(false)
 {
 	// 各ポインタの作成
 	m_pBrutus = std::make_shared<Brutus>();
@@ -24,15 +25,14 @@ void Player::Update()
 {
 	// 操作変更ボタンが押されたらオズとブルータスの操作を変更する(現状Yボタン)
 	if (Input::getInstance().IsTrigger(INPUT_Y)) {
-
-		// 現在の操作フラグを反転する
-		m_osFlug = !m_osFlug;
-
 		// モード変更
 		ChangeMode();
+	}
 
-		// カメラのモードも合わせる
-		Camera::getInstance().ChangeMode(m_osFlug);
+	// インタラクトボタンが押されたときの処理
+	if (Input::getInstance().IsTrigger(INPUT_X)) {
+		// インタラクト処理
+		InteractFunc();
 	}
 
 	// 操作切り替え
@@ -48,7 +48,7 @@ void Player::Draw() const
 Vec3 Player::GetPos() const
 {
 	// 操作モードによって返す値が変わる
-	if (m_osFlug) {
+	if (m_osFlag) {
 		return m_pOs->Position;
 	}
 	else {
@@ -82,8 +82,11 @@ void Player::OsDraw() const
 
 void Player::ChangeMode()
 {
+	// 操作フラグを反転する
+	m_osFlag = !m_osFlag;
+
 	// 呼ばれたときのオズフラグでモードを変更する
-	if (m_osFlug) {
+	if (m_osFlag) {
 		m_updateMode = &Player::OsUpdate;
 		m_drawMode = &Player::OsDraw;
 
@@ -93,6 +96,9 @@ void Player::ChangeMode()
 		// 変更時のカメラの位置と角度を保存しておく
 		m_changePos = Camera::getInstance().Position;
 		m_changeAngle = Camera::getInstance().Angle;
+
+		// カメラのモードを変更する
+		Camera::getInstance().ChangeMode(OS_MODE);
 	}
 	else {
 		m_updateMode = &Player::BrutusUpdate;
@@ -101,5 +107,19 @@ void Player::ChangeMode()
 		// ブルータスに変更するときは保存した座標にカメラを置く
 		Camera::getInstance().Position = m_changePos;
 		Camera::getInstance().Angle = m_changeAngle;
+
+		// ブルータスに切り替えたとき敵に対するボタン表示をオフにする
+		UI::getInstance().SetEnemyInteractFlag(false);
+
+		// カメラのモードを変更する
+		Camera::getInstance().ChangeMode(BRUTUS_MODE);
+	}
+}
+
+void Player::InteractFunc()
+{
+	// エネミーインタラクトが可能の場合
+	if (UI::getInstance().GetEnemyInteractFlag()) {
+		// 気絶させるシーケンスに入る
 	}
 }

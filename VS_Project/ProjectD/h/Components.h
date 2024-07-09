@@ -74,7 +74,7 @@ public:
 	void ChangeAnimationConnect(Model& model, int tag1, int tag2);
 
 	// アニメーション終了フラグを返す
-	bool GetEndAnimFlug();
+	bool GetEndAnimFlag();
 
 ; private:
 
@@ -101,19 +101,19 @@ public:
 	int m_runTag = 0;
 
 	// ループ再生フラグ
-	bool m_loopFlug = false;
+	bool m_loopFlag = false;
 
 	// デフォルトアニメーションタグ
 	int m_defaultTag = 0;
 
 	// アニメーションコネクトフラグ
-	bool m_connectFlug = false;
+	bool m_connectFlag = false;
 
 	// アニメーションブレンドレート
 	float m_blendRate = 0.0f;
 
 	// アニメーション終了フラグ
-	bool m_endAnimFlug = true;
+	bool m_endAnimFlag = true;
 
 };
 

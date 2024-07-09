@@ -26,14 +26,20 @@ void Camera::Update(Vec3 pos)
 	(this->*m_modeFunc)(pos);
 }
 
-void Camera::ChangeMode(bool osFlug)
+void Camera::ChangeMode(int mode)
 {
-	// フラグがtrueのときはオズモードに変更
-	if (osFlug) {
+	// 引数によってモードを変更する
+	if (mode == OS_MODE) {
 		m_modeFunc = &Camera::OsMode;
+		return;
 	}
-	else {
+	if(mode == BRUTUS_MODE) {
 		m_modeFunc = &Camera::BrutusMode;
+		return;
+	}
+	if (mode == SEQUENCE_MODE) {
+		m_modeFunc = &Camera::SequMode;
+		return;
 	}
 }
 
@@ -57,6 +63,10 @@ void Camera::OsMode(Vec3 pos)
 
 	// カメラの位置をセットする
 	SetCameraPositionAndTarget_UpVecY(Position.VGet(),target);
+}
+
+void Camera::SequMode(Vec3 pos)
+{
 }
 
 void Camera::RotateBrutus(Vec3 pos)
