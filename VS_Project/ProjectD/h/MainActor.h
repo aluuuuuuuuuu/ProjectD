@@ -1,12 +1,12 @@
 #pragma once
 #include "CharactorBase.h"
 
-class Brutus:
+class MainActor:
 	public CharactorBase
 {
 public:
-	Brutus();
-	~Brutus();
+	MainActor();
+	~MainActor();
 
 	void Update();
 	void Draw() const;

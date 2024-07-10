@@ -1,5 +1,4 @@
-#include "Os.h"
-#include "Camera.h"
+#include "SubActor.h"
 #include "Input.h"
 #include "DxLib.h"
 #include <cassert>
@@ -8,20 +7,21 @@
 #include "EnemyBase.h"
 #include "Application.h"
 #include "UI.h"
+#include "Sequence.h"
 
-Os::Os()
+SubActor::SubActor()
 {
 	// 外部ファイルから定数を取得する
-	assert(ConstantsFileLoad("data/constant/Os.csv", Constants) == 1);
+	assert(ConstantsFileLoad("data/constant/SubActor.csv", Constants) == 1);
 }
 
-Os::~Os()
+SubActor::~SubActor()
 {
 }
 
-void Os::Update()
+void SubActor::Update()
 {
-	// 近くのエネミーを探してインタラクトボタンを表示する
+	// 近くのエネミーを探してUIにデータを渡す
 	auto enemy = FindEnemy();
 	if (enemy == nullptr) {
 		UI::getInstance().SetEnemyInteractFlag(false);
@@ -29,24 +29,26 @@ void Os::Update()
 	else {
 		UI::getInstance().SetEnemyInteractFlag(true);
 		UI::getInstance().SetEnemyInteractPos(enemy->Position);
+
+		//　敵の座標をシーケンスに渡す
+		Sequence::getInstance().SetEnemyPos(enemy->Position);
 	}
-
 }
 
-void Os::Draw() const
+void SubActor::Draw() const
 {
 }
 
-void Os::ChangeInit(Vec3 pos)
+void SubActor::ChangeInit(Vec3 cameraPos, Vec3 mainActorPos)
 {
-	// ブルータス操作時のカメラの座標がそのままオズの初期座標になる
-	Position = Camera::getInstance().Position;
+	// メインアクター操作時のカメラの座標がそのままオズの初期座標になる
+	Position = cameraPos;
 
-	// ブルータスの座標を保存する
-	m_brutusPos = pos;
+	// メインアクターの座標を保存する
+	m_mainActorPos = mainActorPos;
 }
 
-void Os::Control()
+void SubActor::Control(Vec3 cameraRot)
 {
 	// インプットのインスタンスを取得
 	auto& input = Input::getInstance();
@@ -61,7 +63,7 @@ void Os::Control()
 		m_moveVec = input.GetStickUnitVector(INPUT_LEFT_STICK) * Constants["HORIZONTAL_MOVE_SCALE"];
 
 		// カメラの回転を得る
-		Angle.y = Camera::getInstance().Angle.y;
+		Angle.y = cameraRot.y;
 
 		// Y軸回転行列に変換
 		MATRIX rotaMtx = MGetRotY(Angle.y);
@@ -92,13 +94,13 @@ void Os::Control()
 	Position += m_moveVec;
 
 	// 移動した後移動可能範囲外に出ていたら位置を戻す
-	float dist = (Position - m_brutusPos).Length();
+	float dist = (Position - m_mainActorPos).Length();
 	if (dist >= Constants["MOVABLE_RANGE"]) {
 		Position -= m_moveVec;
 	}
 }
 
-std::shared_ptr<EnemyBase> Os::FindEnemy()
+std::shared_ptr<EnemyBase> SubActor::FindEnemy()
 {
 	std::list<std::shared_ptr<EnemyBase>> enemyList;
 
@@ -131,7 +133,7 @@ std::shared_ptr<EnemyBase> Os::FindEnemy()
 		return nullptr;
 	}
 
-	// オズに最も近い敵を取り出す
+	// サブアクターに最も近い敵を取り出す
 	auto max = enemyList.front();
 	for (std::shared_ptr<EnemyBase> enemy : EnemyManager::getInstance().GetEnemy()) {
 		if ((max->Position - Position).Length() > (enemy->Position - Position).Length()) {

@@ -1,28 +1,27 @@
-#include "Brutus.h"
+#include "MainActor.h"
 #include "DxLib.h"
 #include "Input.h"
-#include "Camera.h"
 
-Brutus::Brutus()
+MainActor::MainActor()
 {
 	// 初期位置の設定
 	Position = Vec3{ 0.0f,0.0f,0.0f };
 }
 
-Brutus::~Brutus()
+MainActor::~MainActor()
 {
 }
 
-void Brutus::Update()
+void MainActor::Update()
 {
 }
 
-void Brutus::Draw() const
+void MainActor::Draw() const
 {
 	DrawSphere3D(Position.VGet(), 8, 16, 0x0000ff, 0x0000ff, true);
 }
 
-void Brutus::Control()
+void MainActor::Control()
 {
 	// インプットのインスタンスを取得
 	auto& input = Input::getInstance();

@@ -2,7 +2,6 @@
 #include "DxLib.h"
 #include "StaticFunction.h"
 #include "Player.h"
-#include "Camera.h"
 #include "Singleton.h"
 #include "EnemyManager.h"
 #include "EnemyTest.h"
@@ -12,11 +11,12 @@
 SceneTest::SceneTest()
 {
 	m_pPlayer = make_shared<Player>();
-	Camera::getInstance().Init(m_pPlayer->GetPos());
 
 	// エネミーを追加する
 	EnemyManager::getInstance().AddEnemy<EnemyTest>(Vec3{ 60,0,60 });
 	EnemyManager::getInstance().AddEnemy<EnemyTest>(Vec3{ 60,0,30 });
+	m_updateFunc = &SceneTest::NormalUpdate;
+	m_drawFunc = &SceneTest::NormalDraw;
 }
 
 SceneTest::~SceneTest()
@@ -81,9 +81,6 @@ void SceneTest::NormalUpdate()
 	// プレイヤーの更新
 	m_pPlayer->Update();
 
-	// カメラの更新
-	Camera::getInstance().Update(m_pPlayer->GetPos());
-
 	// UIの更新
 	UI::getInstance().Update();
 
@@ -108,7 +105,15 @@ void SceneTest::NormalDraw() const
 
 void SceneTest::SeqUpdate()
 {
+	m_pPlayer->Update();
 	Sequence::getInstance().Update();
+	UI::getInstance().Update();
+
+	// シーケンス終了処理
+	if (!Sequence::getInstance().IsPlaySequ()) {
+		m_updateFunc = &SceneTest::NormalUpdate;
+		m_drawFunc = &SceneTest::NormalDraw;
+	}
 }
 
 void SceneTest::SeqDraw() const

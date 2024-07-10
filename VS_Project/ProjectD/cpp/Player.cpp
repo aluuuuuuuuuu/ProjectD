@@ -1,20 +1,25 @@
 #include "Player.h"
-#include "Brutus.h"
-#include "Os.h"
+#include "MainActor.h"
+#include "SubActor.h"
 #include "Input.h"
-#include "Camera.h"
+#include "PlayerCamera.h"
 #include "UI.h"
+#include "Sequence.h"
 
 Player::Player() :
-	m_osFlag(false)
+	m_subActorFlag(false)
 {
 	// 各ポインタの作成
-	m_pBrutus = std::make_shared<Brutus>();
-	m_pOs = std::make_shared<Os>();
+	m_pMainActor = std::make_shared<MainActor>();
+	m_pSubActor = std::make_shared<SubActor>();
+	m_pCamera = std::make_shared<PlayerCamera>();
 
 	// 関数ポインタの初期化
-	m_updateMode = &Player::BrutusUpdate;
-	m_drawMode = &Player::BrutusDraw;
+	m_updateMode = &Player::MainActorUpdate;
+	m_drawMode = &Player::MainActorDraw;
+
+	// カメラの初期処理
+	m_pCamera->Init(GetPos());
 }
 
 Player::~Player()
@@ -23,20 +28,25 @@ Player::~Player()
 
 void Player::Update()
 {
-	// 操作変更ボタンが押されたらオズとブルータスの操作を変更する(現状Yボタン)
-	if (Input::getInstance().IsTrigger(INPUT_Y)) {
-		// モード変更
-		ChangeMode();
-	}
+	if (!Sequence::getInstance().IsPlaySequ()) {
+		// 操作切り替え
+		(this->*m_updateMode)();
 
+		// 操作変更ボタンが押されたらサブアクターとメインアクターとの操作を変更する(現状Yボタン)
+		if (Input::getInstance().IsTrigger(INPUT_Y)) {
+			// モード変更
+			ChangeMode();
+		}
+	}
+	
 	// インタラクトボタンが押されたときの処理
 	if (Input::getInstance().IsTrigger(INPUT_X)) {
 		// インタラクト処理
 		InteractFunc();
 	}
 
-	// 操作切り替え
-	(this->*m_updateMode)();
+	// カメラの更新
+	m_pCamera->Update(GetPos());
 }
 
 void Player::Draw() const
@@ -48,78 +58,86 @@ void Player::Draw() const
 Vec3 Player::GetPos() const
 {
 	// 操作モードによって返す値が変わる
-	if (m_osFlag) {
-		return m_pOs->Position;
+	if (m_subActorFlag) {
+		return m_pSubActor->Position;
 	}
 	else {
-		return m_pBrutus->Position;
+		return m_pMainActor->Position;
 	}
 }
 
-void Player::BrutusUpdate()
+void Player::MainActorUpdate()
 {
-	m_pBrutus->Control();
-	m_pBrutus->Update();
+	m_pMainActor->Control();
+	m_pMainActor->Update();
 }
 
-void Player::BrutusDraw() const
+void Player::MainActorDraw() const
 {
-	m_pBrutus->Draw();
+	m_pMainActor->Draw();
 }
 
-void Player::OsUpdate()
+void Player::SubActorUpdate()
 {
-	m_pOs->Control();
-	m_pBrutus->Update();
-	m_pOs->Update();
+	m_pSubActor->Control(m_pCamera->Angle);
+	m_pMainActor->Update();
+	m_pSubActor->Update();
 }
 
-void Player::OsDraw() const
+void Player::SubActorDraw() const
 {
-	m_pBrutus->Draw();
-	m_pOs->Draw();
+	m_pMainActor->Draw();
+	m_pSubActor->Draw();
 }
 
 void Player::ChangeMode()
 {
 	// 操作フラグを反転する
-	m_osFlag = !m_osFlag;
+	m_subActorFlag = !m_subActorFlag;
+	
+	// 呼ばれたときのサブアクターフラグでモードを変更する
+	if (m_subActorFlag) {
+		m_updateMode = &Player::SubActorUpdate;
+		m_drawMode = &Player::SubActorDraw;
 
-	// 呼ばれたときのオズフラグでモードを変更する
-	if (m_osFlag) {
-		m_updateMode = &Player::OsUpdate;
-		m_drawMode = &Player::OsDraw;
-
-		// オズに変更するときは初期処理を呼ぶ
-		m_pOs->ChangeInit(m_pBrutus->Position);
+		// サブアクターに変更するときは初期処理を呼ぶ
+		m_pSubActor->ChangeInit(m_pCamera->Position, m_pMainActor->Position);
 
 		// 変更時のカメラの位置と角度を保存しておく
-		m_changePos = Camera::getInstance().Position;
-		m_changeAngle = Camera::getInstance().Angle;
+		m_changePos = m_pCamera->Position;
+		m_changeAngle = m_pCamera->Angle;
 
 		// カメラのモードを変更する
-		Camera::getInstance().ChangeMode(OS_MODE);
+		m_pCamera->ChangeMode(OS_MODE);
 	}
 	else {
-		m_updateMode = &Player::BrutusUpdate;
-		m_drawMode = &Player::BrutusDraw;
+		m_updateMode = &Player::MainActorUpdate;
+		m_drawMode = &Player::MainActorDraw;
 
-		// ブルータスに変更するときは保存した座標にカメラを置く
-		Camera::getInstance().Position = m_changePos;
-		Camera::getInstance().Angle = m_changeAngle;
+		// メインアクターに変更するときは保存した座標にカメラを置く
+		m_pCamera->Position = m_changePos;
+		m_pCamera->Angle = m_changeAngle;
 
-		// ブルータスに切り替えたとき敵に対するボタン表示をオフにする
+		// メインアクターに切り替えたとき敵に対するボタン表示をオフにする
 		UI::getInstance().SetEnemyInteractFlag(false);
 
 		// カメラのモードを変更する
-		Camera::getInstance().ChangeMode(BRUTUS_MODE);
+		m_pCamera->ChangeMode(BRUTUS_MODE);
 	}
 }
 
 void Player::InteractFunc()
 {
+	// 気絶シーケンスが再生されていたらシーケンスを抜ける
+	if (Sequence::getInstance().IsPlaySequ()) {
+		Sequence::getInstance().StopSequence();
+	}
 	// エネミーインタラクトが可能の場合
-	if (UI::getInstance().GetEnemyInteractFlag()) {
+	else if (UI::getInstance().GetEnemyInteractFlag()) {
 		// 気絶させるシーケンスに入る
+		Sequence::getInstance().PlayFaintSequ();
+
+		// インタラクトボタンを非表示にする
+		UI::getInstance().SetEnemyInteractFlag(false);
 	}
 }

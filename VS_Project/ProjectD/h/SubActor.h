@@ -3,24 +3,30 @@
 #include <memory>
 
 class EnemyBase;
-class Os :
+class SubActor :
 	public CharactorBase
 {
 public:
-	Os();
-	~Os();
+	SubActor();
+	~SubActor();
 
 	void Update();
 	void Draw() const;
 
-	// 操作を変更したときの初期処理
-	void ChangeInit(Vec3 pos);
+	// インタラクトする敵の座標を返す
 
-	void Control();
+
+	// 操作を変更したときの初期処理
+	void ChangeInit(Vec3 cameraPos, Vec3 mainActorPos);
+
+	void Control(Vec3 cameraRot);
 private:
 	// インタラクトする敵を探す関数
 	std::shared_ptr<EnemyBase> FindEnemy();
 
-	// ブルータスの座標
-	Vec3 m_brutusPos;
+	// メインアクターの座標
+	Vec3 m_mainActorPos;
+	
+	// インタラクトできる敵の座標
+	Vec3 m_enemyPos;
 };

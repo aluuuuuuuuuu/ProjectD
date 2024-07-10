@@ -20,8 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cpp\Application.cpp" />
-    <ClCompile Include="cpp\Brutus.cpp" />
-    <ClCompile Include="cpp\Camera.cpp" />
+    <ClCompile Include="cpp\MainActor.cpp" />
     <ClCompile Include="cpp\CharactorBase.cpp" />
     <ClCompile Include="cpp\Components.cpp" />
     <ClCompile Include="cpp\Constant.cpp" />
@@ -30,7 +29,8 @@
     <ClCompile Include="cpp\EnemyTest.cpp" />
     <ClCompile Include="cpp\GraphicManager.cpp" />
     <ClCompile Include="cpp\Input.cpp" />
-    <ClCompile Include="cpp\Os.cpp" />
+    <ClCompile Include="cpp\PlayerCamera.cpp" />
+    <ClCompile Include="cpp\SubActor.cpp" />
     <ClCompile Include="cpp\Player.cpp" />
     <ClCompile Include="cpp\SceneBase.cpp" />
     <ClCompile Include="cpp\SceneManager.cpp" />
@@ -44,15 +44,14 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="data\constant\Application.csv" />
-    <None Include="data\constant\Camera.csv" />
+    <None Include="data\constant\PlayerCamera.csv" />
     <None Include="data\constant\Input.csv" />
-    <None Include="data\constant\Os.csv" />
+    <None Include="data\constant\SubActor.csv" />
     <None Include="data\GraphicCSV\Graphics.csv" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="h\Application.h" />
-    <ClInclude Include="h\Brutus.h" />
-    <ClInclude Include="h\Camera.h" />
+    <ClInclude Include="h\MainActor.h" />
     <ClInclude Include="h\CharactorBase.h" />
     <ClInclude Include="h\Components.h" />
     <ClInclude Include="h\Constant.h" />
@@ -61,7 +60,8 @@
     <ClInclude Include="h\EnemyTest.h" />
     <ClInclude Include="h\GraphicManager.h" />
     <ClInclude Include="h\Input.h" />
-    <ClInclude Include="h\Os.h" />
+    <ClInclude Include="h\PlayerCamera.h" />
+    <ClInclude Include="h\SubActor.h" />
     <ClInclude Include="h\Player.h" />
     <ClInclude Include="h\SceneBase.h" />
     <ClInclude Include="h\SceneManager.h" />

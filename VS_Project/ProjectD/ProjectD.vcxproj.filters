@@ -23,16 +23,19 @@
     <Filter Include="Object">
       <UniqueIdentifier>{5ea2f623-da17-4dd4-b1dc-417720c98c48}</UniqueIdentifier>
     </Filter>
+    <Filter Include="CSV\Constant">
+      <UniqueIdentifier>{1750ddbd-8c50-42ff-8b38-6457371d2887}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CSV\Graphic">
+      <UniqueIdentifier>{6a3460d1-6c62-47ca-aaa9-1c650649d02c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cpp\Application.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
-    <ClCompile Include="cpp\Brutus.cpp">
+    <ClCompile Include="cpp\MainActor.cpp">
       <Filter>Charactor</Filter>
-    </ClCompile>
-    <ClCompile Include="cpp\Camera.cpp">
-      <Filter>Object</Filter>
     </ClCompile>
     <ClCompile Include="cpp\CharactorBase.cpp">
       <Filter>Charactor</Filter>
@@ -58,7 +61,7 @@
     <ClCompile Include="cpp\Input.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
-    <ClCompile Include="cpp\Os.cpp">
+    <ClCompile Include="cpp\SubActor.cpp">
       <Filter>Charactor</Filter>
     </ClCompile>
     <ClCompile Include="cpp\Player.cpp">
@@ -91,33 +94,33 @@
     <ClCompile Include="main.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="cpp\PlayerCamera.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="data\GraphicCSV\Graphics.csv">
-      <Filter>CSV</Filter>
+    <None Include="data\constant\Application.csv">
+      <Filter>CSV\Constant</Filter>
     </None>
-    <None Include="data\constant\Camera.csv">
-      <Filter>CSV</Filter>
+    <None Include="data\constant\PlayerCamera.csv">
+      <Filter>CSV\Constant</Filter>
     </None>
     <None Include="data\constant\Input.csv">
-      <Filter>CSV</Filter>
+      <Filter>CSV\Constant</Filter>
     </None>
-    <None Include="data\constant\Os.csv">
-      <Filter>CSV</Filter>
+    <None Include="data\constant\SubActor.csv">
+      <Filter>CSV\Constant</Filter>
     </None>
-    <None Include="data\constant\Application.csv">
-      <Filter>CSV</Filter>
+    <None Include="data\GraphicCSV\Graphics.csv">
+      <Filter>CSV\Graphic</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="h\Application.h">
       <Filter>Engine</Filter>
     </ClInclude>
-    <ClInclude Include="h\Brutus.h">
+    <ClInclude Include="h\MainActor.h">
       <Filter>Charactor</Filter>
-    </ClInclude>
-    <ClInclude Include="h\Camera.h">
-      <Filter>Object</Filter>
     </ClInclude>
     <ClInclude Include="h\CharactorBase.h">
       <Filter>Charactor</Filter>
@@ -143,7 +146,7 @@
     <ClInclude Include="h\Input.h">
       <Filter>Engine</Filter>
     </ClInclude>
-    <ClInclude Include="h\Os.h">
+    <ClInclude Include="h\SubActor.h">
       <Filter>Charactor</Filter>
     </ClInclude>
     <ClInclude Include="h\Player.h">
@@ -178,6 +181,9 @@
     </ClInclude>
     <ClInclude Include="h\Sequence.h">
       <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="h\PlayerCamera.h">
+      <Filter>Object</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

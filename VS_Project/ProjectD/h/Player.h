@@ -2,8 +2,9 @@
 #include <memory>
 #include "Vec3.h"
 
-class Brutus;
-class Os;
+class MainActor;
+class SubActor;
+class PlayerCamera;
 // プレイヤークラス
 class Player
 {
@@ -24,11 +25,11 @@ private:
 	m_drawMode_t m_drawMode = nullptr;
 
 	// 操作モード
-	void BrutusUpdate();	// ブルータス操作時の更新処理
-	void BrutusDraw() const;		// ブルータス操作時の描画処理
+	void MainActorUpdate();	// メインアクター操作時の更新処理
+	void MainActorDraw() const;		// メインアクター操作時の描画処理
 
-	void OsUpdate();	// オズ操作時の更新処理
-	void OsDraw() const;		// オズ操作時の描画処理
+	void SubActorUpdate();	// サブアクター操作時の更新処理
+	void SubActorDraw() const;		// サブアクター操作時の描画処理
 
 	// 操作モードを変更する関数
 	void ChangeMode();
@@ -36,14 +37,17 @@ private:
 	// インタラクトボタンが押されたときの処理
 	void InteractFunc();
 
-	// ブルータスとオズのポインタ
-	std::shared_ptr<Brutus> m_pBrutus;
-	std::shared_ptr<Os> m_pOs;
+	// メインアクターとサブアクターのポインタ
+	std::shared_ptr<MainActor> m_pMainActor;
+	std::shared_ptr<SubActor> m_pSubActor;
 
-	// オズを操作しているかどうか
-	bool m_osFlag;
+	// カメラのポインタ
+	std::shared_ptr<PlayerCamera> m_pCamera;
 
-	// 操作変更したときのカメラの位置と角度を保存する
+	// サブアクターを操作しているかどうか
+	bool m_subActorFlag;
+
+	// 操作変更したときのカメラの位置と角度を保存する これはカメラに持たせるべきではby古川
 	Vec3 m_changePos;
 	Vec3 m_changeAngle;
 };

@@ -1,75 +1,68 @@
-#include "Camera.h"
+#include "PlayerCamera.h"
 #include <cassert>
-#include "StaticFunction.h"
 #include "Input.h"
 
-Camera::~Camera()
+PlayerCamera::PlayerCamera()
 {
-}
-
-void Camera::Init(Vec3 pos)
-{
-	// 外部ファイルから定数を取得する
-	assert(ConstantsFileLoad("data/constant/Camera.csv", Constants) == 1);
+    // 外部ファイルから定数を取得する
+    assert(ConstantsFileLoad("data/constant/PlayerCamera.csv", Constants) == 1);
 
 	// カメラのニアファーの設定
 	SetCameraNearFar(Constants["CAMERA_NEAR"], Constants["CAMERA_FAR"]);
 
-	Position = Vec3{ pos.x + Constants["CAMERA_BASE_POS_X"],pos.y + Constants["CAMERA_BASE_POS_Y"], pos.z + Constants["CAMERA_BASE_POS_Z"], };
-
 	// モードの初期化
-	m_modeFunc = &Camera::BrutusMode;
+	m_modeFunc = &PlayerCamera::MainActorMode;
 }
 
-void Camera::Update(Vec3 pos)
+PlayerCamera::~PlayerCamera()
+{
+}
+
+void PlayerCamera::Init(Vec3 pos)
+{
+	Position = Vec3{ pos.x + Constants["CAMERA_BASE_POS_X"],pos.y + Constants["CAMERA_BASE_POS_Y"], pos.z + Constants["CAMERA_BASE_POS_Z"], };
+}
+
+void PlayerCamera::Update(Vec3 pos)
 {
 	(this->*m_modeFunc)(pos);
 }
 
-void Camera::ChangeMode(int mode)
+void PlayerCamera::ChangeMode(int mode)
 {
 	// 引数によってモードを変更する
 	if (mode == OS_MODE) {
-		m_modeFunc = &Camera::OsMode;
+		m_modeFunc = &PlayerCamera::SubActorMode;
 		return;
 	}
-	if(mode == BRUTUS_MODE) {
-		m_modeFunc = &Camera::BrutusMode;
-		return;
-	}
-	if (mode == SEQUENCE_MODE) {
-		m_modeFunc = &Camera::SequMode;
+	if (mode == BRUTUS_MODE) {
+		m_modeFunc = &PlayerCamera::MainActorMode;
 		return;
 	}
 }
 
-void Camera::BrutusMode(Vec3 pos)
+void PlayerCamera::MainActorMode(Vec3 pos)
 {
 	// 回転
-	RotateBrutus(pos);
+	Position =  RotateMainActorMode(pos);
 
 	// カメラの位置をセットする
 	SetCameraPositionAndTarget_UpVecY(Position.VGet(), VECTOR{ pos.x,Constants["CAMERA_MARGIN_Y"],pos.z });
 }
 
-void Camera::OsMode(Vec3 pos)
+void PlayerCamera::SubActorMode(Vec3 pos)
 {
-
-	// 座標をオズの位置に合わせる
+	// 座標をサブアクターの位置に合わせる
 	Position = pos;
 
 	// 回転
-	VECTOR target =  RotateOs(pos).VGet();
+	Vec3 targetPos = RotateSubActorMode(pos);
 
 	// カメラの位置をセットする
-	SetCameraPositionAndTarget_UpVecY(Position.VGet(),target);
+	SetCameraPositionAndTarget_UpVecY(Position.VGet(), targetPos.VGet());
 }
 
-void Camera::SequMode(Vec3 pos)
-{
-}
-
-void Camera::RotateBrutus(Vec3 pos)
+Vec3 PlayerCamera::RotateMainActorMode(Vec3 pos)
 {
 	// インプットのインスタンスを取得
 	auto& input = Input::getInstance();
@@ -108,10 +101,10 @@ void Camera::RotateBrutus(Vec3 pos)
 	basePos = VTransform(basePos, rotMtxX);
 
 	// カメラ座標はプレイヤー座標から変換した座標を足したところ
-	Position = VAdd(VGet(pos.x, 0.0f, pos.z), basePos);
+	return VAdd(VGet(pos.x, 0.0f, pos.z), basePos);
 }
 
-Vec3 Camera::RotateOs(Vec3 pos)
+Vec3 PlayerCamera::RotateSubActorMode(Vec3 pos)
 {
 	// インプットのインスタンスを取得
 	auto& input = Input::getInstance();
