@@ -11,7 +11,7 @@ public:
 	void Update();
 	void Draw() const;
 
-	void Control();
+	void Control(Vec3 angle);
 private:
 
 };

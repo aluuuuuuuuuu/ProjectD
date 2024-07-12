@@ -14,7 +14,7 @@ public:
 	void Draw() const;
 
 	// インタラクトする敵の座標を返す
-
+	Vec3 GetEnemyPos();
 
 	// 操作を変更したときの初期処理
 	void ChangeInit(Vec3 cameraPos, Vec3 mainActorPos);

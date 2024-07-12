@@ -10,5 +10,5 @@ public:
 	int ConstantsFileLoad(const char* fileName, std::map<std::string, float>& constants);
 
 	// ’è”ƒ}ƒbƒv
-	std::map < std::string, float > Constants;
+	std::map < std::string, float > Constants ;
 };

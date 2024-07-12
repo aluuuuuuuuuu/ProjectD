@@ -88,14 +88,20 @@
     <ClCompile Include="cpp\UI.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
-    <ClCompile Include="cpp\Sequence.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="cpp\PlayerCamera.cpp">
       <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="cpp\CameraBase.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="cpp\DirectionCamera.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="cpp\Direction.cpp">
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -113,6 +119,9 @@
     </None>
     <None Include="data\GraphicCSV\Graphics.csv">
       <Filter>CSV\Graphic</Filter>
+    </None>
+    <None Include="data\constant\Tama.csv">
+      <Filter>CSV\Constant</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -179,11 +188,11 @@
     <ClInclude Include="h\Vec3.h">
       <Filter>Engine</Filter>
     </ClInclude>
-    <ClInclude Include="h\Sequence.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
     <ClInclude Include="h\PlayerCamera.h">
       <Filter>Object</Filter>
     </ClInclude>
+    <ClInclude Include="h\CameraBase.h" />
+    <ClInclude Include="h\DirectionCamera.h" />
+    <ClInclude Include="h\Direction.h" />
   </ItemGroup>
 </Project>

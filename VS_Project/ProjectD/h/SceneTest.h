@@ -2,6 +2,7 @@
 #include "SceneBase.h"
 #include <memory>
 
+class Direction;
 class Player;
 // テストシーン
 class SceneTest :
@@ -33,5 +34,8 @@ private:
 
     // プレイヤーのポインタ
     std::shared_ptr<Player> m_pPlayer;
+
+    // ディレクションのぽインタ
+    std::shared_ptr<Direction> m_pDirection;
 };
 

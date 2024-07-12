@@ -20,6 +20,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cpp\Application.cpp" />
+    <ClCompile Include="cpp\CameraBase.cpp" />
+    <ClCompile Include="cpp\Direction.cpp" />
     <ClCompile Include="cpp\MainActor.cpp" />
     <ClCompile Include="cpp\CharactorBase.cpp" />
     <ClCompile Include="cpp\Components.cpp" />
@@ -30,12 +32,12 @@
     <ClCompile Include="cpp\GraphicManager.cpp" />
     <ClCompile Include="cpp\Input.cpp" />
     <ClCompile Include="cpp\PlayerCamera.cpp" />
+    <ClCompile Include="cpp\DirectionCamera.cpp" />
     <ClCompile Include="cpp\SubActor.cpp" />
     <ClCompile Include="cpp\Player.cpp" />
     <ClCompile Include="cpp\SceneBase.cpp" />
     <ClCompile Include="cpp\SceneManager.cpp" />
     <ClCompile Include="cpp\SceneTest.cpp" />
-    <ClCompile Include="cpp\Sequence.cpp" />
     <ClCompile Include="cpp\StaticFunction.cpp" />
     <ClCompile Include="cpp\StaticObject.cpp" />
     <ClCompile Include="cpp\StaticObjectManager.cpp" />
@@ -47,10 +49,13 @@
     <None Include="data\constant\PlayerCamera.csv" />
     <None Include="data\constant\Input.csv" />
     <None Include="data\constant\SubActor.csv" />
+    <None Include="data\constant\Tama.csv" />
     <None Include="data\GraphicCSV\Graphics.csv" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="h\Application.h" />
+    <ClInclude Include="h\CameraBase.h" />
+    <ClInclude Include="h\Direction.h" />
     <ClInclude Include="h\MainActor.h" />
     <ClInclude Include="h\CharactorBase.h" />
     <ClInclude Include="h\Components.h" />
@@ -61,12 +66,12 @@
     <ClInclude Include="h\GraphicManager.h" />
     <ClInclude Include="h\Input.h" />
     <ClInclude Include="h\PlayerCamera.h" />
+    <ClInclude Include="h\DirectionCamera.h" />
     <ClInclude Include="h\SubActor.h" />
     <ClInclude Include="h\Player.h" />
     <ClInclude Include="h\SceneBase.h" />
     <ClInclude Include="h\SceneManager.h" />
     <ClInclude Include="h\SceneTest.h" />
-    <ClInclude Include="h\Sequence.h" />
     <ClInclude Include="h\Singleton.h" />
     <ClInclude Include="h\StaticFunction.h" />
     <ClInclude Include="h\StaticObject.h" />

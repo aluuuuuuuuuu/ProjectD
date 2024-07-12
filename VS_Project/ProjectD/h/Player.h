@@ -2,6 +2,7 @@
 #include <memory>
 #include "Vec3.h"
 
+class Direction;
 class MainActor;
 class SubActor;
 class PlayerCamera;
@@ -9,7 +10,7 @@ class PlayerCamera;
 class Player
 {
 public:
-	Player();
+	Player(std::shared_ptr<Direction>& direction);
 	~Player();
 
 	void Update();
@@ -43,6 +44,9 @@ private:
 
 	// カメラのポインタ
 	std::shared_ptr<PlayerCamera> m_pCamera;
+
+	// ディレクションの参照
+	std::shared_ptr<Direction> m_pDirection;
 
 	// サブアクターを操作しているかどうか
 	bool m_subActorFlag;

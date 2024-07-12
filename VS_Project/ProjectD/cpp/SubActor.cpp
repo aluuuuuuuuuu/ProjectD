@@ -7,7 +7,6 @@
 #include "EnemyBase.h"
 #include "Application.h"
 #include "UI.h"
-#include "Sequence.h"
 
 SubActor::SubActor()
 {
@@ -31,12 +30,17 @@ void SubActor::Update()
 		UI::getInstance().SetEnemyInteractPos(enemy->Position);
 
 		//　敵の座標をシーケンスに渡す
-		Sequence::getInstance().SetEnemyPos(enemy->Position);
+		m_enemyPos = enemy->Position;
 	}
 }
 
 void SubActor::Draw() const
 {
+}
+
+Vec3 SubActor::GetEnemyPos()
+{
+	return m_enemyPos;
 }
 
 void SubActor::ChangeInit(Vec3 cameraPos, Vec3 mainActorPos)

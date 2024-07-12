@@ -1,14 +1,11 @@
 #pragma once
-#include "Components.h"
-#include "Constant.h"
+#include "CameraBase.h"
 
 #define OS_MODE 0
 #define BRUTUS_MODE 1
-#define SEQUENCE_MODE 2
 
 class PlayerCamera :
-	public Transform,
-	public Constant
+	public CameraBase
 {
 public:
 	PlayerCamera();

@@ -6,11 +6,15 @@
 #include "EnemyManager.h"
 #include "EnemyTest.h"
 #include "UI.h"
-#include "Sequence.h"
+#include "Direction.h"
 
 SceneTest::SceneTest()
 {
-	m_pPlayer = make_shared<Player>();
+	// ディレクションインスタンスの作成
+	m_pDirection = make_shared<Direction>();
+
+	// プレイヤーのインスタンスの作成
+	m_pPlayer = make_shared<Player>(m_pDirection);
 
 	// エネミーを追加する
 	EnemyManager::getInstance().AddEnemy<EnemyTest>(Vec3{ 60,0,60 });
@@ -85,7 +89,7 @@ void SceneTest::NormalUpdate()
 	UI::getInstance().Update();
 
 	// シーケンス移行処理
-	if (Sequence::getInstance().IsPlaySequ()) {
+	if (m_pDirection->IsPlaySequ()) {
 		m_updateFunc = &SceneTest::SeqUpdate;
 		m_drawFunc = &SceneTest::SeqDraw;
 	}
@@ -106,11 +110,11 @@ void SceneTest::NormalDraw() const
 void SceneTest::SeqUpdate()
 {
 	m_pPlayer->Update();
-	Sequence::getInstance().Update();
+	m_pDirection->Update();
 	UI::getInstance().Update();
 
 	// シーケンス終了処理
-	if (!Sequence::getInstance().IsPlaySequ()) {
+	if (!m_pDirection->IsPlaySequ()) {
 		m_updateFunc = &SceneTest::NormalUpdate;
 		m_drawFunc = &SceneTest::NormalDraw;
 	}
@@ -127,5 +131,6 @@ void SceneTest::SeqDraw() const
 	// UIの描画
 	UI::getInstance().Draw();
 
-	Sequence::getInstance().Draw();
+	// ディレクションの描画処理
+	m_pDirection->Draw();
 }

@@ -21,7 +21,7 @@ void MainActor::Draw() const
 	DrawSphere3D(Position.VGet(), 8, 16, 0x0000ff, 0x0000ff, true);
 }
 
-void MainActor::Control()
+void MainActor::Control(Vec3 angle)
 {
 	// インプットのインスタンスを取得
 	auto& input = Input::getInstance();
@@ -31,7 +31,7 @@ void MainActor::Control()
 		m_moveVec = input.GetStickUnitVector(INPUT_LEFT_STICK);
 
 		// カメラの回転を得る
-		Angle.y = Camera::getInstance().Angle.y;
+		Angle.y = angle.y;
 
 		// Y軸回転行列に変換
 		MATRIX rotaMtx = MGetRotY(Angle.y);

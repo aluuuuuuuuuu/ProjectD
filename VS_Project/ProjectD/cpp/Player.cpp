@@ -4,10 +4,11 @@
 #include "Input.h"
 #include "PlayerCamera.h"
 #include "UI.h"
-#include "Sequence.h"
+#include "Direction.h"
 
-Player::Player() :
-	m_subActorFlag(false)
+Player::Player(std::shared_ptr<Direction>& direction) :
+	m_subActorFlag(false),
+	m_pDirection(direction)
 {
 	// 各ポインタの作成
 	m_pMainActor = std::make_shared<MainActor>();
@@ -28,7 +29,8 @@ Player::~Player()
 
 void Player::Update()
 {
-	if (!Sequence::getInstance().IsPlaySequ()) {
+	if (!m_pDirection->IsPlaySequ()) {
+
 		// 操作切り替え
 		(this->*m_updateMode)();
 
@@ -37,16 +39,18 @@ void Player::Update()
 			// モード変更
 			ChangeMode();
 		}
+
+		// カメラの更新
+		m_pCamera->Update(GetPos());
+
 	}
-	
+
 	// インタラクトボタンが押されたときの処理
 	if (Input::getInstance().IsTrigger(INPUT_X)) {
 		// インタラクト処理
 		InteractFunc();
 	}
 
-	// カメラの更新
-	m_pCamera->Update(GetPos());
 }
 
 void Player::Draw() const
@@ -68,7 +72,7 @@ Vec3 Player::GetPos() const
 
 void Player::MainActorUpdate()
 {
-	m_pMainActor->Control();
+	m_pMainActor->Control(m_pCamera->Angle);
 	m_pMainActor->Update();
 }
 
@@ -94,7 +98,7 @@ void Player::ChangeMode()
 {
 	// 操作フラグを反転する
 	m_subActorFlag = !m_subActorFlag;
-	
+
 	// 呼ばれたときのサブアクターフラグでモードを変更する
 	if (m_subActorFlag) {
 		m_updateMode = &Player::SubActorUpdate;
@@ -129,14 +133,14 @@ void Player::ChangeMode()
 void Player::InteractFunc()
 {
 	// 気絶シーケンスが再生されていたらシーケンスを抜ける
-	if (Sequence::getInstance().IsPlaySequ()) {
-		Sequence::getInstance().StopSequence();
+	if (m_pDirection->IsPlaySequ()) {
+		m_pDirection->StopSequence();
 	}
 	// エネミーインタラクトが可能の場合
 	else if (UI::getInstance().GetEnemyInteractFlag()) {
 		// 気絶させるシーケンスに入る
-		Sequence::getInstance().PlayFaintSequ();
-
+		m_pDirection->PlayFaintSequ(m_pCamera->Position);
+		m_pDirection->SetEnemyPos(m_pSubActor->GetEnemyPos());
 		// インタラクトボタンを非表示にする
 		UI::getInstance().SetEnemyInteractFlag(false);
 	}
