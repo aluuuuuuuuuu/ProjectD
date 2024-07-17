@@ -7,6 +7,7 @@
 #include "EnemyTest.h"
 #include "UI.h"
 #include "Direction.h"
+#include "EffekseerForDXLib.h"
 
 SceneTest::SceneTest()
 {
@@ -93,6 +94,7 @@ void SceneTest::NormalUpdate()
 		m_updateFunc = &SceneTest::SeqUpdate;
 		m_drawFunc = &SceneTest::SeqDraw;
 	}
+
 }
 
 void SceneTest::NormalDraw() const
@@ -105,6 +107,8 @@ void SceneTest::NormalDraw() const
 
 	// UI‚Ì•`‰æ
 	UI::getInstance().Draw();
+
+	
 }
 
 void SceneTest::SeqUpdate()

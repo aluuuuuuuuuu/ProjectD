@@ -29,4 +29,10 @@ private:
 	
 	// インタラクトできる敵の座標
 	Vec3 m_enemyPos;
+
+	// サインカーブ用のフレーム
+	float m_flame;
+
+	// 画面端をゆがませるエフェクトリソース
+	int m_effectDistortionHandle;
 };

@@ -1,6 +1,7 @@
 #include "SubActor.h"
 #include "Input.h"
 #include "DxLib.h"
+#include "EffekseerForDXLib.h"
 #include <cassert>
 #include <memory>
 #include "EnemyManager.h"
@@ -8,18 +9,25 @@
 #include "Application.h"
 #include "UI.h"
 
-SubActor::SubActor()
+SubActor::SubActor():
+	m_flame(0)
 {
 	// 外部ファイルから定数を取得する
 	assert(ConstantsFileLoad("data/constant/SubActor.csv", Constants) == 1);
+
+	m_effectDistortionHandle = LoadEffekseerEffect("data/effect/test.efkefc", 120.0f);
 }
 
 SubActor::~SubActor()
 {
+	DeleteEffekseerEffect(m_effectDistortionHandle);
 }
 
 void SubActor::Update()
 {
+
+	m_effectDistortionHandle = PlayEffekseer2DEffect(m_effectDistortionHandle);
+
 	// 近くのエネミーを探してUIにデータを渡す
 	auto enemy = FindEnemy();
 	if (enemy == nullptr) {
@@ -32,10 +40,23 @@ void SubActor::Update()
 		//　敵の座標をシーケンスに渡す
 		m_enemyPos = enemy->Position;
 	}
+
+	// サインカーブを使用して常に上下にふわふわと動かす
+	float move = 0.1f * sin(m_flame);
+	m_flame += 0.01f;
+
+	Position.y += move;
+
+	SetPosPlayingEffekseer2DEffect(m_effectDistortionHandle, 960, 540, 0);
+
+	// Effekseerにより再生中のエフェクトを更新する。
+	UpdateEffekseer2D();
 }
 
 void SubActor::Draw() const
 {
+	// Effekseerにより再生中のエフェクトを描画する。
+	DrawEffekseer2D();
 }
 
 Vec3 SubActor::GetEnemyPos()

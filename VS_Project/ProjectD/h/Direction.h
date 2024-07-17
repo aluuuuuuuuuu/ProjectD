@@ -63,5 +63,8 @@ private:
 
 	// ¶‚Ì’e
 	tama m_left;
+
+	// –Ú•W’n“_
+	Vec3 m_target;
 };
 
