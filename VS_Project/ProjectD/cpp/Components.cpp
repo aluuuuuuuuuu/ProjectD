@@ -13,6 +13,11 @@ Transform::~Transform()
 {
 }
 
+Transform& Transform::GetTransformInstance()
+{
+	return *this;
+}
+
 // モデル
 
 Model::Model() :
@@ -35,6 +40,11 @@ void Model::InitModel(int modelHandle, int textureHandle)
 
 	// テクスチャで使用するグラフィックハンドルを変更する
 	MV1SetTextureGraphHandle(ModelHandle, 0, textureHandle, FALSE);
+}
+
+void Model::InitModel(int modelHandle)
+{
+	ModelHandle = modelHandle;
 }
 
 void Model::UpdateModel(Transform& transform)
@@ -87,7 +97,7 @@ Animation::~Animation()
 {
 }
 
-void Animation::InitAnimation(Model& model, int tag)
+void Animation::InitAnimation(int& modelHandle, int tag)
 {
 	m_defaultTag = tag;
 
@@ -95,19 +105,19 @@ void Animation::InitAnimation(Model& model, int tag)
 
 	m_endAnimFlag = false;
 
-	m_attachIndex1 = MV1AttachAnim(model.ModelHandle, tag);
-	m_attachIndex2 = MV1AttachAnim(model.ModelHandle, tag);
-	m_maxFlame = MV1GetAttachAnimTotalTime(model.ModelHandle, m_attachIndex1);
+	m_attachIndex1 = MV1AttachAnim(modelHandle, tag);
+	m_attachIndex2 = MV1AttachAnim(modelHandle, tag);
+	m_maxFlame = MV1GetAttachAnimTotalTime(modelHandle, m_attachIndex1);
 
 	// 再生中のアニメーションのタグを保存する
 	m_playAnimation = tag;
 }
 
-void Animation::UpdateAnimation(Model& model)
+void Animation::UpdateAnimation(int& modelHandle)
 {
 	// 前のフレームでアニメーションが終了していたらデフォルトに戻す
 	if (m_endAnimFlag) {
-		ChangeAnimation(model, m_defaultTag, true);
+		ChangeAnimation(modelHandle, m_defaultTag, true);
 	}
 
 	// 再生時間を進める
@@ -115,14 +125,14 @@ void Animation::UpdateAnimation(Model& model)
 
 	// ブレンドレートを加算していく
 	if (m_blendRate >= 1.0f) {
-		MV1SetAttachAnimBlendRate(model.ModelHandle, m_attachIndex1, 1.0f);
+		MV1SetAttachAnimBlendRate(modelHandle, m_attachIndex1, 1.0f);
 	}
 	else {
 		m_blendRate += 0.25f;
 
-		MV1SetAttachAnimBlendRate(model.ModelHandle, m_attachIndex2, 1.0f - m_blendRate);
+		MV1SetAttachAnimBlendRate(modelHandle, m_attachIndex2, 1.0f - m_blendRate);
 
-		MV1SetAttachAnimBlendRate(model.ModelHandle, m_attachIndex1, m_blendRate);
+		MV1SetAttachAnimBlendRate(modelHandle, m_attachIndex1, m_blendRate);
 	}
 
 	// 再生時間がアニメーションの総再生時間に達したとき
@@ -132,7 +142,7 @@ void Animation::UpdateAnimation(Model& model)
 		if (m_connectFlag) {
 			m_animationState++;
 			m_connectFlag = false;
-			ChangeAnimation(model, m_connectAnimation[m_animationState], true);
+			ChangeAnimation(modelHandle, m_connectAnimation[m_animationState], true);
 			m_connectAnimation.clear();
 		}
 		// ループフラグがtrueだったらループさせる
@@ -146,16 +156,16 @@ void Animation::UpdateAnimation(Model& model)
 	}
 
 	// アニメーション更新
-	MV1SetAttachAnimTime(model.ModelHandle, m_attachIndex1, m_flameCount);
+	MV1SetAttachAnimTime(modelHandle, m_attachIndex1, m_flameCount);
 }
 
 // アニメーション変更
-void Animation::ChangeAnimation(Model& model, int tag, bool loop)
+void Animation::ChangeAnimation(int& modelHandle, int tag, bool loop)
 {
 	// 再生するアニメーションを変更する
 	if (tag != m_playAnimation) {
 		// 現行のアニメーションをデタッチする
-		MV1DetachAnim(model.ModelHandle, m_attachIndex2);
+		MV1DetachAnim(modelHandle, m_attachIndex2);
 
 		// ループフラグを保存
 		m_loopFlag = loop;
@@ -167,10 +177,10 @@ void Animation::ChangeAnimation(Model& model, int tag, bool loop)
 		m_attachIndex2 = m_attachIndex1;
 
 		// アニメーションを変更
-		m_attachIndex1 = MV1AttachAnim(model.ModelHandle, tag);
+		m_attachIndex1 = MV1AttachAnim(modelHandle, tag);
 
 		// アニメーションのフレーム数を保存
-		m_maxFlame = MV1GetAttachAnimTotalTime(model.ModelHandle, m_attachIndex1);
+		m_maxFlame = MV1GetAttachAnimTotalTime(modelHandle, m_attachIndex1);
 
 		// 再生中のアニメーションのタグを保存する
 		m_playAnimation = tag;
@@ -184,13 +194,13 @@ void Animation::ChangeAnimation(Model& model, int tag, bool loop)
 }
 
 // アニメーションを連続させたいときの変更関数
-void Animation::ChangeAnimationConnect(Model& model, int tag1, int tag2)
+void Animation::ChangeAnimationConnect(int& modelHandle, int tag1, int tag2)
 {
 	m_endAnimFlag = false;
 	m_connectFlag = true;
 	m_connectAnimation.push_back(tag1);
 	m_connectAnimation.push_back(tag2);
-	ChangeAnimation(model, m_connectAnimation[m_animationState], false);
+	ChangeAnimation(modelHandle, m_connectAnimation[m_animationState], false);
 }
 
 bool Animation::GetEndAnimFlag()
@@ -208,7 +218,7 @@ Capsule::~Capsule()
 {
 }
 
-void Capsule::Init(Vec3 pos, float radius, float height)
+void Capsule::InitCapsule(Vec3 pos, float radius, float height)
 {
 	Radius = radius;
 	m_height = height;
@@ -312,4 +322,26 @@ void Capsule::DrawCapsule() const
 		vecb = Vec3{ PointB.x ,PointB.y,PointB.z - Radius };
 		DrawLine3D(veca.VGet(), vecb.VGet(), 0xff0000);
 	}
+}
+
+// エフェクトクラス
+
+Effect::Effect()
+{
+}
+
+Effect::~Effect()
+{
+}
+
+void Effect::InitEffect()
+{
+}
+
+void Effect::TerminateEffect()
+{
+}
+
+void Effect::AddEffect(const char* fileName, float magnification)
+{
 }

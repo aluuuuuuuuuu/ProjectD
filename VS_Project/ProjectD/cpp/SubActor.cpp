@@ -15,7 +15,11 @@ SubActor::SubActor():
 	// 外部ファイルから定数を取得する
 	assert(ConstantsFileLoad("data/constant/SubActor.csv", Constants) == 1);
 
+	// 歪みエフェクトをロード
 	m_effectDistortionHandle = LoadEffekseerEffect("data/effect/test.efkefc", 120.0f);
+
+	// 歪みエフェクトを発生させる
+	m_effectDistortionHandle = PlayEffekseer2DEffect(m_effectDistortionHandle);
 }
 
 SubActor::~SubActor()
@@ -25,9 +29,6 @@ SubActor::~SubActor()
 
 void SubActor::Update()
 {
-
-	m_effectDistortionHandle = PlayEffekseer2DEffect(m_effectDistortionHandle);
-
 	// 近くのエネミーを探してUIにデータを渡す
 	auto enemy = FindEnemy();
 	if (enemy == nullptr) {
@@ -48,15 +49,12 @@ void SubActor::Update()
 	Position.y += move;
 
 	SetPosPlayingEffekseer2DEffect(m_effectDistortionHandle, 960, 540, 0);
-
-	// Effekseerにより再生中のエフェクトを更新する。
-	UpdateEffekseer2D();
 }
 
 void SubActor::Draw() const
 {
-	// Effekseerにより再生中のエフェクトを描画する。
-	DrawEffekseer2D();
+	// 歪みエフェクトを描画する
+	DrawEffekseer2D_Draw(m_effectDistortionHandle);
 }
 
 Vec3 SubActor::GetEnemyPos()

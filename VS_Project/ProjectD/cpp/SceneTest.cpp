@@ -31,6 +31,9 @@ SceneTest::~SceneTest()
 void SceneTest::Update()
 {
 	(this->*m_updateFunc)();
+
+	// エフェクトの更新処理
+	UpdateEffekseer2D();
 }
 
 void SceneTest::Draw() const
@@ -94,7 +97,6 @@ void SceneTest::NormalUpdate()
 		m_updateFunc = &SceneTest::SeqUpdate;
 		m_drawFunc = &SceneTest::SeqDraw;
 	}
-
 }
 
 void SceneTest::NormalDraw() const
@@ -107,8 +109,6 @@ void SceneTest::NormalDraw() const
 
 	// UIの描画
 	UI::getInstance().Draw();
-
-	
 }
 
 void SceneTest::SeqUpdate()

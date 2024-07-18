@@ -1,13 +1,15 @@
 #pragma once
 #include "Vec3.h"
 #include <vector>
+#include <string>
+#include <list>
 
 // 座標、拡大、回転を制御する
 class Transform
 {
 public:
 	Transform();
-	~Transform();
+	virtual ~Transform();
 
 	// 座標
 	Vec3 Position;
@@ -18,6 +20,8 @@ public:
 	// 回転
 	Vec3 Angle;
 
+	Transform& GetTransformInstance();
+
 private:
 
 };
@@ -27,10 +31,11 @@ class Model
 {
 public:
 	Model();
-	~Model();
+	virtual ~Model();
 
 	// 3Dモデル初期処理
 	void InitModel(int modelHandle, int textureHandle);
+	void InitModel(int modelHandle);
 	
 	// 3D更新処理
 	void UpdateModel(Transform& transform);
@@ -44,6 +49,7 @@ public:
 	// テクスチャのゲッター
 	int GetTextureHandle() const;
 
+protected:
 	// モデルハンドル
 	int ModelHandle = 0;
 
@@ -59,19 +65,19 @@ class Animation
 {
 public:
 	Animation();
-	~Animation();
+	virtual ~Animation();
 
 	// アニメーション初期処理
-	void InitAnimation(Model& model, int tag);
+	void InitAnimation(int& modelHandle, int tag);
 
 	// アニメーション更新処理
-	void UpdateAnimation(Model& model);
+	void UpdateAnimation(int& modelHandle);
 
 	// アニメーション変更
-	void ChangeAnimation(Model& model, int tag, bool loop);
+	void ChangeAnimation(int& modelHandle, int tag, bool loop);
 
 	// 連続でアニメを切り替えたい場合のアニメーション変更
-	void ChangeAnimationConnect(Model& model, int tag1, int tag2);
+	void ChangeAnimationConnect(int& modelHandle, int tag1, int tag2);
 
 	// アニメーション終了フラグを返す
 	bool GetEndAnimFlag();
@@ -121,10 +127,10 @@ class Capsule
 {
 public:
 	Capsule();
-	~Capsule();
+	virtual ~Capsule();
 
 	// 初期化処理
-	void Init(Vec3 pos, float radius, float height);
+	void InitCapsule(Vec3 pos, float radius, float height);
 
 	// 有効化
 	void Aactivation();
@@ -151,3 +157,27 @@ private:
 	float m_height = 0;
 	bool m_valid = true;	// 基本有効化されている
 };
+
+// Effekseerを使ったエフェクトコンポーネント
+class Effect
+{
+public:
+	Effect();
+	virtual ~Effect();
+
+	// 初期化処理
+	void InitEffect();
+
+	// 終了処理
+	void TerminateEffect();
+
+	// ハンドルを追加する
+	void AddEffect(const char *fileName, float magnification);
+
+private:
+
+	// エフェクトのハンドルを保持するリスト
+	std::list<int> m_effectHandleList;
+
+};
+

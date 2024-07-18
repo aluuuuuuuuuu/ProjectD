@@ -139,6 +139,9 @@ void Application::Run()
 		// FPS60‚ÉŒÅ’è‚·‚é
 		while (GetNowHiPerformanceCount() - start < 16667) {}
 	}
+
+	// I—¹ˆ—‚ðs‚¤
+	Terminate();
 }
 
 // I—¹ˆ—

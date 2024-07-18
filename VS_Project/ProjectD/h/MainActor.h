@@ -2,7 +2,9 @@
 #include "CharactorBase.h"
 
 class MainActor:
-	public CharactorBase
+	public CharactorBase,
+	private Model,
+	private Animation
 {
 public:
 	MainActor();

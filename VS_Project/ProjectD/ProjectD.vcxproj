@@ -47,6 +47,7 @@
   <ItemGroup>
     <None Include="data\constant\Application.csv" />
     <None Include="data\constant\Direction.csv" />
+    <None Include="data\constant\MainActor.csv" />
     <None Include="data\constant\PlayerCamera.csv" />
     <None Include="data\constant\Input.csv" />
     <None Include="data\constant\SubActor.csv" />

@@ -126,6 +126,9 @@
     <None Include="data\constant\Direction.csv">
       <Filter>CSV\Constant</Filter>
     </None>
+    <None Include="data\constant\MainActor.csv">
+      <Filter>CSV\Constant</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="h\Application.h">

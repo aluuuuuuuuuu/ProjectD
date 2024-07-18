@@ -1,11 +1,24 @@
 #include "MainActor.h"
 #include "DxLib.h"
 #include "Input.h"
+#include <cassert>
 
 MainActor::MainActor()
 {
+	// 外部ファイルから定数を取得する
+	assert(ConstantsFileLoad("data/constant/MainActor.csv", Constants) == 1);
+
 	// 初期位置の設定
 	Position = Vec3{ 0.0f,0.0f,0.0f };
+
+	// 拡大の設定
+	Scale = Vec3{ 0.2f,0.2f,0.2f };
+
+	// モデルの初期処理
+	InitModel(MV1LoadModel("data/model/MainActor.mv1"));
+
+	// アニメーションの初期処理
+	InitAnimation(ModelHandle, Constants["ANIM_IDLE"]);
 }
 
 MainActor::~MainActor()
@@ -14,11 +27,14 @@ MainActor::~MainActor()
 
 void MainActor::Update()
 {
+	UpdateAnimation(ModelHandle);
+	UpdateModel(GetTransformInstance());
 }
 
 void MainActor::Draw() const
 {
-	DrawSphere3D(Position.VGet(), 8, 16, 0x0000ff, 0x0000ff, true);
+	DrawModel();
+	//DrawSphere3D(Position.VGet(), 8, 16, 0x0000ff, 0x0000ff, true);
 }
 
 void MainActor::Control(Vec3 angle)
