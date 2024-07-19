@@ -33,6 +33,7 @@
     <ClCompile Include="cpp\Input.cpp" />
     <ClCompile Include="cpp\PlayerCamera.cpp" />
     <ClCompile Include="cpp\DirectionCamera.cpp" />
+    <ClCompile Include="cpp\SceneTitle.cpp" />
     <ClCompile Include="cpp\SubActor.cpp" />
     <ClCompile Include="cpp\Player.cpp" />
     <ClCompile Include="cpp\SceneBase.cpp" />
@@ -69,6 +70,7 @@
     <ClInclude Include="h\Input.h" />
     <ClInclude Include="h\PlayerCamera.h" />
     <ClInclude Include="h\DirectionCamera.h" />
+    <ClInclude Include="h\SceneTitle.h" />
     <ClInclude Include="h\SubActor.h" />
     <ClInclude Include="h\Player.h" />
     <ClInclude Include="h\SceneBase.h" />

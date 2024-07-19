@@ -5,6 +5,8 @@
 #include "PlayerCamera.h"
 #include "UI.h"
 #include "Direction.h"
+#include "EffekseerForDXLib.h"
+#include "DxLib.h"
 
 Player::Player(std::shared_ptr<Direction>& direction) :
 	m_subActorFlag(false),
@@ -50,7 +52,6 @@ void Player::Update()
 		// インタラクト処理
 		InteractFunc();
 	}
-
 }
 
 void Player::Draw() const

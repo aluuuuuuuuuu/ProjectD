@@ -14,17 +14,10 @@ SubActor::SubActor():
 {
 	// 外部ファイルから定数を取得する
 	assert(ConstantsFileLoad("data/constant/SubActor.csv", Constants) == 1);
-
-	// 歪みエフェクトをロード
-	m_effectDistortionHandle = LoadEffekseerEffect("data/effect/test.efkefc", 120.0f);
-
-	// 歪みエフェクトを発生させる
-	m_effectDistortionHandle = PlayEffekseer2DEffect(m_effectDistortionHandle);
 }
 
 SubActor::~SubActor()
 {
-	DeleteEffekseerEffect(m_effectDistortionHandle);
 }
 
 void SubActor::Update()
@@ -45,16 +38,11 @@ void SubActor::Update()
 	// サインカーブを使用して常に上下にふわふわと動かす
 	float move = 0.1f * sin(m_flame);
 	m_flame += 0.01f;
-
 	Position.y += move;
-
-	SetPosPlayingEffekseer2DEffect(m_effectDistortionHandle, 960, 540, 0);
 }
 
 void SubActor::Draw() const
 {
-	// 歪みエフェクトを描画する
-	DrawEffekseer2D_Draw(m_effectDistortionHandle);
 }
 
 Vec3 SubActor::GetEnemyPos()

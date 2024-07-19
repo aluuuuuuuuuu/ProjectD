@@ -6,6 +6,7 @@
 #include "SceneTest.h"
 #include <cassert>
 #include "GraphicManager.h"
+#include "SceneTitle.h"
 
 // 初期化処理
 bool Application::Init()
@@ -54,6 +55,9 @@ bool Application::Init()
 
 	Effekseer_InitDistortion(1.0f);
 
+	// フルスクリーンウインドウの切り替えでリソースが消えるのを防ぐ。
+	SetChangeScreenModeGraphicsSystemResetFlag(FALSE);
+
 	// DXライブラリのデバイスロストした時のコールバックを設定する。
 	// ウインドウとフルスクリーンの切り替えが発生する場合は必ず実行する。
 	// ただし、DirectX11を使用する場合は実行する必要はない。
@@ -68,6 +72,9 @@ bool Application::Init()
 
 	// バックバッファに描画する
 	SetDrawScreen(DX_SCREEN_BACK);
+
+	// 背景色の設定
+	SetBackgroundColor(0, 0, 0, 0);
 
 	// カーソルの表示設定
 	SetMouseDispFlag(true);
@@ -93,7 +100,7 @@ void Application::Run()
 	auto& manager = SceneManager::getInstance();
 
 	// 初期シーンを設定
-	manager.ChangeScene(std::make_shared <SceneTest>());
+	manager.ChangeScene(std::make_shared <SceneTitle>());
 
 	// インプットのインスタンスを取得
 	auto& input = Input::getInstance();

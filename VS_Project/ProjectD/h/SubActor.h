@@ -32,7 +32,4 @@ private:
 
 	// サインカーブ用のフレーム
 	float m_flame;
-
-	// 画面端をゆがませるエフェクトリソース
-	int m_effectDistortionHandle;
 };
