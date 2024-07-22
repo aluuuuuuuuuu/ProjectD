@@ -2,7 +2,7 @@
 #include "GraphicManager.h"
 #include "DxLib.h"
 #include "SceneManager.h"
-#include "SceneTest.h"
+#include "SceneSelect.h"
 
 SceneTitle::SceneTitle() :
 	m_flame(60)
@@ -73,7 +73,7 @@ void SceneTitle::FadeOutUpdate()
 {
 	m_flame++;
 	if (m_flame >= 120) {
-		SceneManager::getInstance().ChangeScene(std::make_shared<SceneTest>());
+		SceneManager::getInstance().ChangeScene(std::make_shared<SceneSelect>());
 	}
 }
 
