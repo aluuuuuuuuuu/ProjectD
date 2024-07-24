@@ -17,11 +17,13 @@ SceneTitle::~SceneTitle()
 
 void SceneTitle::Update()
 {
+	// 更新の関数ポインタを実行
 	(this->*m_updateFunc)();
 }
 
 void SceneTitle::Draw() const
 {
+	// 描画の関数ポインタを実行
 	(this->*m_drawFunc)();
 }
 
@@ -30,6 +32,7 @@ void SceneTitle::NormalUpdate()
 	// 何かしらのボタンが押されたらフェードアウト処理に移行する
 	if (GetJoypadInputState(DX_INPUT_PAD1) != 0)
 	{
+		m_flame = 0;
 		m_updateFunc = &SceneTitle::FadeOutUpdate;
 		m_drawFunc = &SceneTitle::FadeDraw;
 	}
@@ -51,6 +54,7 @@ void SceneTitle::NormalUpdate()
 
 void SceneTitle::NormalDraw() const
 {
+	// タイトル画像を描画
 	DrawGraph(0, 0, GraphicManager::getInstance().GetGraph("TitleBack"), true);
 
 	// スタート指示を点滅させながら描画
@@ -79,6 +83,7 @@ void SceneTitle::FadeOutUpdate()
 
 void SceneTitle::FadeDraw() const
 {
+	// 通常の描画も同時に行う
 	NormalDraw();
 
 	//フェード暗幕

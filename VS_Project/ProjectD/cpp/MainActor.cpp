@@ -58,6 +58,13 @@ void MainActor::Control(Vec3 angle)
 		// スティックの傾きをカメラに合わせてY軸回転させる
 		m_moveVec = VTransform(inclination.VGet(), rotaMtx);
 
+		// 移動のタイミングで移動している方向にモデルを回転させる
+		Vec3 targetPos = Position + m_moveVec;
+		float x = targetPos.x - Position.x;
+		float z = targetPos.z - Position.z;
+		float angle = atan2f(x, z);
+		Angle.y = angle + static_cast<float>(DX_PI);
+
 		// 現在の座標に移動ベクトルを足す
 		Position += m_moveVec;
 	}

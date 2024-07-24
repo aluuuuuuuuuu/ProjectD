@@ -36,25 +36,29 @@ private:
 	void StageSelect();
 
 	// 左右ボタンで選択ステージを切り替える
-	void StageSelectTrigger();
+	void StageSelectTriggerButton();
 
 	// 左右ボタン長押しで選択ステージを切り替える
-	void StageSelectHold();
+	void StageSelectHoldButton();
+
+	// スティックの左右操作で選択ステージを切り替える
+	void StageSelectStick();
 
 	// フレームカウンタ
 	int m_flame;
 
 	// ボタン長押し用のフレームカウンタ
-	int m_flameLeft;
-	int m_flameRight;
+	int m_flameLeftButton;
+	int m_flameRightButton;
+
+	// スティック用のフレームカウンタ
+	int m_flameLeftStick;
+	int m_flameRightStick;
 
 	// 現在選択しているステージ
 	int m_stage;
 
-	// 真ん中の波エフェクト
-	int m_effectHandle;
-	int a;
-
-	int g;
+	// 波の画像ハンドル
+	int m_waveGraphHandle;
 };
 

@@ -67,7 +67,6 @@ bool Input::IsTrigger(int input) const
 	if (input == INPUT_RIGHT_TRIGGER) {
 		return (m_lastPadState.RightTrigger <= 0 && m_padState.RightTrigger >= 1);
 	}
-
 	return false;
 }
 

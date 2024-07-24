@@ -9,15 +9,16 @@
 SceneSelect::SceneSelect() :
 	m_flame(60),
 	m_stage(1),
-	m_flameLeft(0),
-	m_flameRight(0)
+	m_flameLeftButton(0),
+	m_flameRightButton(0),
+	m_flameLeftStick(10),
+	m_flameRightStick(10)
 {
 	// 外部ファイルから定数を取得する
 	assert(ConstantsFileLoad("data/constant/SceneSelect.csv", Constants) == 1);
 
-	m_effectHandle = LoadEffekseerEffect("data/effect/string.efkefc.efk", 1.0f);
-
-	g = LoadGraph("data/image/名称未設定 1.png");
+	// 画像のロード
+	m_waveGraphHandle = LoadGraph("data/image/名称未設定 1.png");
 
 	// 背景色の設定
 	SetBackgroundColor(240, 240, 240);
@@ -29,15 +30,19 @@ SceneSelect::SceneSelect() :
 
 SceneSelect::~SceneSelect()
 {
+	// 画像のデリート
+	DeleteGraph(m_waveGraphHandle);
 }
 
 void SceneSelect::Update()
 {
+	// 更新の関数ポインタを実行
 	(this->*m_updateFunc)();
 }
 
 void SceneSelect::Draw() const
 {
+	// 描画の関数ポインタを実行
 	(this->*m_drawFunc)();
 }
 
@@ -59,7 +64,7 @@ void SceneSelect::NormalDraw() const
 	DrawFormatString(20, 20, 0xff0000, "%d", m_stage);
 
 	//DrawRotaGraph(0, 0, 1.0, 0.0, g, true);
-	DrawGraph(0, 0, g, true);
+	DrawGraph(0, 0, m_waveGraphHandle, true);
 }
 
 void SceneSelect::FadeInUpdate()
@@ -81,6 +86,7 @@ void SceneSelect::FadeOutUpdate()
 
 void SceneSelect::FadeDraw() const
 {
+	// 通常の描画も同時に行う
 	NormalDraw();
 
 	//フェード暗幕
@@ -128,13 +134,16 @@ void SceneSelect::ChangeScene()
 void SceneSelect::StageSelect()
 {
 	// 左右ボタンで選択ステージを切り替える
-	StageSelectTrigger();
+	StageSelectTriggerButton();
 
 	// 左右ボタン長押しで選択ステージを切り替える
-	StageSelectHold();
+	StageSelectHoldButton();
+
+	// スティックの左右入力で選択ステージを切り替える
+	StageSelectStick();
 }
 
-void SceneSelect::StageSelectTrigger()
+void SceneSelect::StageSelectTriggerButton()
 {
 	// 左右ボタンで選択ステージを切り替える
 	if (Input::getInstance().IsTrigger(INPUT_LEFT)) {
@@ -155,15 +164,15 @@ void SceneSelect::StageSelectTrigger()
 	}
 }
 
-void SceneSelect::StageSelectHold()
+void SceneSelect::StageSelectHoldButton()
 {
-	// 左右ボタン長押しで連続で選択ステージを切り替える
+	// 左ボタン長押しで連続で選択ステージを切り替える
 	if (Input::getInstance().IsHold(INPUT_LEFT)) {
-		m_flameLeft++;
+		m_flameLeftButton++;
 
 		// 一定フレーム長押ししたら連続でステージを切り替える
-		if (m_flameLeft >= Constants["FLAME_BUTTON_HOLD"]) {
-			if (m_flameLeft % static_cast<int>(Constants["FLAME_LHS_NUM"]) == 0) {
+		if (m_flameLeftButton >= Constants["FLAME_BUTTON_HOLD"]) {
+			if (m_flameLeftButton % static_cast<int>(Constants["FLAME_LHS_NUM_BUTTON"]) == 0) {
 				if (m_stage <= 1) {
 					m_stage = static_cast<int>(Constants["MAX_STAGE_NUM"]);
 				}
@@ -174,16 +183,16 @@ void SceneSelect::StageSelectHold()
 		}
 	}
 	else {
-		m_flameLeft = 0;
+		m_flameLeftButton = 0;
 	}
 
-	// 左右ボタン長押しで連続で選択ステージを切り替える
+	// 右ボタン長押しで連続で選択ステージを切り替える
 	if (Input::getInstance().IsHold(INPUT_RIGHT)) {
-		m_flameRight++;
+		m_flameRightButton++;
 
 		// 一定フレーム長押ししたら連続でステージを切り替える
-		if (m_flameRight >= Constants["FLAME_BUTTON_HOLD"]) {
-			if (m_flameRight % static_cast<int>(Constants["FLAME_LHS_NUM"]) == 0) {
+		if (m_flameRightButton >= Constants["FLAME_BUTTON_HOLD"]) {
+			if (m_flameRightButton % static_cast<int>(Constants["FLAME_LHS_NUM_BUTTON"]) == 0) {
 				if (m_stage >= Constants["MAX_STAGE_NUM"]) {
 					m_stage = 1;
 				}
@@ -194,6 +203,41 @@ void SceneSelect::StageSelectHold()
 		}
 	}
 	else {
-		m_flameRight = 0;
+		m_flameRightButton = 0;
+	}
+}
+
+void SceneSelect::StageSelectStick()
+{
+	// 左入力で選択切り替え
+	if (Input::getInstance().GetStickThumbX(INPUT_LEFT_STICK) >= Input::getInstance().Constants["STICK_INVALID_VALUE"]) {
+		m_flameLeftStick++;
+		if (m_flameLeftStick % static_cast<int>(Constants["FLAME_LHS_NUM_STICK"]) == 0) {
+			if (m_stage >= Constants["MAX_STAGE_NUM"]) {
+				m_stage = 1;
+			}
+			else {
+				m_stage++;
+			}
+		}
+	}
+	else {
+		m_flameLeftStick = 10;
+	}
+
+	// 右入力で選択切り替え
+	if (Input::getInstance().GetStickThumbX(INPUT_LEFT_STICK) <= -Input::getInstance().Constants["STICK_INVALID_VALUE"]) {
+		m_flameRightStick++;
+		if (m_flameRightStick % static_cast<int>(Constants["FLAME_LHS_NUM_STICK"]) == 0) {
+			if (m_stage >= Constants["MAX_STAGE_NUM"]) {
+				m_stage = 1;
+			}
+			else {
+				m_stage++;
+			}
+		}
+	}
+	else {
+		m_flameRightStick = 10;
 	}
 }
