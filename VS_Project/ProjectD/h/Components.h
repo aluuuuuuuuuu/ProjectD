@@ -68,21 +68,33 @@ public:
 	virtual ~Animation();
 
 	// アニメーション初期処理
-	void InitAnimation(int& modelHandle, int tag);
+	void InitAnimation(int& modelHandle, int tag, float rate);
 
 	// アニメーション更新処理
 	void UpdateAnimation(int& modelHandle);
 
 	// アニメーション変更
-	void ChangeAnimation(int& modelHandle, int tag, bool loop);
+	void ChangeAnimation(int& modelHandle, int tag, bool loop,float blendRate);
 
 	// 連続でアニメを切り替えたい場合のアニメーション変更
-	void ChangeAnimationConnect(int& modelHandle, int tag1, int tag2);
+	void ChangeAnimationConnect(int& modelHandle, int tag1, int tag2, float rate1,float rate2);
 
 	// アニメーション終了フラグを返す
 	bool GetEndAnimFlag();
 
-; private:
+	// 現行のアニメーションタグを返す
+	int GetAnimTag();
+
+private:
+
+	// デフォルトのブレンドレート
+	float m_defaultRate = 0.0f;
+
+	// コネクト先のブレンドレートを保存する
+	float m_rate2 = 0.0f;
+
+	// ブレンドレート
+	float m_blendRateSave = 0.0f;
 
 	// 再生時間
 	float m_flameCount = 0.0f;

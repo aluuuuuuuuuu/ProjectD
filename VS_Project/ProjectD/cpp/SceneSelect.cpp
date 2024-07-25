@@ -18,7 +18,8 @@ SceneSelect::SceneSelect() :
 	assert(ConstantsFileLoad("data/constant/SceneSelect.csv", Constants) == 1);
 
 	// 画像のロード
-	m_waveGraphHandle = LoadGraph("data/image/名称未設定 1.png");
+	m_waveGraphHandle = LoadGraph("data/image/string.png");
+	m_stringGraphHandle = LoadGraph("data/image/SelectStage.png");
 
 	// 背景色の設定
 	SetBackgroundColor(240, 240, 240);
@@ -32,6 +33,7 @@ SceneSelect::~SceneSelect()
 {
 	// 画像のデリート
 	DeleteGraph(m_waveGraphHandle);
+	DeleteGraph(m_stringGraphHandle);
 }
 
 void SceneSelect::Update()
@@ -63,8 +65,9 @@ void SceneSelect::NormalDraw() const
 	// テストでステージ数を表示
 	DrawFormatString(20, 20, 0xff0000, "%d", m_stage);
 
-	//DrawRotaGraph(0, 0, 1.0, 0.0, g, true);
 	DrawGraph(0, 0, m_waveGraphHandle, true);
+
+	DrawGraph(150, 900, m_stringGraphHandle, true);
 }
 
 void SceneSelect::FadeInUpdate()

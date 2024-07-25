@@ -97,8 +97,10 @@ Animation::~Animation()
 {
 }
 
-void Animation::InitAnimation(int& modelHandle, int tag)
+void Animation::InitAnimation(int& modelHandle, int tag, float rate)
 {
+	m_defaultRate = rate;
+
 	m_defaultTag = tag;
 
 	m_loopFlag = true;
@@ -117,7 +119,7 @@ void Animation::UpdateAnimation(int& modelHandle)
 {
 	// 前のフレームでアニメーションが終了していたらデフォルトに戻す
 	if (m_endAnimFlag) {
-		ChangeAnimation(modelHandle, m_defaultTag, true);
+		ChangeAnimation(modelHandle, m_defaultTag, true, m_defaultRate);
 	}
 
 	// 再生時間を進める
@@ -128,7 +130,7 @@ void Animation::UpdateAnimation(int& modelHandle)
 		MV1SetAttachAnimBlendRate(modelHandle, m_attachIndex1, 1.0f);
 	}
 	else {
-		m_blendRate += 0.25f;
+		m_blendRate += m_blendRateSave;
 
 		MV1SetAttachAnimBlendRate(modelHandle, m_attachIndex2, 1.0f - m_blendRate);
 
@@ -141,9 +143,9 @@ void Animation::UpdateAnimation(int& modelHandle)
 		// コネクトフラグがtrueだったら次のアニメーションをスタートさせる
 		if (m_connectFlag) {
 			m_animationState++;
-			m_connectFlag = false;
-			ChangeAnimation(modelHandle, m_connectAnimation[m_animationState], true);
+			ChangeAnimation(modelHandle, m_connectAnimation[m_animationState], true, m_rate2);
 			m_connectAnimation.clear();
+			m_animationState = 0;
 		}
 		// ループフラグがtrueだったらループさせる
 		else if (m_loopFlag) {
@@ -160,7 +162,7 @@ void Animation::UpdateAnimation(int& modelHandle)
 }
 
 // アニメーション変更
-void Animation::ChangeAnimation(int& modelHandle, int tag, bool loop)
+void Animation::ChangeAnimation(int& modelHandle, int tag, bool loop, float blendRate)
 {
 	// 再生するアニメーションを変更する
 	if (tag != m_playAnimation) {
@@ -169,6 +171,9 @@ void Animation::ChangeAnimation(int& modelHandle, int tag, bool loop)
 
 		// ループフラグを保存
 		m_loopFlag = loop;
+
+		// ブレンドレートを変更
+		m_blendRateSave = blendRate;
 
 		// 再生時間を最初に戻す
 		m_flameCount = 0.0f;
@@ -190,22 +195,30 @@ void Animation::ChangeAnimation(int& modelHandle, int tag, bool loop)
 
 		// ブレンドレートを初期化する
 		m_blendRate = 0.0f;
+
+		// コネクトフラグを下げる
+		m_connectFlag = false;
 	}
 }
 
 // アニメーションを連続させたいときの変更関数
-void Animation::ChangeAnimationConnect(int& modelHandle, int tag1, int tag2)
+void Animation::ChangeAnimationConnect(int& modelHandle, int tag1, int tag2, float rate1, float rate2)
 {
 	m_endAnimFlag = false;
-	m_connectFlag = true;
 	m_connectAnimation.push_back(tag1);
 	m_connectAnimation.push_back(tag2);
-	ChangeAnimation(modelHandle, m_connectAnimation[m_animationState], false);
+	ChangeAnimation(modelHandle, m_connectAnimation[m_animationState], false, rate1);
+	m_connectFlag = true;
 }
 
 bool Animation::GetEndAnimFlag()
 {
 	return m_endAnimFlag;
+}
+
+int Animation::GetAnimTag()
+{
+	return m_playAnimation;
 }
 
 // カプセル

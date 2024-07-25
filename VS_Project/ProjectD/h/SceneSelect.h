@@ -60,5 +60,8 @@ private:
 
 	// 波の画像ハンドル
 	int m_waveGraphHandle;
+
+	// 文字の画像ハンドル
+	int m_stringGraphHandle;
 };
 

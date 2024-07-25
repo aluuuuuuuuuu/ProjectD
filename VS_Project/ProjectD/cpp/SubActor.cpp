@@ -87,13 +87,13 @@ void SubActor::Control(Vec3 cameraRot)
 	}
 
 	// 垂直移動
-	// RBで上昇
-	if (input.IsHold(INPUT_RIGHT_SHOULDER)) {
+	// Aで上昇
+	if (input.IsHold(INPUT_A)) {
 		// 移動ベクトルのY値を加算する
 		m_moveVec.y += Constants["VERTICAL_MOVE_SCALE"];
 	}
-	// RTで下降
-	if (input.IsHold(INPUT_RIGHT_TRIGGER)) {
+	// Bで下降
+	if (input.IsHold(INPUT_B)) {
 		// 移動ベクトルのY値を減算する
 		m_moveVec.y += -Constants["VERTICAL_MOVE_SCALE"];
 	}

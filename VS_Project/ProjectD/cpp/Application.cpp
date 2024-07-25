@@ -7,6 +7,7 @@
 #include <cassert>
 #include "GraphicManager.h"
 #include "SceneTitle.h"
+#include "SceneSelect.h"
 
 // 初期化処理
 bool Application::Init()
@@ -100,7 +101,7 @@ void Application::Run()
 	auto& manager = SceneManager::getInstance();
 
 	// 初期シーンを設定
-	manager.ChangeScene(std::make_shared <SceneTitle>());
+	manager.ChangeScene(std::make_shared <SceneSelect>());
 
 	// インプットのインスタンスを取得
 	auto& input = Input::getInstance();
