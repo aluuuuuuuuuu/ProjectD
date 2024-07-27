@@ -29,6 +29,9 @@
     <Filter Include="CSV\Graphic">
       <UniqueIdentifier>{6a3460d1-6c62-47ca-aaa9-1c650649d02c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="hlsl">
+      <UniqueIdentifier>{c1038b66-cb3d-464f-9440-f33edaeac135}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cpp\Application.cpp">
@@ -215,5 +218,10 @@
     <ClInclude Include="h\SceneSelect.h">
       <Filter>Scene</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="hlsl\ShaderDistortion.hlsl">
+      <Filter>hlsl</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>
