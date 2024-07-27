@@ -55,11 +55,8 @@ void PlayerCamera::SubActorMode(Vec3 pos)
 	// 座標をサブアクターの位置に合わせる
 	Position = pos;
 
-	// 回転
-	Vec3 targetPos = RotateSubActorMode(pos);
-
 	// カメラの位置をセットする
-	SetCameraPositionAndTarget_UpVecY(Position.VGet(), targetPos.VGet());
+	SetCameraPositionAndTarget_UpVecY(Position.VGet(), RotateSubActorMode(pos).VGet());
 }
 
 Vec3 PlayerCamera::RotateMainActorMode(Vec3 pos)

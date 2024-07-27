@@ -85,29 +85,34 @@ void MainActor::RotateAngle(float cameraAngle)
 	float z = targetPos.z - Position.z;
 	float targetAngle = atan2f(x, z);
 	targetAngle = targetAngle + static_cast<float>(DX_PI);
+	DX_TWO_PI;
 
 	// ˆÚ“®‚·‚é•ûŒü‚É™X‚É‰ñ“]‚·‚é
 
-	// ©g‚ÌY²‚Ì‰ñ“]’l‚ğ‚R‚U‚O“x“à‚Éû‚ß‚é
-	Angle.y = fmodf(Angle.y, 360.0f);
+	// ƒ‰ƒWƒAƒ“Šp‚ğ³‹K‰»‚·‚é
+	Angle.y = fmodf(Angle.y, static_cast<float>(DX_TWO_PI));
+	if (Angle.y < 0.0f) Angle.y += static_cast<float>(DX_TWO_PI);
 
+	// ·‚ªˆÚ“®—Ê‚æ‚è¬‚³‚­‚È‚Á‚½‚ç–Ú•W‚Ì’l‚ğ‘ã“ü‚·‚é
+	if (fabsf(Angle.y - targetAngle) > Constants["ANGLE_ROTATE_SCALE"]) {
+		// ‘‚â‚·‚Ì‚ÆŒ¸‚ç‚·‚Ì‚Å‚Ç‚¿‚ç‚ª‹ß‚¢‚©”»’f‚·‚é
+		float add = targetAngle - Angle.y;	// ‘«‚·ê‡‚Ì‰ñ“]—Ê
+		if (add < 0.0f) add += static_cast<float>(DX_TWO_PI);	// ‘«‚·ê‡‚Ì‰ñ“]—Ê‚ª•‰‚Ì”‚¾‚Á‚½ê‡³‹K‰»‚·‚é
+		float sub = static_cast<float>(DX_TWO_PI) - add;	// ˆø‚­ê‡‚Ì‰ñ“]—Ê
 
+		// ‰ñ“]—Ê‚ğ”ä‚×‚Ä­‚È‚¢•û‚ğ‘I‘ğ‚·‚é
+		if (add < sub) {
+			Angle.y += Constants["ANGLE_ROTATE_SCALE"];
+		}
+		else {
+			Angle.y -= Constants["ANGLE_ROTATE_SCALE"];
+		}
 
-	//// ‚ ‚é’ö“x‚Ü‚Å‰ñ“]‚µ‚½‚ç‚Ò‚Á‚½‚è‚Æ‡‚í‚¹‚é
-	//if (abs(Angle.y - targetAngle) > 0.01f) {
-	//	Angle.y -= 0.1f;
-	//	//// ‘‚â‚·‚Ì‚ÆŒ¸‚ç‚·‚Ì‚Å‚Ç‚¿‚ç‚ª‹ß‚¢‚©”»’f‚·‚é
-	//	//float add = abs(Angle.y + targetAngle);
-	//	//float sub = abs(Angle.y - targetAngle);
-
-	//	//if (add > sub) {
-	//	//	Angle.y -= 0.1f;//
-	//	//}
-	//	//else {
-	//	//	Angle.y += 0.1f;
-	//	//}
-	//}
-	//else {
-	//	Angle.y = targetAngle;
-	//}
+		// ‘Œ¸‚É‚æ‚Á‚Ä”ÍˆÍŠO‚É‚È‚Á‚½ê‡‚Ì³‹K‰»
+		Angle.y = fmodf(Angle.y, static_cast<float>(DX_TWO_PI));
+		if (Angle.y < 0.0f) Angle.y += static_cast<float>(DX_TWO_PI);
+	}
+	else {
+		Angle.y = targetAngle;
+	}
 }
