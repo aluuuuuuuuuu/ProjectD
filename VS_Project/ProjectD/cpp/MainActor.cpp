@@ -18,7 +18,7 @@ MainActor::MainActor()
 	InitModel(MV1LoadModel("data/model/MainActor.mv1"));
 
 	// アニメーションの初期処理
-	InitAnimation(ModelHandle, Constants["ANIM_IDLE"], 0.15);
+	InitAnimation(ModelHandle, Constants["ANIM_IDLE"], 0.15f);
 }
 
 MainActor::~MainActor()
@@ -27,7 +27,7 @@ MainActor::~MainActor()
 
 void MainActor::Update()
 {
-	ChangeAnimation();
+	AnimationControl();
 	UpdateAnimation(ModelHandle);
 	UpdateModel(GetTransformInstance());
 
@@ -58,13 +58,13 @@ void MainActor::Control(Vec3 angle)
 	}
 }
 
-void MainActor::ChangeAnimation()
+void MainActor::AnimationControl()
 {
 	if (m_moveVec.Length() == 0.0f) {
-		Animation::ChangeAnimation(ModelHandle, Constants["ANIM_CROUCH"], true, 0.05);
+		ChangeAnimation(ModelHandle, Constants["ANIM_CROUCH"], true, 0.05f);
 	}
 	else if (m_moveVec.Length() != 0.0f) {
-		Animation::ChangeAnimation(ModelHandle, Constants["ANIM_WALK"], true, 0.15f);
+		ChangeAnimation(ModelHandle, Constants["ANIM_WALK"], true, 0.15f);
 	}
 }
 

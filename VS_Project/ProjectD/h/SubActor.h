@@ -8,7 +8,7 @@ class SubActor :
 {
 public:
 	SubActor();
-	~SubActor();
+	virtual ~SubActor();
 
 	void Update();
 	void Draw() const;
@@ -32,13 +32,4 @@ private:
 
 	// サインカーブ用のフレーム
 	float m_flame;
-
-	// シェーダーハンドル
-	int m_shaderHandle;
-
-	// シェーダー用の定数バッファ
-	int m_constBufferHandle;
-
-	// シェーダー用のテクスチャ
-	int m_textureHandlel;
 };

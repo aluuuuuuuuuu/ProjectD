@@ -82,12 +82,6 @@
     <ClCompile Include="cpp\StaticFunction.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
-    <ClCompile Include="cpp\StaticObject.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
-    <ClCompile Include="cpp\StaticObjectManager.cpp">
-      <Filter>Manager</Filter>
-    </ClCompile>
     <ClCompile Include="cpp\UI.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
@@ -111,6 +105,15 @@
     </ClCompile>
     <ClCompile Include="cpp\SceneSelect.cpp">
       <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="cpp\ObjectWall.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="cpp\StaticObjectBase.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="cpp\StaticObjectManager.cpp">
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -139,6 +142,9 @@
       <Filter>CSV\Constant</Filter>
     </None>
     <None Include="data\constant\SceneSelect.csv">
+      <Filter>CSV\Constant</Filter>
+    </None>
+    <None Include="data\constant\Enemy.csv">
       <Filter>CSV\Constant</Filter>
     </None>
   </ItemGroup>
@@ -194,12 +200,6 @@
     <ClInclude Include="h\StaticFunction.h">
       <Filter>Engine</Filter>
     </ClInclude>
-    <ClInclude Include="h\StaticObject.h">
-      <Filter>Object</Filter>
-    </ClInclude>
-    <ClInclude Include="h\StaticObjectManager.h">
-      <Filter>Manager</Filter>
-    </ClInclude>
     <ClInclude Include="h\UI.h">
       <Filter>Engine</Filter>
     </ClInclude>
@@ -218,10 +218,8 @@
     <ClInclude Include="h\SceneSelect.h">
       <Filter>Scene</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <FxCompile Include="hlsl\ShaderDistortion.hlsl">
-      <Filter>hlsl</Filter>
-    </FxCompile>
+    <ClInclude Include="h\ObjectWall.h" />
+    <ClInclude Include="h\StaticObjectBase.h" />
+    <ClInclude Include="h\StaticObjectManager.h" />
   </ItemGroup>
 </Project>

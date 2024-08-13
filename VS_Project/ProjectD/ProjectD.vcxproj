@@ -31,24 +31,26 @@
     <ClCompile Include="cpp\EnemyTest.cpp" />
     <ClCompile Include="cpp\GraphicManager.cpp" />
     <ClCompile Include="cpp\Input.cpp" />
+    <ClCompile Include="cpp\ObjectWall.cpp" />
     <ClCompile Include="cpp\PlayerCamera.cpp" />
     <ClCompile Include="cpp\DirectionCamera.cpp" />
     <ClCompile Include="cpp\SceneSelect.cpp" />
     <ClCompile Include="cpp\SceneTitle.cpp" />
+    <ClCompile Include="cpp\StaticObjectBase.cpp" />
+    <ClCompile Include="cpp\StaticObjectManager.cpp" />
     <ClCompile Include="cpp\SubActor.cpp" />
     <ClCompile Include="cpp\Player.cpp" />
     <ClCompile Include="cpp\SceneBase.cpp" />
     <ClCompile Include="cpp\SceneManager.cpp" />
     <ClCompile Include="cpp\SceneTest.cpp" />
     <ClCompile Include="cpp\StaticFunction.cpp" />
-    <ClCompile Include="cpp\StaticObject.cpp" />
-    <ClCompile Include="cpp\StaticObjectManager.cpp" />
     <ClCompile Include="cpp\UI.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="data\constant\Application.csv" />
     <None Include="data\constant\Direction.csv" />
+    <None Include="data\constant\Enemy.csv" />
     <None Include="data\constant\MainActor.csv" />
     <None Include="data\constant\PlayerCamera.csv" />
     <None Include="data\constant\Input.csv" />
@@ -70,10 +72,13 @@
     <ClInclude Include="h\EnemyTest.h" />
     <ClInclude Include="h\GraphicManager.h" />
     <ClInclude Include="h\Input.h" />
+    <ClInclude Include="h\ObjectWall.h" />
     <ClInclude Include="h\PlayerCamera.h" />
     <ClInclude Include="h\DirectionCamera.h" />
     <ClInclude Include="h\SceneSelect.h" />
     <ClInclude Include="h\SceneTitle.h" />
+    <ClInclude Include="h\StaticObjectBase.h" />
+    <ClInclude Include="h\StaticObjectManager.h" />
     <ClInclude Include="h\SubActor.h" />
     <ClInclude Include="h\Player.h" />
     <ClInclude Include="h\SceneBase.h" />
@@ -81,22 +86,8 @@
     <ClInclude Include="h\SceneTest.h" />
     <ClInclude Include="h\Singleton.h" />
     <ClInclude Include="h\StaticFunction.h" />
-    <ClInclude Include="h\StaticObject.h" />
-    <ClInclude Include="h\StaticObjectManager.h" />
     <ClInclude Include="h\UI.h" />
     <ClInclude Include="h\Vec3.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <FxCompile Include="hlsl\ShaderDistortion.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Geometry</ShaderType>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4.0</ShaderModel>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Geometry</ShaderType>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">4.0</ShaderModel>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Geometry</ShaderType>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">4.0</ShaderModel>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Geometry</ShaderType>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4.0</ShaderModel>
-    </FxCompile>
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

@@ -7,7 +7,6 @@ struct tama
 {
 	Vec3 pos;
 	Vec3 moveVec;
-	float moveScale;
 };
 
 class DirectionCamera;

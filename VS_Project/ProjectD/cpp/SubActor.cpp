@@ -14,14 +14,6 @@ SubActor::SubActor():
 {
 	// 外部ファイルから定数を取得する
 	assert(ConstantsFileLoad("data/constant/SubActor.csv", Constants) == 1);
-
-	// シェーダーファイルのロード
-	m_shaderHandle = LoadPixelShader("hlsl/ShaderDistortion.hlsl");
-
-	// シェーダー用の定数バッファを作成
-	m_constBufferHandle = CreateShaderConstantBuffer(sizeof(MATRIX) * 3);
-
-	m_textureHandlel = LoadGraph("data/image/画像 (8).png");
 }
 
 SubActor::~SubActor()
@@ -30,39 +22,6 @@ SubActor::~SubActor()
 
 void SubActor::Update()
 {
-
-	// シェーダーを設定
-	SetUsePixelShader(m_shaderHandle);
-	SetUseVertexShader(m_shaderHandle);
-
-	// シェーダー定数バッファを更新
-	MATRIX worldMatrix, viewMatrix, projectionMatrix;
-	worldMatrix = MGetIdent();
-	viewMatrix = GetCameraViewMatrix();
-	projectionMatrix = GetCameraProjectionMatrix();
-
-	// シェーダー定数バッファにデータを設定
-	float* constBuffer = (float*)GetBufferShaderConstantBuffer(m_constBufferHandle);
-	memcpy(constBuffer, &worldMatrix, sizeof(MATRIX));
-	memcpy(constBuffer + sizeof(MATRIX), &viewMatrix, sizeof(MATRIX));
-	memcpy(constBuffer + sizeof(MATRIX) * 2, &projectionMatrix, sizeof(MATRIX));
-	UpdateShaderConstantBuffer(m_constBufferHandle);
-
-	// シェーダー定数バッファをシェーダーに設定
-	SetShaderConstantBuffer(m_constBufferHandle, DX_SHADERTYPE_PIXEL, 0);
-	SetShaderConstantBuffer(m_constBufferHandle, DX_SHADERTYPE_VERTEX, 0);
-
-	// テクスチャを設定
-	SetUseTextureToShader(0, m_textureHandlel);
-
-	// 描画処理
-	DrawBox(0, 0, 640, 480, GetColor(255, 255, 255), TRUE);
-
-	// シェーダーの使用を解除
-	SetUsePixelShader(-1);
-	SetUseVertexShader(-1);
-
-
 	// 近くのエネミーを探してUIにデータを渡す
 	auto enemy = FindEnemy();
 	if (enemy == nullptr) {
@@ -186,7 +145,7 @@ std::shared_ptr<EnemyBase> SubActor::FindEnemy()
 	}
 
 	// サブアクターに最も近い敵を取り出す
-	auto max = enemyList.front();
+	auto &max = enemyList.front();
 	for (std::shared_ptr<EnemyBase> enemy : EnemyManager::getInstance().GetEnemy()) {
 		if ((max->Position - Position).Length() > (enemy->Position - Position).Length()) {
 			max = enemy;

@@ -2,9 +2,7 @@
 #include "CharactorBase.h"
 
 class MainActor:
-	public CharactorBase,
-	private Model,
-	private Animation
+	public CharactorBase
 {
 public:
 	MainActor();
@@ -17,7 +15,7 @@ public:
 private:
 
 	// アニメーション変更
-	void ChangeAnimation();
+	void AnimationControl();
 
 	// 移動する方向に回転する
 	void RotateAngle(float cameraAngle);

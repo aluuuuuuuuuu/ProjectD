@@ -1,5 +1,12 @@
 #include "EnemyManager.h"
 #include "EnemyBase.h"
+#include "DxLib.h"
+#include "EnemyTest.h"
+
+void EnemyManager::Init()
+{
+	m_modelHandle = MV1LoadModel("data/model/enemy2.mv1");
+}
 
 void EnemyManager::Update()
 {
@@ -20,5 +27,10 @@ void EnemyManager::Draw() const
 std::list<std::shared_ptr<EnemyBase>> EnemyManager::GetEnemy()
 {
 	return m_pEnemy;
+}
+
+void EnemyManager::AddEnemy(Vec3 pos)
+{
+	m_pEnemy.push_back(std::make_shared<EnemyTest>(pos, MV1DuplicateModel(m_modelHandle)));
 }
 

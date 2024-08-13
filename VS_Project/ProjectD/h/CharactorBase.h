@@ -4,7 +4,9 @@
 
 class CharactorBase:
 	public Constant,
-	public Transform
+	public Transform,
+	public Model,
+	public Animation
 {
 protected:
 

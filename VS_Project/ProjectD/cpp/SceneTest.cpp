@@ -11,6 +11,9 @@
 
 SceneTest::SceneTest()
 {
+	// エネミーマネージャの初期処理
+	EnemyManager::getInstance().Init();
+
 	// ディレクションインスタンスの作成
 	m_pDirection = make_shared<Direction>();
 
@@ -18,8 +21,8 @@ SceneTest::SceneTest()
 	m_pPlayer = make_shared<Player>(m_pDirection);
 
 	// エネミーを追加する
-	EnemyManager::getInstance().AddEnemy<EnemyTest>(Vec3{ 60,0,60 });
-	EnemyManager::getInstance().AddEnemy<EnemyTest>(Vec3{ 60,0,30 });
+	EnemyManager::getInstance().AddEnemy(Vec3{ 60,0,60 });
+	EnemyManager::getInstance().AddEnemy(Vec3{ 60,0,30 });
 	m_updateFunc = &SceneTest::NormalUpdate;
 	m_drawFunc = &SceneTest::NormalDraw;
 }
