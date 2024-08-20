@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="cpp\Application.cpp" />
     <ClCompile Include="cpp\CameraBase.cpp" />
+    <ClCompile Include="cpp\CollisionManager.cpp" />
     <ClCompile Include="cpp\Direction.cpp" />
     <ClCompile Include="cpp\MainActor.cpp" />
     <ClCompile Include="cpp\CharactorBase.cpp" />
@@ -62,6 +63,7 @@
   <ItemGroup>
     <ClInclude Include="h\Application.h" />
     <ClInclude Include="h\CameraBase.h" />
+    <ClInclude Include="h\CollisionManager.h" />
     <ClInclude Include="h\Direction.h" />
     <ClInclude Include="h\MainActor.h" />
     <ClInclude Include="h\CharactorBase.h" />
@@ -73,6 +75,7 @@
     <ClInclude Include="h\GraphicManager.h" />
     <ClInclude Include="h\Input.h" />
     <ClInclude Include="h\ObjectWall.h" />
+    <ClInclude Include="h\Player.h" />
     <ClInclude Include="h\PlayerCamera.h" />
     <ClInclude Include="h\DirectionCamera.h" />
     <ClInclude Include="h\SceneSelect.h" />
@@ -80,7 +83,6 @@
     <ClInclude Include="h\StaticObjectBase.h" />
     <ClInclude Include="h\StaticObjectManager.h" />
     <ClInclude Include="h\SubActor.h" />
-    <ClInclude Include="h\Player.h" />
     <ClInclude Include="h\SceneBase.h" />
     <ClInclude Include="h\SceneManager.h" />
     <ClInclude Include="h\SceneTest.h" />

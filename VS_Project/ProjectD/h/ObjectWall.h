@@ -5,10 +5,9 @@ class ObjectWall :
     public StaticObjectBase
 {
 public:
-    ObjectWall();
+    ObjectWall(int modelHandle);
     virtual ~ObjectWall();
 
-    void Update();
     void Draw() const;
 };
 

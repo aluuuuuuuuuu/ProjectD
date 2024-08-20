@@ -8,6 +8,8 @@
 #include "UI.h"
 #include "Direction.h"
 #include "EffekseerForDXLib.h"
+#include "StaticObjectManager.h"
+#include "CollisionManager.h"
 
 SceneTest::SceneTest()
 {
@@ -19,6 +21,15 @@ SceneTest::SceneTest()
 
 	// プレイヤーのインスタンスの作成
 	m_pPlayer = make_shared<Player>(m_pDirection);
+
+	// スタティックオブジェクトマネージャーのインスタンスの作成
+	m_pStaticObject = make_shared<StaticObjectManager>();
+
+	// スタティックオブジェクトマネージャーの初期処理
+	m_pStaticObject->InitTest();
+
+	// コリジョンマネージャーの作成
+	m_pCollisionManager = make_shared<CollisionManager>(m_pPlayer->GetCupsule());
 
 	// エネミーを追加する
 	EnemyManager::getInstance().AddEnemy(Vec3{ 60,0,60 });
@@ -104,6 +115,9 @@ void SceneTest::NormalUpdate()
 
 void SceneTest::NormalDraw() const
 {
+	// スタティックオブジェクトの描画
+	m_pStaticObject->Draw(m_pPlayer->GetPos());
+
 	// エネミーの描画
 	EnemyManager::getInstance().Draw();
 

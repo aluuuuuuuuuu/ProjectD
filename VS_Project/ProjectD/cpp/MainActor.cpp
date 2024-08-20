@@ -18,7 +18,10 @@ MainActor::MainActor()
 	InitModel(MV1LoadModel("data/model/MainActor.mv1"));
 
 	// アニメーションの初期処理
-	InitAnimation(ModelHandle, Constants["ANIM_IDLE"], 0.15f);
+	InitAnimation(ModelHandle, static_cast<int>(Constants["ANIM_IDLE"]), 0.15f);
+
+	// カプセルの初期化処理
+	InitCapsule(Position, 10, 10);
 }
 
 MainActor::~MainActor()
@@ -31,14 +34,20 @@ void MainActor::Update()
 	UpdateAnimation(ModelHandle);
 	UpdateModel(GetTransformInstance());
 
+	// カプセルの更新
+	Set(Position);
+
 	// 移動ベクトルの初期化
 	m_moveVec = 0;
 }
 
 void MainActor::Draw() const
 {
+	// モデルの描画
 	DrawModel();
 
+	// カプセルのテスト描画
+	DrawCapsule();
 }
 
 void MainActor::Control(Vec3 angle)
@@ -61,10 +70,10 @@ void MainActor::Control(Vec3 angle)
 void MainActor::AnimationControl()
 {
 	if (m_moveVec.Length() == 0.0f) {
-		ChangeAnimation(ModelHandle, Constants["ANIM_CROUCH"], true, 0.05f);
+		ChangeAnimation(ModelHandle, static_cast<int>(Constants["ANIM_CROUCH"]), true, 0.05f);
 	}
 	else if (m_moveVec.Length() != 0.0f) {
-		ChangeAnimation(ModelHandle, Constants["ANIM_WALK"], true, 0.15f);
+		ChangeAnimation(ModelHandle, static_cast<int>(Constants["ANIM_WALK"]), true, 0.15f);
 	}
 }
 

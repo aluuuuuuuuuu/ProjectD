@@ -223,51 +223,51 @@ int Animation::GetAnimTag()
 
 // カプセル
 
-Capsule::Capsule()
+CapsuleCollision::CapsuleCollision()
 {
 }
 
-Capsule::~Capsule()
+CapsuleCollision::~CapsuleCollision()
 {
 }
 
-void Capsule::InitCapsule(Vec3 pos, float radius, float height)
+void CapsuleCollision::InitCapsule(Vec3 pos, float radius, float height)
 {
-	Radius = radius;
+	m_data.Radius = radius;
 	m_height = height;
 
-	Vec3 vecA = Vec3{ pos.x,pos.y + Radius,pos.z };
-	Vec3 vecB = Vec3{ pos.x,pos.y + Radius + m_height,pos.z };
+	Vec3 vecA = Vec3{ pos.x,pos.y + m_data.Radius,pos.z };
+	Vec3 vecB = Vec3{ pos.x,pos.y + m_data.Radius + m_height,pos.z };
 
-	PointA = vecA;
-	PointB = vecB;
+	m_data.PointA = vecA;
+	m_data.PointB = vecB;
 }
 
-void Capsule::Aactivation()
+void CapsuleCollision::Aactivation()
 {
 	m_valid = true;
 }
 
-void Capsule::Invalidation()
+void CapsuleCollision::Invalidation()
 {
 	m_valid = false;
 }
 
-bool Capsule::IsActivation()
+bool CapsuleCollision::IsActivation()
 {
 	return m_valid;
 }
 
-void Capsule::Set(Vec3 pos)
+void CapsuleCollision::Set(Vec3 pos)
 {
-	Vec3 vecA = Vec3{ pos.x,pos.y + Radius,pos.z };
-	Vec3 vecB = Vec3{ pos.x,pos.y + Radius + m_height,pos.z };
+	Vec3 vecA = Vec3{ pos.x,pos.y + m_data.Radius,pos.z };
+	Vec3 vecB = Vec3{ pos.x,pos.y + m_data.Radius + m_height,pos.z };
 
-	PointA = vecA;
-	PointB = vecB;
+	m_data.PointA = vecA;
+	m_data.PointB = vecB;
 }
 
-float Capsule::CapsuleDistance(const Vec3& p1, const Vec3& q1, const Vec3& p2, const Vec3& q2) const
+float CapsuleCollision::CapsuleDistance(const Vec3& p1, const Vec3& q1, const Vec3& p2, const Vec3& q2) const
 {
 	Vec3 d1 = q1 - p1;
 	Vec3 d2 = q2 - p2;
@@ -313,28 +313,38 @@ float Capsule::CapsuleDistance(const Vec3& p1, const Vec3& q1, const Vec3& p2, c
 	return (closestPoint1 - closestPoint2).Length();
 }
 
-void Capsule::DrawCapsule() const
+void CapsuleCollision::DrawCapsule() const
 {
 	if (m_valid) {
-		DrawSphere3D(PointA.VGet(), Radius, 4, 0xff0000, 0xff0000, false);
-		DrawSphere3D(PointB.VGet(), Radius, 4, 0xff0000, 0xff0000, false);
+		DrawSphere3D(m_data.PointA.VGet(), m_data.Radius, 4, 0xff0000, 0xff0000, false);
+		DrawSphere3D(m_data.PointB.VGet(), m_data.Radius, 4, 0xff0000, 0xff0000, false);
 
-		Vec3 veca = Vec3{ PointA.x + Radius,PointA.y,PointA.z };
-		Vec3 vecb = Vec3{ PointB.x + Radius,PointB.y,PointB.z };
+		Vec3 veca = Vec3{ m_data.PointA.x + m_data.Radius,m_data.PointA.y,m_data.PointA.z };
+		Vec3 vecb = Vec3{ m_data.PointB.x + m_data.Radius,m_data.PointB.y,m_data.PointB.z };
 		DrawLine3D(veca.VGet(), vecb.VGet(), 0xff0000);
 
-		veca = Vec3{ PointA.x - Radius,PointA.y,PointA.z };
-		vecb = Vec3{ PointB.x - Radius,PointB.y,PointB.z };
+		veca = Vec3{ m_data.PointA.x - m_data.Radius,m_data.PointA.y,m_data.PointA.z };
+		vecb = Vec3{ m_data.PointB.x - m_data.Radius,m_data.PointB.y,m_data.PointB.z };
 		DrawLine3D(veca.VGet(), vecb.VGet(), 0xff0000);
 
-		veca = Vec3{ PointA.x ,PointA.y,PointA.z + Radius };
-		vecb = Vec3{ PointB.x ,PointB.y,PointB.z + Radius };
+		veca = Vec3{ m_data.PointA.x ,m_data.PointA.y,m_data.PointA.z + m_data.Radius };
+		vecb = Vec3{ m_data.PointB.x ,m_data.PointB.y,m_data.PointB.z + m_data.Radius };
 		DrawLine3D(veca.VGet(), vecb.VGet(), 0xff0000);
 
-		veca = Vec3{ PointA.x ,PointA.y,PointA.z - Radius };
-		vecb = Vec3{ PointB.x ,PointB.y,PointB.z - Radius };
+		veca = Vec3{ m_data.PointA.x ,m_data.PointA.y,m_data.PointA.z - m_data.Radius };
+		vecb = Vec3{ m_data.PointB.x ,m_data.PointB.y,m_data.PointB.z - m_data.Radius };
 		DrawLine3D(veca.VGet(), vecb.VGet(), 0xff0000);
 	}
+}
+
+// ボックスコリジョンクラス
+
+BoxCollision::BoxCollision()
+{
+}
+
+BoxCollision::~BoxCollision()
+{
 }
 
 // エフェクトクラス

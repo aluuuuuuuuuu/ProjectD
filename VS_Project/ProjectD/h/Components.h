@@ -135,11 +135,18 @@ private:
 
 };
 
-class Capsule
+struct CapsuleData
+{
+	Vec3 PointA;
+	Vec3 PointB;
+	float Radius;
+};
+
+class CapsuleCollision
 {
 public:
-	Capsule();
-	virtual ~Capsule();
+	CapsuleCollision();
+	virtual ~CapsuleCollision();
 
 	// 初期化処理
 	void InitCapsule(Vec3 pos, float radius, float height);
@@ -162,12 +169,23 @@ public:
 	// テスト表示
 	void DrawCapsule() const;
 
-	Vec3 PointA = 0;
-	Vec3 PointB = 0;
-	float Radius = 0;
+	CapsuleData m_data;
 private:
 	float m_height = 0;
 	bool m_valid = true;	// 基本有効化されている
+};
+
+class BoxCollision
+{
+public:
+	BoxCollision();
+	virtual ~BoxCollision();
+
+	Vec3 Center;
+	Vec3 HalfSize;
+	std::vector<Vec3> axes;
+private:
+
 };
 
 // Effekseerを使ったエフェクトコンポーネント

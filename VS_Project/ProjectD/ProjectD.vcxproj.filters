@@ -91,15 +91,6 @@
     <ClCompile Include="cpp\PlayerCamera.cpp">
       <Filter>Object</Filter>
     </ClCompile>
-    <ClCompile Include="cpp\CameraBase.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="cpp\DirectionCamera.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="cpp\Direction.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="cpp\SceneTitle.cpp">
       <Filter>Scene</Filter>
     </ClCompile>
@@ -107,12 +98,24 @@
       <Filter>Scene</Filter>
     </ClCompile>
     <ClCompile Include="cpp\ObjectWall.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="cpp\StaticObjectBase.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>Object</Filter>
     </ClCompile>
     <ClCompile Include="cpp\StaticObjectManager.cpp">
+      <Filter>Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="cpp\StaticObjectBase.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="cpp\DirectionCamera.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="cpp\CameraBase.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="cpp\Direction.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="cpp\CollisionManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -182,9 +185,6 @@
     <ClInclude Include="h\SubActor.h">
       <Filter>Charactor</Filter>
     </ClInclude>
-    <ClInclude Include="h\Player.h">
-      <Filter>Charactor</Filter>
-    </ClInclude>
     <ClInclude Include="h\SceneBase.h">
       <Filter>Scene</Filter>
     </ClInclude>
@@ -209,17 +209,31 @@
     <ClInclude Include="h\PlayerCamera.h">
       <Filter>Object</Filter>
     </ClInclude>
-    <ClInclude Include="h\CameraBase.h" />
-    <ClInclude Include="h\DirectionCamera.h" />
-    <ClInclude Include="h\Direction.h" />
     <ClInclude Include="h\SceneTitle.h">
       <Filter>Scene</Filter>
     </ClInclude>
     <ClInclude Include="h\SceneSelect.h">
       <Filter>Scene</Filter>
     </ClInclude>
-    <ClInclude Include="h\ObjectWall.h" />
-    <ClInclude Include="h\StaticObjectBase.h" />
-    <ClInclude Include="h\StaticObjectManager.h" />
+    <ClInclude Include="h\ObjectWall.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="h\Direction.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="h\StaticObjectManager.h">
+      <Filter>Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="h\StaticObjectBase.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="h\DirectionCamera.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="h\CameraBase.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="h\CollisionManager.h" />
+    <ClInclude Include="h\Player.h" />
   </ItemGroup>
 </Project>

@@ -36,6 +36,9 @@ bool Application::Init()
 	// ライティングを使用する
 	SetUseLighting(true);
 
+	// ライトのカラーを調整する
+	SetLightDifColor(GetColorF(0.9f, 0.9f, 0.9f, 0.0f));
+
 	// ニアレストネイバー法で描画する
 	SetDrawMode(DX_DRAWMODE_NEAREST);
 
@@ -54,6 +57,7 @@ bool Application::Init()
 		return -1;
 	}
 
+	// エフェクサーの歪みを初期化する
 	Effekseer_InitDistortion(1.0f);
 
 	// フルスクリーンウインドウの切り替えでリソースが消えるのを防ぐ。
@@ -75,7 +79,7 @@ bool Application::Init()
 	SetDrawScreen(DX_SCREEN_BACK);
 
 	// 背景色の設定
-	SetBackgroundColor(0, 0, 0, 0);
+	SetBackgroundColor(20, 20, 200);
 
 	// カーソルの表示設定
 	SetMouseDispFlag(true);

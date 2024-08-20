@@ -2,7 +2,8 @@
 #include "CharactorBase.h"
 
 class MainActor:
-	public CharactorBase
+	public CharactorBase,
+	public CapsuleCollision
 {
 public:
 	MainActor();

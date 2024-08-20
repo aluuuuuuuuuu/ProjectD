@@ -71,6 +71,11 @@ Vec3 Player::GetPos() const
 	}
 }
 
+CapsuleData& Player::GetCupsule()
+{
+	return m_pMainActor->m_data;
+}
+
 void Player::MainActorUpdate()
 {
 	m_pMainActor->Control(m_pCamera->Angle);
@@ -113,7 +118,7 @@ void Player::ChangeMode()
 		m_changeAngle = m_pCamera->Angle;
 
 		// カメラのモードを変更する
-		m_pCamera->ChangeMode(OS_MODE);
+		m_pCamera->ChangeMode(SUBACTOR_MODE);
 	}
 	else {
 		m_updateMode = &Player::MainActorUpdate;
@@ -127,7 +132,7 @@ void Player::ChangeMode()
 		UI::getInstance().SetEnemyInteractFlag(false);
 
 		// カメラのモードを変更する
-		m_pCamera->ChangeMode(BRUTUS_MODE);
+		m_pCamera->ChangeMode(MAINACTOR_MODE);
 	}
 }
 

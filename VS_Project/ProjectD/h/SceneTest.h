@@ -2,6 +2,8 @@
 #include "SceneBase.h"
 #include <memory>
 
+class CollisionManager;
+class StaticObjectManager;
 class Direction;
 class Player;
 // テストシーン
@@ -37,5 +39,11 @@ private:
 
     // ディレクションのぽインタ
     std::shared_ptr<Direction> m_pDirection;
+
+    // スタティックオブジェクトマネージャーのポインタ
+    std::shared_ptr<StaticObjectManager> m_pStaticObject;
+
+    // コリジョンマネージャーのポインタ
+    std::shared_ptr<CollisionManager> m_pCollisionManager;
 };
 

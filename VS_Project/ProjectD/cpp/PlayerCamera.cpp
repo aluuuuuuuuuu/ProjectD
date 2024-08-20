@@ -12,6 +12,9 @@ PlayerCamera::PlayerCamera()
 
 	// モードの初期化
 	m_modeFunc = &PlayerCamera::MainActorMode;
+
+	// ライトのカラーを調整する
+	SetLightDifColor(GetColorF(0.8f, 0.8f, 0.8f, 0.0f));
 }
 
 PlayerCamera::~PlayerCamera()
@@ -20,22 +23,29 @@ PlayerCamera::~PlayerCamera()
 
 void PlayerCamera::Init(Vec3 pos)
 {
+	// 初期位置に設定する
 	Position = Vec3{ pos.x + Constants["CAMERA_BASE_POS_X"],pos.y + Constants["CAMERA_BASE_POS_Y"], pos.z + Constants["CAMERA_BASE_POS_Z"], };
 }
 
 void PlayerCamera::Update(Vec3 pos)
 {
 	(this->*m_modeFunc)(pos);
+
+	// ライトの回転
+	// 基準となるターゲットの座標
+	VECTOR basePos = VGet(Constants["CAMERA_TARGET_POS_X"], Constants["CAMERA_TARGET_POS_Y"], Constants["CAMERA_TARGET_POS_Z"]);
+
+	SetLightDirection(MakeBasePos(basePos));
 }
 
 void PlayerCamera::ChangeMode(int mode)
 {
 	// 引数によってモードを変更する
-	if (mode == OS_MODE) {
+	if (mode == SUBACTOR_MODE) {
 		m_modeFunc = &PlayerCamera::SubActorMode;
 		return;
 	}
-	if (mode == BRUTUS_MODE) {
+	if (mode == MAINACTOR_MODE) {
 		m_modeFunc = &PlayerCamera::MainActorMode;
 		return;
 	}
@@ -87,18 +97,8 @@ Vec3 PlayerCamera::RotateMainActorMode(Vec3 pos)
 	// 基準となるカメラの座標
 	VECTOR basePos = VGet(Constants["CAMERA_BASE_POS_X"], Constants["CAMERA_BASE_POS_Y"], Constants["CAMERA_BASE_POS_Z"]);
 
-	// 回転行列を作成
-	MATRIX rotMtxX, rotMtxZ;
-	rotMtxX = MGetRotY(Angle.y);
-	rotMtxZ = MGetRotX(Angle.z);
-
-
-	// 基準座標を行列で変換
-	basePos = VTransform(basePos, rotMtxZ);
-	basePos = VTransform(basePos, rotMtxX);
-
 	// カメラ座標はプレイヤー座標から変換した座標を足したところ
-	return VAdd(VGet(pos.x, 0.0f, pos.z), basePos);
+	return VAdd(VGet(pos.x, 0.0f, pos.z), MakeBasePos(basePos));
 }
 
 Vec3 PlayerCamera::RotateSubActorMode(Vec3 pos)
@@ -129,18 +129,20 @@ Vec3 PlayerCamera::RotateSubActorMode(Vec3 pos)
 	// 基準となるターゲットの座標
 	VECTOR basePos = VGet(Constants["CAMERA_TARGET_POS_X"], Constants["CAMERA_TARGET_POS_Y"], Constants["CAMERA_TARGET_POS_Z"]);
 
+	// ターゲット座標はカメラ座標から変換した座標を足したところ
+	return VAdd(Position.VGet(), MakeBasePos(basePos));
+}
+
+VECTOR PlayerCamera::MakeBasePos(VECTOR base)
+{
 	// 回転行列を作成
 	MATRIX rotMtxX, rotMtxZ;
 	rotMtxX = MGetRotY(Angle.y);
 	rotMtxZ = MGetRotX(Angle.z);
 
-
 	// 基準座標を行列で変換
-	basePos = VTransform(basePos, rotMtxZ);
-	basePos = VTransform(basePos, rotMtxX);
+	base = VTransform(base, rotMtxZ);
+	base = VTransform(base, rotMtxX);
 
-	// ターゲット座標はカメラ座標から変換した座標を足したところ
-	return VAdd(Position.VGet(), basePos);
-
-	DrawSphere3D(VAdd(Position.VGet(), basePos), 16, 16, 0xff0000, 0xff0000, true);
+	return base;
 }

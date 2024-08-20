@@ -1,6 +1,7 @@
 #pragma once
 #include <memory>
 #include "Vec3.h"
+#include "Components.h"
 
 class Direction;
 class MainActor;
@@ -15,6 +16,8 @@ public:
 
 	void Update();
 	void Draw() const;
+
+	CapsuleData& GetCupsule();
 
 	Vec3 GetPos() const;
 private:
