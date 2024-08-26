@@ -32,6 +32,7 @@
     <ClCompile Include="cpp\EnemyTest.cpp" />
     <ClCompile Include="cpp\GraphicManager.cpp" />
     <ClCompile Include="cpp\Input.cpp" />
+    <ClCompile Include="cpp\ObjectFloor.cpp" />
     <ClCompile Include="cpp\ObjectWall.cpp" />
     <ClCompile Include="cpp\PlayerCamera.cpp" />
     <ClCompile Include="cpp\DirectionCamera.cpp" />
@@ -74,6 +75,7 @@
     <ClInclude Include="h\EnemyTest.h" />
     <ClInclude Include="h\GraphicManager.h" />
     <ClInclude Include="h\Input.h" />
+    <ClInclude Include="h\ObjectFloor.h" />
     <ClInclude Include="h\ObjectWall.h" />
     <ClInclude Include="h\Player.h" />
     <ClInclude Include="h\PlayerCamera.h" />

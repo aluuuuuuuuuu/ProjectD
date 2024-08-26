@@ -1,5 +1,6 @@
 #include "StaticObjectManager.h"
 #include "StaticObjectBase.h"
+#include "ObjectFloor.h"
 #include "ObjectWall.h"
 #include "DxLib.h"
 
@@ -15,7 +16,9 @@ StaticObjectManager::~StaticObjectManager()
 // テストステージでのオブジェクトの生成
 void StaticObjectManager::InitTest()
 {
+	mv1
 	m_pStaticObject.push_back(std::make_shared<ObjectWall>(m_wallHandle));
+	m_pStaticObject.push_back(std::make_shared <ObjectFloor>(m_wallHandle));
 }
 
 void StaticObjectManager::InitStage1()
