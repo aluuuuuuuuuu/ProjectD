@@ -5,7 +5,7 @@ class ObjectFloor:
 	public StaticObjectBase
 {
 public:
-	ObjectFloor(int modelHandle);
+	ObjectFloor(int modelHandle, Vec3 pos);
 	virtual ~ObjectFloor();
 
 	void Draw() const;

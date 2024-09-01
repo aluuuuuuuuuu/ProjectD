@@ -9,7 +9,7 @@
 #include "Direction.h"
 #include "EffekseerForDXLib.h"
 #include "StaticObjectManager.h"
-#include "CollisionManager.h"
+#include "MapCollisionManager.h"
 
 SceneTest::SceneTest()
 {
@@ -29,7 +29,7 @@ SceneTest::SceneTest()
 	m_pStaticObject->InitTest();
 
 	// コリジョンマネージャーの作成
-	m_pCollisionManager = make_shared<CollisionManager>(m_pPlayer->GetCupsule());
+	m_pCollisionManager = make_shared<MapCollisionManager>(m_pPlayer->GetCupsule(),*m_pStaticObject);
 
 	// エネミーを追加する
 	EnemyManager::getInstance().AddEnemy(Vec3{ 60,0,60 });

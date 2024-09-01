@@ -18,10 +18,15 @@ public:
 	void InitStage1();
 
 	void Draw(Vec3 plPos) const;
+
+	std::vector<std::shared_ptr<StaticObjectBase>> m_pStaticObject;	// 要改善
+
 private:
-	std::vector<std::shared_ptr<StaticObjectBase>> m_pStaticObject;
 
 	// 壁オブジェクトのモデルハンドル
 	int m_wallHandle;
+
+	// 床オブジェクトのモデルハンドル
+	int m_floorHandle;
 };
 

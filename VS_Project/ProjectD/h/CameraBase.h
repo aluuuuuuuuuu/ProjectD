@@ -6,5 +6,6 @@ class CameraBase:
 	public Transform,
 	public Constant
 {
+public:
 };
 

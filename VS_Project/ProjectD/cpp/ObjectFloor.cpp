@@ -1,10 +1,12 @@
 #include "ObjectFloor.h"
 #include "DxLib.h"
 
-ObjectFloor::ObjectFloor(int modelHandle) 
+ObjectFloor::ObjectFloor(int modelHandle, Vec3 pos)
 {
+	m_code = FLOOR_CODE;
+	Position = pos;
 	ModelHandle = MV1DuplicateModel(modelHandle);
-	Scale = Vec3{ 0.5f,0.01f,1.2f };
+	Scale = Vec3{ 1.2f,0.01f,1.2f };
 	UpdateModel(GetTransformInstance());
 }
 

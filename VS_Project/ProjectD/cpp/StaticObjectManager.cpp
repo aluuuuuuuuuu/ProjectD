@@ -7,6 +7,7 @@
 StaticObjectManager::StaticObjectManager()
 {
 	m_wallHandle = MV1LoadModel("data/model/object/Wall.mv1");
+	m_floorHandle = MV1LoadModel("data/model/object/Floor.mv1");
 }
 
 StaticObjectManager::~StaticObjectManager()
@@ -16,9 +17,9 @@ StaticObjectManager::~StaticObjectManager()
 // テストステージでのオブジェクトの生成
 void StaticObjectManager::InitTest()
 {
-	mv1
-	m_pStaticObject.push_back(std::make_shared<ObjectWall>(m_wallHandle));
-	m_pStaticObject.push_back(std::make_shared <ObjectFloor>(m_wallHandle));
+	m_pStaticObject.push_back(std::make_shared<ObjectWall>(m_wallHandle, Vec3{ 20.0f,0.0f,0.0f }));
+
+	m_pStaticObject.push_back(std::make_shared <ObjectFloor>(m_floorHandle, Vec3{ 0.0f,-4.0f,0.0f }));
 }
 
 void StaticObjectManager::InitStage1()

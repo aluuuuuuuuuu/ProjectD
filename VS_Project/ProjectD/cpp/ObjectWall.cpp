@@ -1,10 +1,12 @@
 #include "ObjectWall.h"
 #include "DxLib.h"
 
-ObjectWall::ObjectWall(int modelHandle)
+ObjectWall::ObjectWall(int modelHandle, Vec3 pos)
 {
+	m_code = WALL_CODE;
+	Position = pos;
 	ModelHandle = MV1DuplicateModel(modelHandle);
-	Scale = 0.1f;
+	Scale = Vec3{ 0.01f,0.4f,0.4f };
 	UpdateModel(GetTransformInstance());
 
 }
