@@ -115,10 +115,10 @@
     <ClCompile Include="cpp\Direction.cpp">
       <Filter>Scene</Filter>
     </ClCompile>
-    <ClCompile Include="cpp\CollisionManager.cpp">
+    <ClCompile Include="cpp\ObjectFloor.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="cpp\ObjectFloor.cpp">
+    <ClCompile Include="cpp\MapCollisionManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -153,6 +153,7 @@
     <None Include="data\constant\Enemy.csv">
       <Filter>CSV\Constant</Filter>
     </None>
+    <None Include="Collision.csv" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="h\Application.h">
@@ -236,8 +237,8 @@
     <ClInclude Include="h\CameraBase.h">
       <Filter>Object</Filter>
     </ClInclude>
-    <ClInclude Include="h\CollisionManager.h" />
     <ClInclude Include="h\Player.h" />
     <ClInclude Include="h\ObjectFloor.h" />
+    <ClInclude Include="h\MapCollisionManager.h" />
   </ItemGroup>
 </Project>

@@ -50,6 +50,7 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Collision.csv" />
     <None Include="data\constant\Application.csv" />
     <None Include="data\constant\Direction.csv" />
     <None Include="data\constant\Enemy.csv" />
