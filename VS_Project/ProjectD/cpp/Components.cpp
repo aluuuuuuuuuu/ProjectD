@@ -283,12 +283,6 @@ float CapsuleCollision::CapsuleDistance(const Vec3& p1, const Vec3& q1, const Ve
 	float denom = a * e - b * b;
 
 	// ƒ}ƒNƒ‚ğ–³Œø‰»‚µ‚Ä‹£‡‚ğ–h‚®
-#ifdef max
-#undef max
-#endif
-#ifdef min
-#undef min
-#endif
 
 	if (denom != 0) {
 		s = (b * f - c * e) / denom;
@@ -296,16 +290,16 @@ float CapsuleCollision::CapsuleDistance(const Vec3& p1, const Vec3& q1, const Ve
 	else {
 		s = 0.0f;
 	}
-	s = std::max(0.0f, std::min(1.0f, s));
+	s = (std::max)(0.0f, (std::min)(1.0f, s));
 	t = (b * s + f) / e;
 
 	if (t < 0.0f) {
 		t = 0.0f;
-		s = std::max(0.0f, std::min(1.0f, -c / a));
+		s = (std::max)(0.0f, (std::min)(1.0f, -c / a));
 	}
 	else if (t > 1.0f) {
 		t = 1.0f;
-		s = std::max(0.0f, std::min(1.0f, (b - c) / a));
+		s = (std::max)(0.0f, (std::min)(1.0f, (b - c) / a));
 	}
 
 	Vec3 closestPoint1 = p1 + d1 * s;
