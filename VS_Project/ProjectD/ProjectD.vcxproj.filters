@@ -153,7 +153,9 @@
     <None Include="data\constant\Enemy.csv">
       <Filter>CSV\Constant</Filter>
     </None>
-    <None Include="Collision.csv" />
+    <None Include="data\constant\Collision.csv">
+      <Filter>CSV\Constant</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="h\Application.h">

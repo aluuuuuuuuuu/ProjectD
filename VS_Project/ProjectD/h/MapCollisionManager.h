@@ -4,6 +4,7 @@
 #include <vector>
 #include <memory>
 
+
 class StaticObjectManager;
 class MapCollisionManager:
 	public Constant
@@ -23,19 +24,25 @@ public:
 
 private:
 
-	// 最近接点を求める関数
-	Vec3 ClosestPointOnLineSegment(Vec3 A, Vec3 B, Vec3 Point);
+	// カプセルとボックスの平面上の当たり判定をとる関数
+	bool ColliosionBoxCapsuleParallel(Vec3 min, Vec3 max);
 
-	// 距離を計算する関数
-	float DistanceSquared(Vec3 A, Vec3 B);
-
-	// 当たっているかどうか判定する
-	bool CheckCollisionCapsuleAABB(Vec3 min, Vec3 max, Vec3 center);
+	// プレイヤーがずれる移動ベクトルを返す
+	Vec3 CollisionMove(Vec3 min, Vec3 max);
 
 	// プレイヤーのカプセルの情報
 	CapsuleData& m_playerCapsule;
 
 	// 静的オブジェクトマネージャーの参照
 	StaticObjectManager& m_staticObjectManager;
+
+	// プレイヤーの前フレームの座標
+	CapsuleData m_beforePlayerPos;
+
+	// 衝突しているすべての壁の移動ベクトル
+	std::vector<Vec3> m_move;
+
+	// 最終的な壁に対するコリジョンの移動ベクトル
+	Vec3 m_lastMoveVec;
 };
 

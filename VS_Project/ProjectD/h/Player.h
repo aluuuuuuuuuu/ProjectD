@@ -20,6 +20,9 @@ public:
 	CapsuleData& GetCupsule();
 
 	Vec3 GetPos() const;
+
+	// 当たり判定後の移動ベクトルを受け取って反映させる
+	void CollisionMove(Vec3 vec);
 private:
 
 	// 関数ポインタ
@@ -57,5 +60,7 @@ private:
 	// 操作変更したときのカメラの位置と角度を保存する これはカメラに持たせるべきではby古川
 	Vec3 m_changePos;
 	Vec3 m_changeAngle;
+
+	// メインアクターの
 };
 

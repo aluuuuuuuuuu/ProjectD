@@ -1,8 +1,12 @@
 #include "ObjectWall.h"
 #include "DxLib.h"
 
-ObjectWall::ObjectWall(int modelHandle, Vec3 pos)
+ObjectWall::ObjectWall(int modelHandle, Vec3 pos,bool angle)
 {
+	if (!angle) {
+		Angle.y = 1.5708;
+	}
+
 	m_code = WALL_CODE;
 	Position = pos;
 	ModelHandle = MV1DuplicateModel(modelHandle);

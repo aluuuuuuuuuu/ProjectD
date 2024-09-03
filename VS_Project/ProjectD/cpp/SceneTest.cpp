@@ -103,8 +103,8 @@ void SceneTest::NormalUpdate()
 	// プレイヤーの更新
 	m_pPlayer->Update();
 
+	m_pPlayer->CollisionMove(m_pCollisionManager->PlayerCollision());
 	m_pCollisionManager->DrawColl();
-	m_pCollisionManager->PlayerCollision();
 
 	// UIの更新
 	UI::getInstance().Update();

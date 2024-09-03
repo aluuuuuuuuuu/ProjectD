@@ -71,6 +71,16 @@ Vec3 Player::GetPos() const
 	}
 }
 
+void Player::CollisionMove(Vec3 vec)
+{
+	// 当たり判定後の座標に移動する
+	m_pMainActor->Position += vec;
+
+	// 移動した後にメインアクターのカプセルとカメラを更新する
+	m_pCamera->Update(GetPos());
+	m_pMainActor->Set(m_pMainActor->Position);
+}
+
 CapsuleData& Player::GetCupsule()
 {
 	return m_pMainActor->m_data;
