@@ -21,7 +21,7 @@ void StaticObjectManager::InitTest()
 
 	m_pStaticObject.push_back(std::make_shared<ObjectWall>(m_wallHandle, Vec3{ 30.0f,0.0f,0.0f },true));
 
-	m_pStaticObject.push_back(std::make_shared <ObjectFloor>(m_floorHandle, Vec3{ 0.0f,-4.0f,0.0f }));
+	m_pStaticObject.push_back(std::make_shared <ObjectFloor>(m_floorHandle, Vec3{ 0.0f,-2.0f,0.0f }));
 }
 
 void StaticObjectManager::InitStage1()

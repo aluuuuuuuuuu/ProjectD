@@ -53,7 +53,7 @@ void SceneTest::Update()
 void SceneTest::Draw() const
 {
 	// グリッドの表示
-	DrawGrid();
+	//DrawGrid();
 
 	(this->*m_drawFunc)();
 }
@@ -146,6 +146,9 @@ void SceneTest::SeqUpdate()
 
 void SceneTest::SeqDraw() const
 {
+	// スタティックオブジェクトの描画
+	m_pStaticObject->Draw(m_pPlayer->GetPos());
+
 	// エネミーの描画
 	EnemyManager::getInstance().Draw();
 

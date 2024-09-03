@@ -23,6 +23,9 @@ public:
 
 	// 当たり判定後の移動ベクトルを受け取って反映させる
 	void CollisionMove(Vec3 vec);
+
+	// 現在サブアクターを操作しているかどうか
+	bool IsSubActorControl();
 private:
 
 	// 関数ポインタ

@@ -81,6 +81,11 @@ void Player::CollisionMove(Vec3 vec)
 	m_pMainActor->Set(m_pMainActor->Position);
 }
 
+bool Player::IsSubActorControl()
+{
+	return m_subActorFlag;
+}
+
 CapsuleData& Player::GetCupsule()
 {
 	return m_pMainActor->m_data;
