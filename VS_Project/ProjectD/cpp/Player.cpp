@@ -7,14 +7,15 @@
 #include "Direction.h"
 #include "EffekseerForDXLib.h"
 #include "DxLib.h"
+#include "EnemyBase.h"
 
-Player::Player(std::shared_ptr<Direction>& direction) :
+Player::Player(std::shared_ptr<Direction>& direction, std::list<std::shared_ptr<EnemyBase>> enemy) :
 	m_subActorFlag(false),
 	m_pDirection(direction)
 {
 	// 各ポインタの作成
 	m_pMainActor = std::make_shared<MainActor>();
-	m_pSubActor = std::make_shared<SubActor>();
+	m_pSubActor = std::make_shared<SubActor>(enemy);
 	m_pCamera = std::make_shared<PlayerCamera>();
 
 	// 関数ポインタの初期化
@@ -93,7 +94,10 @@ CapsuleData& Player::GetCupsule()
 
 void Player::MainActorUpdate()
 {
-	m_pMainActor->Control(m_pCamera->Angle);
+	if (!m_pCamera->IsModeChange()) {
+		m_pMainActor->Control(m_pCamera->Angle);
+	}
+
 	m_pMainActor->Update();
 }
 
@@ -128,26 +132,18 @@ void Player::ChangeMode()
 		// サブアクターに変更するときは初期処理を呼ぶ
 		m_pSubActor->ChangeInit(m_pCamera->Position, m_pMainActor->Position);
 
-		// 変更時のカメラの位置と角度を保存しておく
-		m_changePos = m_pCamera->Position;
-		m_changeAngle = m_pCamera->Angle;
-
 		// カメラのモードを変更する
-		m_pCamera->ChangeMode(SUBACTOR_MODE);
+		m_pCamera->ChangeMode(SUBACTOR_MODE, m_pMainActor->Position);
 	}
 	else {
 		m_updateMode = &Player::MainActorUpdate;
 		m_drawMode = &Player::MainActorDraw;
 
-		// メインアクターに変更するときは保存した座標にカメラを置く
-		m_pCamera->Position = m_changePos;
-		m_pCamera->Angle = m_changeAngle;
-
 		// メインアクターに切り替えたとき敵に対するボタン表示をオフにする
 		UI::getInstance().SetEnemyInteractFlag(false);
 
 		// カメラのモードを変更する
-		m_pCamera->ChangeMode(MAINACTOR_MODE);
+		m_pCamera->ChangeMode(MAINACTOR_MODE, m_pMainActor->Position);
 	}
 }
 
@@ -161,7 +157,7 @@ void Player::InteractFunc()
 	else if (UI::getInstance().GetEnemyInteractFlag()) {
 		// 気絶させるシーケンスに入る
 		m_pDirection->PlayFaintSequ(m_pCamera->Position);
-		m_pDirection->SetEnemyPos(m_pSubActor->GetEnemyPos());
+		m_pDirection->SetEnemyPtr(m_pSubActor->GetEnemyPtr());
 		// インタラクトボタンを非表示にする
 		UI::getInstance().SetEnemyInteractFlag(false);
 	}

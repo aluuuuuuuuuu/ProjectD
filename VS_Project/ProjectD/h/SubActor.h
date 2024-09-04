@@ -7,14 +7,14 @@ class SubActor :
 	public CharactorBase
 {
 public:
-	SubActor();
+	SubActor(std::list<std::shared_ptr<EnemyBase>> enemy);
 	virtual ~SubActor();
 
 	void Update();
 	void Draw() const;
 
-	// インタラクトする敵の座標を返す
-	Vec3 GetEnemyPos();
+	// インタラクトする敵のポインタを返す
+	std::shared_ptr<EnemyBase> GetEnemyPtr();
 
 	// 操作を変更したときの初期処理
 	void ChangeInit(Vec3 cameraPos, Vec3 mainActorPos);
@@ -28,8 +28,10 @@ private:
 	Vec3 m_mainActorPos;
 	
 	// インタラクトできる敵の座標
-	Vec3 m_enemyPos;
+	std::shared_ptr<EnemyBase> m_enemyPtr;
 
 	// サインカーブ用のフレーム
 	float m_flame;
+
+	std::list<std::shared_ptr<EnemyBase>>& m_enemyManager;
 };

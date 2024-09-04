@@ -13,14 +13,14 @@
 
 SceneTest::SceneTest()
 {
-	// エネミーマネージャの初期処理
-	EnemyManager::getInstance().Init();
+	// エネミーマネージャーの作成
+	m_pEnemyManager = make_shared<EnemyManager>();
 
 	// ディレクションインスタンスの作成
 	m_pDirection = make_shared<Direction>();
 
 	// プレイヤーのインスタンスの作成
-	m_pPlayer = make_shared<Player>(m_pDirection);
+	m_pPlayer = make_shared<Player>(m_pDirection,m_pEnemyManager->GetEnemy());
 
 	// スタティックオブジェクトマネージャーのインスタンスの作成
 	m_pStaticObject = make_shared<StaticObjectManager>();
@@ -32,8 +32,8 @@ SceneTest::SceneTest()
 	m_pCollisionManager = make_shared<MapCollisionManager>(m_pPlayer->GetCupsule(),*m_pStaticObject);
 
 	// エネミーを追加する
-	EnemyManager::getInstance().AddEnemy(Vec3{ 60,0,60 });
-	EnemyManager::getInstance().AddEnemy(Vec3{ 60,0,30 });
+	m_pEnemyManager->AddEnemy(Vec3{ 60,0,60 });
+	//m_pEnemyManager->AddEnemy(Vec3{ 60,0,30 });
 	m_updateFunc = &SceneTest::NormalUpdate;
 	m_drawFunc = &SceneTest::NormalDraw;
 }
@@ -98,7 +98,7 @@ void SceneTest::DrawGrid() const
 void SceneTest::NormalUpdate()
 {
 	// エネミーの更新
-	EnemyManager::getInstance().Update();
+	m_pEnemyManager->Update();
 
 	// プレイヤーの更新
 	m_pPlayer->Update();
@@ -122,7 +122,7 @@ void SceneTest::NormalDraw() const
 	m_pStaticObject->Draw(m_pPlayer->GetPos());
 
 	// エネミーの描画
-	EnemyManager::getInstance().Draw();
+	m_pEnemyManager->Draw();
 
 	// プレイヤーの描画
 	m_pPlayer->Draw();
@@ -139,6 +139,13 @@ void SceneTest::SeqUpdate()
 
 	// シーケンス終了処理
 	if (!m_pDirection->IsPlaySequ()) {
+
+		// 気絶フラグが立っていたらプレイヤーをメインアクターに変更する
+		if (m_pDirection->IsFaintEnemy()) {
+			m_pPlayer->ChangeMode();
+		}
+
+		// 通常の処理に移行する
 		m_updateFunc = &SceneTest::NormalUpdate;
 		m_drawFunc = &SceneTest::NormalDraw;
 	}
@@ -150,7 +157,7 @@ void SceneTest::SeqDraw() const
 	m_pStaticObject->Draw(m_pPlayer->GetPos());
 
 	// エネミーの描画
-	EnemyManager::getInstance().Draw();
+	m_pEnemyManager->Draw();
 
 	// プレイヤーの描画
 	m_pPlayer->Draw();

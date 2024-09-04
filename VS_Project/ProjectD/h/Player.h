@@ -1,8 +1,10 @@
 #pragma once
 #include <memory>
 #include "Vec3.h"
+#include <list>
 #include "Components.h"
 
+class EnemyBase;
 class Direction;
 class MainActor;
 class SubActor;
@@ -11,7 +13,7 @@ class PlayerCamera;
 class Player
 {
 public:
-	Player(std::shared_ptr<Direction>& direction);
+	Player(std::shared_ptr<Direction>& direction, std::list<std::shared_ptr<EnemyBase>> enemy);
 	~Player();
 
 	void Update();
@@ -26,6 +28,10 @@ public:
 
 	// 現在サブアクターを操作しているかどうか
 	bool IsSubActorControl();
+
+	// 操作モードを変更する関数
+	void ChangeMode();
+
 private:
 
 	// 関数ポインタ
@@ -40,9 +46,6 @@ private:
 
 	void SubActorUpdate();	// サブアクター操作時の更新処理
 	void SubActorDraw() const;		// サブアクター操作時の描画処理
-
-	// 操作モードを変更する関数
-	void ChangeMode();
 
 	// インタラクトボタンが押されたときの処理
 	void InteractFunc();
@@ -59,10 +62,6 @@ private:
 
 	// サブアクターを操作しているかどうか
 	bool m_subActorFlag;
-
-	// 操作変更したときのカメラの位置と角度を保存する これはカメラに持たせるべきではby古川
-	Vec3 m_changePos;
-	Vec3 m_changeAngle;
 
 	// メインアクターの
 };

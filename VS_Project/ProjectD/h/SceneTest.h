@@ -2,6 +2,7 @@
 #include "SceneBase.h"
 #include <memory>
 
+class EnemyManager;
 class MapCollisionManager;
 class StaticObjectManager;
 class Direction;
@@ -45,5 +46,8 @@ private:
 
     // コリジョンマネージャーのポインタ
     std::shared_ptr<MapCollisionManager> m_pCollisionManager;
+
+    // エネミーマネージャーのポインタ
+    std::shared_ptr<EnemyManager> m_pEnemyManager;
 };
 

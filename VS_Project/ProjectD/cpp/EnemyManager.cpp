@@ -3,16 +3,31 @@
 #include "DxLib.h"
 #include "EnemyTest.h"
 
-void EnemyManager::Init()
+EnemyManager::EnemyManager():
+	m_modelHandle(0)
 {
 	m_modelHandle = MV1LoadModel("data/model/enemy2.mv1");
+}
+
+EnemyManager::~EnemyManager()
+{
 }
 
 void EnemyManager::Update()
 {
 	// エネミーの更新処理
-	for (std::shared_ptr<EnemyBase> enemy : m_pEnemy) {
+	for (auto enemy : m_pEnemy) {
 		enemy->Update();
+	}
+
+	// エネミーが死亡していたら削除する
+	for (auto it = m_pEnemy.begin(); it != m_pEnemy.end();) {
+		if ((*it)->GetDeadFlag()) {
+			it = m_pEnemy.erase(it);	//要素を削除し次の要素を指すイテレータを取得
+		}
+		else {
+			it++;
+		}
 	}
 }
 

@@ -2,10 +2,11 @@
 #include <cassert>
 #include "Input.h"
 
-PlayerCamera::PlayerCamera()
+PlayerCamera::PlayerCamera():
+	m_changeFlag(false)
 {
-    // 外部ファイルから定数を取得する
-    assert(ConstantsFileLoad("data/constant/PlayerCamera.csv", Constants) == 1);
+	// 外部ファイルから定数を取得する
+	assert(ConstantsFileLoad("data/constant/PlayerCamera.csv", Constants) == 1);
 
 	// カメラのニアファーの設定
 	SetCameraNearFar(Constants["CAMERA_NEAR"], Constants["CAMERA_FAR"]);
@@ -38,23 +39,50 @@ void PlayerCamera::Update(Vec3 pos)
 	SetLightDirection(MakeBasePos(basePos));
 }
 
-void PlayerCamera::ChangeMode(int mode)
+void PlayerCamera::ChangeMode(int mode, Vec3 pos)
 {
 	// 引数によってモードを変更する
 	if (mode == SUBACTOR_MODE) {
+
+		// 即サブアクターモードに変更する
 		m_modeFunc = &PlayerCamera::SubActorMode;
+
+		// 座標を保存する
+		m_savePos = Position;
+		m_saveTarget = VAdd(Position.VGet(), MakeBasePos(VGet(Constants["CAMERA_TARGET_POS_X"], Constants["CAMERA_TARGET_POS_Y"], Constants["CAMERA_TARGET_POS_Z"])));
+		m_saveAngle = Angle;
 		return;
 	}
 	if (mode == MAINACTOR_MODE) {
-		m_modeFunc = &PlayerCamera::MainActorMode;
+
+		// 切り替え中フラグを立てる
+		m_changeFlag = true;
+
+		// 保存した座標に移動する処理に移る
+		m_modeFunc = &PlayerCamera::ChangeMainActorMode;
+
+		// 元居た座標への単位ベクトルを作成する
+		m_unitPos = (m_savePos - Position).GetNormalized();
+
+		// 現在のターゲットを求める
+		m_target = VAdd(Position.VGet(), MakeBasePos(VGet(Constants["CAMERA_TARGET_POS_X"], Constants["CAMERA_TARGET_POS_Y"], Constants["CAMERA_TARGET_POS_Z"])));
+
+		// 現在のターゲットからメインアクターに向かうターゲットへの単位ベクトルを作成する
+		m_unitTarget = (Vec3{ pos.x,Constants["CAMERA_MARGIN_Y"],pos.z } - m_target).GetNormalized();
+
 		return;
 	}
+}
+
+bool PlayerCamera::IsModeChange()
+{
+	return m_changeFlag;
 }
 
 void PlayerCamera::MainActorMode(Vec3 pos)
 {
 	// 回転
-	Position =  RotateMainActorMode(pos);
+	Position = RotateMainActorMode(pos);
 
 	// カメラの位置をセットする
 	SetCameraPositionAndTarget_UpVecY(Position.VGet(), VECTOR{ pos.x,Constants["CAMERA_MARGIN_Y"],pos.z });
@@ -67,6 +95,42 @@ void PlayerCamera::SubActorMode(Vec3 pos)
 
 	// カメラの位置をセットする
 	SetCameraPositionAndTarget_UpVecY(Position.VGet(), RotateSubActorMode(pos).VGet());
+}
+
+void PlayerCamera::ChangeMainActorMode(Vec3 pos)
+{
+	bool a  = false;
+	bool b = false;
+	if ((Vec3{ pos.x,Constants["CAMERA_MARGIN_Y"],pos.z } - m_target).Length() > 2.0f) {
+		// 単位ベクトルの方向にターゲットを移動する
+		m_target += m_unitTarget * Constants["CAMERA_TARGET_MOVE_SCALE"];
+	}
+	else {
+		a = true;
+	}
+	if ((Position - m_savePos).Length() > 5.0f) {
+		// 単位ベクトルの方向に一定の速度で移動する
+		Position += m_unitPos * Constants["CAMERA_MOVE_SCALE"];
+	}
+	else {
+		b = true;
+	}
+
+	// カメラの位置をセットする
+	SetCameraPositionAndTarget_UpVecY(Position.VGet(), m_target.VGet());
+
+	// 座標とターゲットがどちらも目標に到達したらメインアクターモードに切り替える
+	if (a && b) {
+
+		// 切り替え中フラグを下げる
+		m_changeFlag = false;
+
+		// 保存したアングルにしておく
+		Angle = m_saveAngle;
+
+		// 切り替え
+		m_modeFunc = &PlayerCamera::MainActorMode;
+	}
 }
 
 Vec3 PlayerCamera::RotateMainActorMode(Vec3 pos)

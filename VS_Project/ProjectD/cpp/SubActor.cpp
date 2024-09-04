@@ -9,8 +9,9 @@
 #include "Application.h"
 #include "UI.h"
 
-SubActor::SubActor():
-	m_flame(0)
+SubActor::SubActor(std::list<std::shared_ptr<EnemyBase>> enemy) :
+	m_flame(0),
+	m_enemyManager(enemy)
 {
 	// 外部ファイルから定数を取得する
 	assert(ConstantsFileLoad("data/constant/SubActor.csv", Constants) == 1);
@@ -29,10 +30,10 @@ void SubActor::Update()
 	}
 	else {
 		UI::getInstance().SetEnemyInteractFlag(true);
-		UI::getInstance().SetEnemyInteractPos(enemy->Position);
+		UI::getInstance().SetEnemyInteractPtr(enemy);
 
-		//　敵の座標をシーケンスに渡す
-		m_enemyPos = enemy->Position;
+		//　敵のポインタをシーケンスに渡す
+		m_enemyPtr = enemy;
 	}
 
 	// サインカーブを使用して常に上下にふわふわと動かす
@@ -45,9 +46,9 @@ void SubActor::Draw() const
 {
 }
 
-Vec3 SubActor::GetEnemyPos()
+std::shared_ptr<EnemyBase> SubActor::GetEnemyPtr()
 {
-	return m_enemyPos;
+	return m_enemyPtr;
 }
 
 void SubActor::ChangeInit(Vec3 cameraPos, Vec3 mainActorPos)
@@ -116,7 +117,7 @@ std::shared_ptr<EnemyBase> SubActor::FindEnemy()
 	std::list<std::shared_ptr<EnemyBase>> enemyList;
 
 	// 範囲内の敵を配列におさめる
-	for (std::shared_ptr<EnemyBase> enemy : EnemyManager::getInstance().GetEnemy()) {
+	for (std::shared_ptr<EnemyBase> enemy : m_enemyManager) {
 		if ((enemy->Position - Position).Length() <= Constants["EFFECTIVE_RANGE"]) {
 			enemyList.push_back(enemy);
 		}
@@ -146,7 +147,7 @@ std::shared_ptr<EnemyBase> SubActor::FindEnemy()
 
 	// サブアクターに最も近い敵を取り出す
 	auto &max = enemyList.front();
-	for (std::shared_ptr<EnemyBase> enemy : EnemyManager::getInstance().GetEnemy()) {
+	for (std::shared_ptr<EnemyBase> enemy : m_enemyManager) {
 		if ((max->Position - Position).Length() > (enemy->Position - Position).Length()) {
 			max = enemy;
 		}

@@ -15,7 +15,10 @@ public:
 	void Update(Vec3 pos);
 
 	// サブアクターモードとメインアクターモードを変更する
-	void ChangeMode(int mode);
+	void ChangeMode(int mode, Vec3 pos);
+
+	// モード切替中であるか
+	bool IsModeChange();
 private:	
 
 	// 関数ポインタ
@@ -28,6 +31,9 @@ private:
 	// サブアクターモード
 	void SubActorMode(Vec3 pos);
 
+	// サブアクターからメインアクターに変更する処理
+	void ChangeMainActorMode(Vec3 pos);
+
 	// 回転
 	Vec3 RotateMainActorMode(Vec3 pos);	// メインアクターモードでの回転処理
 	Vec3 RotateSubActorMode(Vec3 pos);	// サブアクターモードでの回転処理
@@ -35,7 +41,17 @@ private:
 	// 引数の座標を回転させる
 	VECTOR MakeBasePos(VECTOR base);
 
-	// カメラの方向から発せられるライトのハンドル
-	int m_lightHandle;
+	// メインアクターからサブに変更したときの座標を保存する
+	Vec3 m_savePos;
+	Vec3 m_saveTarget;
+	Vec3 m_saveAngle;
+
+	// メインに変更するときの単位ベクトル
+	Vec3 m_unitPos;
+	Vec3 m_unitTarget;
+	Vec3 m_target;
+
+	// モード切替中フラグ
+	bool m_changeFlag;
 };
 

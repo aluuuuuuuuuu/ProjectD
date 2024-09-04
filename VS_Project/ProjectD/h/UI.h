@@ -1,7 +1,9 @@
 #pragma once
 #include "Singleton.h"
 #include "Vec3.h"
+#include <memory>
 
+class EnemyBase;
 class UI :
     public Singleton<UI>
 {
@@ -11,7 +13,7 @@ public:
     void Update();
     void Draw() const;
 
-    void SetEnemyInteractPos(Vec3 pos);
+    void SetEnemyInteractPtr(std::shared_ptr<EnemyBase> enemy);
     void SetEnemyInteractFlag(bool flag);
 
     bool GetEnemyInteractFlag();
@@ -25,7 +27,7 @@ private:
     // エネミーインタラクトを表示するフラグ
     bool m_enemyInteractFlag = false;
 
-    // エネミーインタラクトを表示する座標
-    Vec3 m_enemyInteractPos;
+    // エネミーインタラクトの対象エネミーポインタ
+    std::shared_ptr<EnemyBase> m_enemyInteractPtr;
 };
 

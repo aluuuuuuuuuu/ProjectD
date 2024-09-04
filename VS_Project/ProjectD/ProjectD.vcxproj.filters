@@ -239,8 +239,10 @@
     <ClInclude Include="h\CameraBase.h">
       <Filter>Object</Filter>
     </ClInclude>
-    <ClInclude Include="h\Player.h" />
     <ClInclude Include="h\ObjectFloor.h" />
     <ClInclude Include="h\MapCollisionManager.h" />
+    <ClInclude Include="h\Player.h">
+      <Filter>Charactor</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
