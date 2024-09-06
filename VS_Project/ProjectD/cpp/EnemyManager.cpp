@@ -2,6 +2,7 @@
 #include "EnemyBase.h"
 #include "DxLib.h"
 #include "EnemyTest.h"
+#include "StaticObjectManager.h"
 
 EnemyManager::EnemyManager():
 	m_modelHandle(0)
@@ -11,12 +12,13 @@ EnemyManager::EnemyManager():
 
 EnemyManager::~EnemyManager()
 {
+	MV1DeleteModel(m_modelHandle);
 }
 
 void EnemyManager::Update()
 {
 	// エネミーの更新処理
-	for (auto enemy : m_pEnemy) {
+	for (auto& enemy : m_pEnemy) {
 		enemy->Update();
 	}
 
@@ -34,18 +36,18 @@ void EnemyManager::Update()
 void EnemyManager::Draw() const
 {
 	// エネミーの描画処理
-	for (std::shared_ptr<EnemyBase> enemy : m_pEnemy) {
+	for (auto& enemy : m_pEnemy) {
 		enemy->Draw();
 	}
 }
 
-std::list<std::shared_ptr<EnemyBase>> EnemyManager::GetEnemy()
+std::list<std::shared_ptr<EnemyBase>>& EnemyManager::GetEnemy()
 {
 	return m_pEnemy;
 }
 
-void EnemyManager::AddEnemy(Vec3 pos)
+void EnemyManager::AddEnemy(Vec3 pos, std::shared_ptr<Player>& pl, std::shared_ptr<StaticObjectManager>& obj)
 {
-	m_pEnemy.push_back(std::make_shared<EnemyTest>(pos, MV1DuplicateModel(m_modelHandle)));
+	m_pEnemy.push_back(std::make_shared<EnemyTest>(pos, MV1DuplicateModel(m_modelHandle),pl,obj));
 }
 

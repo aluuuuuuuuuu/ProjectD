@@ -33,6 +33,7 @@ void MainActor::Update()
 	AnimationControl();
 	UpdateAnimation(ModelHandle);
 	UpdateModel(GetTransformInstance());
+	MakeSmallerCollision();
 
 	// カプセルの更新
 	Set(Position);
@@ -64,6 +65,18 @@ void MainActor::Control(Vec3 angle)
 
 		// 現在の座標に移動ベクトルを足す
 		Position += m_moveVec * Constants["WALK_SPEED"];
+	}
+}
+
+void MainActor::MakeSmallerCollision()
+{
+	// 移動中かどうか判定する
+	if (m_moveVec.Length() == 0.0f) {
+		// 移動していない
+		SetHeight(5.0f);
+	}
+	else {
+		SetHeight(10.0f);
 	}
 }
 

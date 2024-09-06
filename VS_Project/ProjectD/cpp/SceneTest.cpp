@@ -32,8 +32,9 @@ SceneTest::SceneTest()
 	m_pCollisionManager = make_shared<MapCollisionManager>(m_pPlayer->GetCupsule(),*m_pStaticObject);
 
 	// エネミーを追加する
-	m_pEnemyManager->AddEnemy(Vec3{ 60,0,60 });
-	//m_pEnemyManager->AddEnemy(Vec3{ 60,0,30 });
+	m_pEnemyManager->AddEnemy(Vec3{ 60,0,60 }, m_pPlayer, m_pStaticObject);
+
+	m_pEnemyManager->AddEnemy(Vec3{ 60,0,30 }, m_pPlayer, m_pStaticObject);
 	m_updateFunc = &SceneTest::NormalUpdate;
 	m_drawFunc = &SceneTest::NormalDraw;
 }

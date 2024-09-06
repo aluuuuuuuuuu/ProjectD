@@ -163,6 +163,9 @@ public:
 	// コリジョンに値をセットする
 	void Set(Vec3 pos);
 
+	// コリジョンの高さをセットする
+	void SetHeight(float height);
+
 	// 線分間の距離を求める
 	float CapsuleDistance(const Vec3& p1, const Vec3& q1, const Vec3& p2, const Vec3& q2) const;
 

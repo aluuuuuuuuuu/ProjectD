@@ -9,7 +9,7 @@
 #include "DxLib.h"
 #include "EnemyBase.h"
 
-Player::Player(std::shared_ptr<Direction>& direction, std::list<std::shared_ptr<EnemyBase>> enemy) :
+Player::Player(std::shared_ptr<Direction>& direction, std::list<std::shared_ptr<EnemyBase>>& enemy) :
 	m_subActorFlag(false),
 	m_pDirection(direction)
 {

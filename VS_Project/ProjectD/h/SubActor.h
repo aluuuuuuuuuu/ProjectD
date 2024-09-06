@@ -7,7 +7,7 @@ class SubActor :
 	public CharactorBase
 {
 public:
-	SubActor(std::list<std::shared_ptr<EnemyBase>> enemy);
+	SubActor(std::list<std::shared_ptr<EnemyBase>>& enemy);
 	virtual ~SubActor();
 
 	void Update();
@@ -27,11 +27,11 @@ private:
 	// メインアクターの座標
 	Vec3 m_mainActorPos;
 	
-	// インタラクトできる敵の座標
+	// インタラクトできる敵のポインタ
 	std::shared_ptr<EnemyBase> m_enemyPtr;
 
 	// サインカーブ用のフレーム
 	float m_flame;
 
-	std::list<std::shared_ptr<EnemyBase>>& m_enemyManager;
+	std::list<std::shared_ptr<EnemyBase>>& m_enemy;
 };

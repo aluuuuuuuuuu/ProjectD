@@ -15,6 +15,9 @@ public:
 	void Control(Vec3 angle);
 private:
 
+	// 動いていないときは当たり判定のサイズを小さくする
+	void MakeSmallerCollision();
+
 	// アニメーション変更
 	void AnimationControl();
 

@@ -13,7 +13,7 @@ class PlayerCamera;
 class Player
 {
 public:
-	Player(std::shared_ptr<Direction>& direction, std::list<std::shared_ptr<EnemyBase>> enemy);
+	Player(std::shared_ptr<Direction>& direction, std::list<std::shared_ptr<EnemyBase>>& enemy);
 	~Player();
 
 	void Update();

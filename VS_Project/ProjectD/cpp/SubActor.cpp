@@ -9,9 +9,9 @@
 #include "Application.h"
 #include "UI.h"
 
-SubActor::SubActor(std::list<std::shared_ptr<EnemyBase>> enemy) :
+SubActor::SubActor(std::list<std::shared_ptr<EnemyBase>>& enemy) :
 	m_flame(0),
-	m_enemyManager(enemy)
+	m_enemy(enemy)
 {
 	// 外部ファイルから定数を取得する
 	assert(ConstantsFileLoad("data/constant/SubActor.csv", Constants) == 1);
@@ -116,8 +116,11 @@ std::shared_ptr<EnemyBase> SubActor::FindEnemy()
 {
 	std::list<std::shared_ptr<EnemyBase>> enemyList;
 
+	auto aaa = m_enemy.size();
+	printfDx("%d\n", aaa);
+
 	// 範囲内の敵を配列におさめる
-	for (std::shared_ptr<EnemyBase> enemy : m_enemyManager) {
+	for (auto& enemy : m_enemy) {
 		if ((enemy->Position - Position).Length() <= Constants["EFFECTIVE_RANGE"]) {
 			enemyList.push_back(enemy);
 		}
@@ -147,7 +150,7 @@ std::shared_ptr<EnemyBase> SubActor::FindEnemy()
 
 	// サブアクターに最も近い敵を取り出す
 	auto &max = enemyList.front();
-	for (std::shared_ptr<EnemyBase> enemy : m_enemyManager) {
+	for (auto& enemy : m_enemy) {
 		if ((max->Position - Position).Length() > (enemy->Position - Position).Length()) {
 			max = enemy;
 		}

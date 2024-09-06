@@ -267,6 +267,11 @@ void CapsuleCollision::Set(Vec3 pos)
 	m_data.PointB = vecB;
 }
 
+void CapsuleCollision::SetHeight(float height)
+{
+	m_height = height;
+}
+
 float CapsuleCollision::CapsuleDistance(const Vec3& p1, const Vec3& q1, const Vec3& p2, const Vec3& q2) const
 {
 	Vec3 d1 = q1 - p1;
