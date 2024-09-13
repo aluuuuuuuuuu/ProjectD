@@ -4,7 +4,7 @@
 void Input::Init()
 {
 	// 外部ファイルから定数を取得する
-	assert(ConstantsFileLoad("data/constant/Input.csv", Constants) == 1);
+	ReadCSV("data/constant/Input.csv");
 }
 
 void Input::Update()

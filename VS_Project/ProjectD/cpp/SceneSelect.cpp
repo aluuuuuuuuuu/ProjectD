@@ -15,7 +15,7 @@ SceneSelect::SceneSelect() :
 	m_flameRightStick(10)
 {
 	// 外部ファイルから定数を取得する
-	assert(ConstantsFileLoad("data/constant/SceneSelect.csv", Constants) == 1);
+	ReadCSV("data/constant/SceneSelect.csv");
 
 	// 画像のロード
 	m_waveGraphHandle = LoadGraph("data/image/string.png");
@@ -151,14 +151,14 @@ void SceneSelect::StageSelectTriggerButton()
 	// 左右ボタンで選択ステージを切り替える
 	if (Input::getInstance().IsTrigger(INPUT_LEFT)) {
 		if (m_stage <= 1) {
-			m_stage = static_cast<int>(Constants["MAX_STAGE_NUM"]);
+			m_stage = std::get<float>(Constants["MAX_STAGE_NUM"]);
 		}
 		else {
 			m_stage--;
 		}
 	}
 	if (Input::getInstance().IsTrigger(INPUT_RIGHT)) {
-		if (m_stage >= Constants["MAX_STAGE_NUM"]) {
+		if (m_stage >= std::get<float>(Constants["MAX_STAGE_NUM"])) {
 			m_stage = 1;
 		}
 		else {
@@ -174,10 +174,10 @@ void SceneSelect::StageSelectHoldButton()
 		m_flameLeftButton++;
 
 		// 一定フレーム長押ししたら連続でステージを切り替える
-		if (m_flameLeftButton >= Constants["FLAME_BUTTON_HOLD"]) {
-			if (m_flameLeftButton % static_cast<int>(Constants["FLAME_LHS_NUM_BUTTON"]) == 0) {
+		if (m_flameLeftButton >= std::get<float>(Constants["FLAME_BUTTON_HOLD"])) {
+			if (m_flameLeftButton % std::get<int>(Constants["FLAME_LHS_NUM_BUTTON"]) == 0) {
 				if (m_stage <= 1) {
-					m_stage = static_cast<int>(Constants["MAX_STAGE_NUM"]);
+					m_stage = std::get<float>(Constants["MAX_STAGE_NUM"]);
 				}
 				else {
 					m_stage--;
@@ -194,9 +194,9 @@ void SceneSelect::StageSelectHoldButton()
 		m_flameRightButton++;
 
 		// 一定フレーム長押ししたら連続でステージを切り替える
-		if (m_flameRightButton >= Constants["FLAME_BUTTON_HOLD"]) {
-			if (m_flameRightButton % static_cast<int>(Constants["FLAME_LHS_NUM_BUTTON"]) == 0) {
-				if (m_stage >= Constants["MAX_STAGE_NUM"]) {
+		if (m_flameRightButton >= std::get<float>(Constants["FLAME_BUTTON_HOLD"])) {
+			if (m_flameRightButton % std::get<int>(Constants["FLAME_LHS_NUM_BUTTON"]) == 0) {
+				if (m_stage >= std::get<int>(Constants["MAX_STAGE_NUM"])) {
 					m_stage = 1;
 				}
 				else {
@@ -213,10 +213,10 @@ void SceneSelect::StageSelectHoldButton()
 void SceneSelect::StageSelectStick()
 {
 	// 左入力で選択切り替え
-	if (Input::getInstance().GetStickThumbX(INPUT_LEFT_STICK) >= Input::getInstance().Constants["STICK_INVALID_VALUE"]) {
+	if (Input::getInstance().GetStickThumbX(INPUT_LEFT_STICK) >= std::get<float>(Input::getInstance().GetConstant("STICK_INVALID_VALUE"))) {
 		m_flameLeftStick++;
-		if (m_flameLeftStick % static_cast<int>(Constants["FLAME_LHS_NUM_STICK"]) == 0) {
-			if (m_stage >= Constants["MAX_STAGE_NUM"]) {
+		if (m_flameLeftStick % std::get<int>(Constants["FLAME_LHS_NUM_STICK"]) == 0) {
+			if (m_stage >= std::get<int>(Constants["MAX_STAGE_NUM"])) {
 				m_stage = 1;
 			}
 			else {
@@ -229,10 +229,10 @@ void SceneSelect::StageSelectStick()
 	}
 
 	// 右入力で選択切り替え
-	if (Input::getInstance().GetStickThumbX(INPUT_LEFT_STICK) <= -Input::getInstance().Constants["STICK_INVALID_VALUE"]) {
+	if (Input::getInstance().GetStickThumbX(INPUT_LEFT_STICK) <= -std::get<float>(Input::getInstance().GetConstant("STICK_INVALID_VALUE"))) {
 		m_flameRightStick++;
-		if (m_flameRightStick % static_cast<int>(Constants["FLAME_LHS_NUM_STICK"]) == 0) {
-			if (m_stage >= Constants["MAX_STAGE_NUM"]) {
+		if (m_flameRightStick % std::get<int>(Constants["FLAME_LHS_NUM_STICK"]) == 0) {
+			if (m_stage >= std::get<int>(Constants["MAX_STAGE_NUM"])) {
 				m_stage = 1;
 			}
 			else {

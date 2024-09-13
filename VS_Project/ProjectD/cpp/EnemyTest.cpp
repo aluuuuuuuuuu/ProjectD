@@ -8,8 +8,9 @@ EnemyTest::EnemyTest(Vec3 pos, int modelhandle, std::shared_ptr<Player>& pl, std
 	m_pPlayer(pl),
 	m_pObject(obj)
 {
+	int a = 0;
 	// 外部ファイルから定数を取得する
-	assert(ConstantsFileLoad("data/constant/Enemy.csv", Constants) == 1);
+	ReadCSV("data/constant/Enemy.csv");
 
 	// 初期位置の設定
 	Position = pos;
@@ -33,7 +34,7 @@ EnemyTest::~EnemyTest()
 
 void EnemyTest::Update()
 {
-	Angle.y += 0.1;
+	//Angle.y += 0.1;
 	UpdateAnimation();
 	UpdateModel(GetTransformInstance());
 
@@ -78,7 +79,7 @@ bool EnemyTest::IsPlayerDetected()
 bool EnemyTest::IsPlayerInRange()
 {
 	// プレイヤーと自身の距離が一定以内であるか
-	return((Position - m_pPlayer->GetPos()).Length() <= Constants["PLAYER_RANGE"]);
+	return((Position - m_pPlayer->GetPos()).Length() <= std::get<float>(Constants["PLAYER_RANGE"]));
 }
 
 bool EnemyTest::IsPlayerInSight()
@@ -88,10 +89,10 @@ bool EnemyTest::IsPlayerInSight()
 	normalVector.x = std::cos(Angle.y);
 	normalVector.z = std::sin(Angle.y);
 
-	// 自身からプレイヤーへの正規ベクトル
-	Vec3 playerVector = (Position - m_pPlayer->GetPos()).GetNormalized();
-	if(std::cos(Constants["SIGHT_RANGE"]) )
-
+	//// 自身からプレイヤーへの正規ベクトル
+	//Vec3 playerVector = (Position - m_pPlayer->GetPos()).GetNormalized();
+	//if(std::cos(Constants["SIGHT_RANGE"]) )
+	return false;
 
 }
 
@@ -102,7 +103,8 @@ bool EnemyTest::IsPlayerObstructed()
 
 bool EnemyTest::IsPlayerWithinReach()
 {
-	return ((Position - m_pPlayer->GetPos()).Length() <= Constants["PLAYER_WITHIN_RANGE"]);
+	int a = 0;
+	return ((Position - m_pPlayer->GetPos()).Length() <= std::get<float>(Constants["PLAYER_WITHIN_RANGE"]));
 }
 
 void EnemyTest::InitAnimation(int tag, float rate)

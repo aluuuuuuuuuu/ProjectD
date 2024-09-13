@@ -11,7 +11,7 @@ MapCollisionManager::MapCollisionManager(CapsuleData& cap, StaticObjectManager& 
 	m_staticObjectManager(manager)
 {
 	// 外部ファイルから定数を取得する
-	assert(ConstantsFileLoad("data/constant/Collision.csv", Constants) == 1);
+	ReadCSV("data/constant/Collision.csv");
 }
 
 MapCollisionManager::~MapCollisionManager()
@@ -37,13 +37,13 @@ Vec3 MapCollisionManager::PlayerCollision()
 			Vec3 max;
 			if (obj->Angle.y == 0.0f) {
 				// ボックスの最小値と最大値を作成する
-				min = Vec3{ pos.x - Constants["WALL_SHORT"],pos.y,pos.z - Constants["WALL_LONG"] };
-				max = Vec3{ pos.x + Constants["WALL_SHORT"],pos.y + Constants["WALL_HEIGHT"],pos.z + Constants["WALL_LONG"] };
+				min = Vec3{ pos.x - std::get<float>(Constants["WALL_SHORT"]),pos.y,pos.z - std::get<float>(Constants["WALL_LONG"]) };
+				max = Vec3{ pos.x + std::get<float>(Constants["WALL_SHORT"]),pos.y + std::get<float>(Constants["WALL_HEIGHT"]),pos.z + std::get<float>(Constants["WALL_LONG"]) };
 			}
 			else {
 				// ボックスの最小値と最大値を作成する
-				min = Vec3{ pos.x - Constants["WALL_LONG"],pos.y,pos.z - Constants["WALL_SHORT"] };
-				max = Vec3{ pos.x + Constants["WALL_LONG"],pos.y + Constants["WALL_HEIGHT"],pos.z + Constants["WALL_SHORT"] };
+				min = Vec3{ pos.x - std::get<float>(Constants["WALL_LONG"]),pos.y,pos.z - std::get<float>(Constants["WALL_SHORT"]) };
+				max = Vec3{ pos.x + std::get<float>(Constants["WALL_LONG"]),pos.y + std::get<float>(Constants["WALL_HEIGHT"]),pos.z + std::get<float>(Constants["WALL_SHORT"]) };
 			}
 
 			// 判定する
@@ -80,8 +80,8 @@ void MapCollisionManager::DrawColl()
 		Vec3 pos = obj->Position;
 		// オブジェクトの種類を特定する
 		if (obj->m_code == WALL_CODE) {
-			DrawBoxColl(Vec3(pos.x - Constants["WALL_X"], pos.y, pos.z - Constants["WALL_Z"]),
-				Vec3(pos.x + Constants["WALL_X"], pos.y + Constants["WALL_Y"], pos.z + Constants["WALL_Z"]));
+			DrawBoxColl(Vec3(pos.x - std::get<float>(Constants["WALL_LONG"]), pos.y, pos.z - std::get<float>(Constants["WALL_SHORT"])),
+				Vec3(pos.x + std::get<float>(Constants["WALL_LONG"]), pos.y + std::get<float>(Constants["WALL_HEIGHT"]), pos.z + std::get<float>(Constants["WALL_SHORT"])));
 		}
 		else if (obj->m_code == FLOOR_CODE) {
 

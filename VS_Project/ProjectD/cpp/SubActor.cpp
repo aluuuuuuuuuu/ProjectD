@@ -14,7 +14,7 @@ SubActor::SubActor(std::list<std::shared_ptr<EnemyBase>>& enemy) :
 	m_enemy(enemy)
 {
 	// 外部ファイルから定数を取得する
-	assert(ConstantsFileLoad("data/constant/SubActor.csv", Constants) == 1);
+	ReadCSV("data/constant/SubActor.csv");
 }
 
 SubActor::~SubActor()
@@ -69,10 +69,10 @@ void SubActor::Control(Vec3 cameraRot)
 	m_moveVec = 0;
 
 	// 平行移動
-	if (input.GetStickVectorLength(INPUT_LEFT_STICK) > input.Constants["STICK_INVALID_VALUE"]) {
+	if (input.GetStickVectorLength(INPUT_LEFT_STICK) > std::get<float>(input.GetConstant("STICK_INVALID_VALUE"))) {
 
 		// スティックの単位ベクトルに移動量をかけた値を代入
-		m_moveVec = input.GetStickUnitVector(INPUT_LEFT_STICK) * Constants["HORIZONTAL_MOVE_SCALE"];
+		m_moveVec = input.GetStickUnitVector(INPUT_LEFT_STICK) * std::get<float>(Constants["HORIZONTAL_MOVE_SCALE"]);
 
 		// カメラの回転を得る
 		Angle.y = cameraRot.y;
@@ -91,12 +91,12 @@ void SubActor::Control(Vec3 cameraRot)
 	// Aで上昇
 	if (input.IsHold(INPUT_A)) {
 		// 移動ベクトルのY値を加算する
-		m_moveVec.y += Constants["VERTICAL_MOVE_SCALE"];
+		m_moveVec.y += std::get<float>(Constants["VERTICAL_MOVE_SCALE"]);
 	}
 	// Bで下降
 	if (input.IsHold(INPUT_B)) {
 		// 移動ベクトルのY値を減算する
-		m_moveVec.y += -Constants["VERTICAL_MOVE_SCALE"];
+		m_moveVec.y += -std::get<float>(Constants["VERTICAL_MOVE_SCALE"]);
 	}
 
 	// 作成した移動ベクトルを単位化する
@@ -107,7 +107,7 @@ void SubActor::Control(Vec3 cameraRot)
 
 	// 移動した後移動可能範囲外に出ていたら位置を戻す
 	float dist = (Position - m_mainActorPos).Length();
-	if (dist >= Constants["MOVABLE_RANGE"]) {
+	if (dist >= std::get<float>(Constants["MOVABLE_RANGE"])) {
 		Position -= m_moveVec;
 	}
 }
@@ -121,7 +121,7 @@ std::shared_ptr<EnemyBase> SubActor::FindEnemy()
 
 	// 範囲内の敵を配列におさめる
 	for (auto& enemy : m_enemy) {
-		if ((enemy->Position - Position).Length() <= Constants["EFFECTIVE_RANGE"]) {
+		if ((enemy->Position - Position).Length() <= std::get<float>(Constants["EFFECTIVE_RANGE"])) {
 			enemyList.push_back(enemy);
 		}
 	}
@@ -134,8 +134,8 @@ std::shared_ptr<EnemyBase> SubActor::FindEnemy()
 	// 範囲内の敵から画面外にいる敵を排除する
 	for (auto it = enemyList.begin(); it != enemyList.end();) {
 		VECTOR pos = ConvWorldPosToScreenPos((*it)->Position.VGet());
-		if (pos.x < 0 || pos.x > Application::getInstance().Constants["SCREEN_WIDTH"] ||
-			pos.y < 0 || pos.y > Application::getInstance().Constants["SCREEN_HEIGHT"]) {
+		if (pos.x < 0 || pos.x > std::get<float>(Application::getInstance().GetConstant("SCREEN_WIDTH")) ||
+			pos.y < 0 || pos.y > std::get<float>(Application::getInstance().GetConstant("SCREEN_HEIGHT"))) {
 			it = enemyList.erase(it);
 		}
 		else {

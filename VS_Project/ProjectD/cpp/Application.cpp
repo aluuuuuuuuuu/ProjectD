@@ -13,22 +13,22 @@
 bool Application::Init()
 {
 	// 外部ファイルから定数を取得する
-	assert(ConstantsFileLoad("data/constant/Application.csv", Constants) == 1);
+	ReadCSV("data/constant/Application.csv");
 
 	// ウィンドウモードの設定
 	ChangeWindowMode(true);
 
 	// ウィンドウ名の設定
-	SetWindowText("ProjectD");
+ 	SetWindowText("ProjectD");
 
 	// 画面サイズの設定
-	SetGraphMode(static_cast<int>(Constants["SCREEN_WIDTH"]),
-		static_cast<int>(Constants["SCREEN_HEIGHT"]),
-		static_cast<int>(Constants["COLRO_BIT"]));
+	SetGraphMode(std::get<int>(Constants["SCREEN_WIDTH"]),
+		std::get<int>(Constants["SCREEN_HEIGHT"]),
+		std::get<int>(Constants["COLOR_BIT"]));
 
 	// 解像度の設定
-	SetWindowSize(static_cast<int>(Constants["RESOLUTION_WIDTH"]),
-		static_cast<int>(Constants["RESOLUTION_HEIGHT"]));
+	SetWindowSize(std::get<int>(Constants["RESOLUTION_WIDTH"]),
+		std::get<int>(Constants["RESOLUTION_HEIGHT"]));
 
 	// 背面の描画を行わない
 	SetUseBackCulling(true);
@@ -103,7 +103,7 @@ void Application::Run()
 {
 	// シーンマネージャーのインスタンスを取得
 	auto& manager = SceneManager::getInstance();
-
+	int a = 0;
 	// 初期シーンを設定
 	manager.ChangeScene(std::make_shared <SceneTest>());
 

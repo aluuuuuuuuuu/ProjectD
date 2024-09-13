@@ -6,7 +6,7 @@
 MainActor::MainActor()
 {
 	// 外部ファイルから定数を取得する
-	assert(ConstantsFileLoad("data/constant/MainActor.csv", Constants) == 1);
+	ReadCSV("data/constant/MainActor.csv");
 
 	// 初期位置の設定
 	Position = Vec3{ 0.0f,0.0f,0.0f };
@@ -18,7 +18,7 @@ MainActor::MainActor()
 	InitModel(MV1LoadModel("data/model/MainActor.mv1"));
 
 	// アニメーションの初期処理
-	InitAnimation(ModelHandle, static_cast<int>(Constants["ANIM_IDLE"]), 0.15f);
+	InitAnimation(ModelHandle, std::get<int>(Constants["ANIM_IDLE"]), 0.15f);
 
 	// カプセルの初期化処理
 	InitCapsule(Position, 10, 10);
@@ -55,7 +55,7 @@ void MainActor::Control(Vec3 angle)
 {
 	// インプットのインスタンスを取得
 	auto& input = Input::getInstance();
-	if (input.GetStickVectorLength(INPUT_LEFT_STICK) > input.Constants["STICK_INVALID_VALUE"]) {
+	if (input.GetStickVectorLength(INPUT_LEFT_STICK) > std::get<float>(input.GetConstant("STICK_INVALID_VALUE"))) {
 
 		// 移動ベクトルにスティックの値をそのまま代入する
 		m_moveVec = input.GetStickUnitVector(INPUT_LEFT_STICK);
@@ -64,7 +64,7 @@ void MainActor::Control(Vec3 angle)
 		RotateAngle(angle.y);
 
 		// 現在の座標に移動ベクトルを足す
-		Position += m_moveVec * Constants["WALK_SPEED"];
+		Position += m_moveVec * std::get<float>(Constants["WALK_SPEED"]);
 	}
 }
 
@@ -83,10 +83,10 @@ void MainActor::MakeSmallerCollision()
 void MainActor::AnimationControl()
 {
 	if (m_moveVec.Length() == 0.0f) {
-		ChangeAnimation(ModelHandle, static_cast<int>(Constants["ANIM_CROUCH"]), true, 0.05f);
+		ChangeAnimation(ModelHandle, std::get<int>(Constants["ANIM_CROUCH"]), true, 0.05f);
 	}
 	else if (m_moveVec.Length() != 0.0f) {
-		ChangeAnimation(ModelHandle, static_cast<int>(Constants["ANIM_WALK"]), true, 0.15f);
+		ChangeAnimation(ModelHandle, std::get<int>(Constants["ANIM_WALK"]), true, 0.15f);
 	}
 }
 
@@ -116,7 +116,7 @@ void MainActor::RotateAngle(float cameraAngle)
 	if (Angle.y < 0.0f) Angle.y += static_cast<float>(DX_TWO_PI);
 
 	// 差が移動量より小さくなったら目標の値を代入する
-	if (fabsf(Angle.y - targetAngle) > Constants["ANGLE_ROTATE_SCALE"]) {
+	if (fabsf(Angle.y - targetAngle) > std::get<float>(Constants["ANGLE_ROTATE_SCALE"])) {
 		// 増やすのと減らすのでどちらが近いか判断する
 		float add = targetAngle - Angle.y;	// 足す場合の回転量
 		if (add < 0.0f) add += static_cast<float>(DX_TWO_PI);	// 足す場合の回転量が負の数だった場合正規化する
@@ -124,10 +124,10 @@ void MainActor::RotateAngle(float cameraAngle)
 
 		// 回転量を比べて少ない方を選択する
 		if (add < sub) {
-			Angle.y += Constants["ANGLE_ROTATE_SCALE"];
+			Angle.y += std::get<float>(Constants["ANGLE_ROTATE_SCALE"]);
 		}
 		else {
-			Angle.y -= Constants["ANGLE_ROTATE_SCALE"];
+			Angle.y -= std::get<float>(Constants["ANGLE_ROTATE_SCALE"]);
 		}
 
 		// 増減によって範囲外になった場合の正規化

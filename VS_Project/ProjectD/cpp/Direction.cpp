@@ -11,7 +11,7 @@ Direction::Direction() :
 	m_flame(0)
 {
 	// 外部ファイルから定数を取得する
-	assert(ConstantsFileLoad("data/constant/Direction.csv", Constants) == 1);
+	ReadCSV("data/constant/Direction.csv");
 
 	m_updateFunc = &Direction::NullUpdate;
 	m_drawFunc = &Direction::NullDraw;
@@ -51,14 +51,14 @@ void Direction::PlayFaintSequ(Vec3 cameraPos)
 	m_playFlag = true;
 
 	// 左右の玉の座標の設定
-	m_left.pos = Vec3{ Constants["FAINT_LEFT_POS_X"],0.0f,Constants["FAINT_LEFT_POS_Z"] };
-	m_right.pos = Vec3{ Constants["FAINT_RIGHT_POS_X"],0.0f,Constants["FAINT_RIGHT_POS_Z"] };
+	m_left.pos = Vec3{ std::get<float>(Constants["FAINT_LEFT_POS_X"]),0.0f,std::get<float>(Constants["FAINT_LEFT_POS_Z"]) };
+	m_right.pos = Vec3{ std::get<float>(Constants["FAINT_RIGHT_POS_X"]),0.0f,std::get<float>(Constants["FAINT_RIGHT_POS_Z"]) };
 
 	// ターゲットの座標の設定
-	m_target = Vec3{ Constants["FAINT_TARGET_POS_X"],0.0f,Constants["FAINT_TARGET_POS_Y"] };
+	m_target = Vec3{ std::get<float>(Constants["FAINT_TARGET_POS_X"]),0.0f,std::get<float>(Constants["FAINT_TARGET_POS_Y"]) };
 }
 
-void Direction::SetEnemyPtr(std::shared_ptr<EnemyBase> enemy)
+void Direction::SetEnemyPtr(std::shared_ptr<EnemyBase> enemy) 
 {
 	m_enemyPtr = enemy;
 }
@@ -94,7 +94,7 @@ void Direction::FaintUpdate()
 	if (m_faintFlag) {
 
 		// 一定フレームたったら通常の処理に移行する
-		if (m_flame >= Constants["END_FLAME"]) {
+		if (m_flame >= std::get<int>(Constants["END_FLAME"])) {
 			m_playFlag = false;
 			m_flame = 0;
 		}
@@ -119,35 +119,35 @@ void Direction::FaintUpdate()
 		m_right.length = (m_right.pos - m_target).Length();
 
 		// 左
-		if (m_left.length <= Constants["TARGET_RANGE"]) {
-			moveScaleLeft = static_cast<float>(1.0 - (1 - m_left.length / Constants["TARGET_RANGE"]));
+		if (m_left.length <= std::get<float>(Constants["TARGET_RANGE"])) {
+			moveScaleLeft = static_cast<float>(1.0 - (1 - m_left.length / std::get<float>(Constants["TARGET_RANGE"])));
 		}
 		// 右
-		if (m_right.length <= Constants["TARGET_RANGE"]) {
-			moveScaleRight = static_cast<float>(1.0 - (1 - m_right.length / Constants["TARGET_RANGE"]));
+		if (m_right.length <= std::get<float>(Constants["TARGET_RANGE"])) {
+			moveScaleRight = static_cast<float>(1.0 - (1 - m_right.length / std::get<float>(Constants["TARGET_RANGE"])));
 		}
 
 		// 円がターゲットに近づくにつれ振動が大きくなる
 		int vibe = 0;
 		// 左
-		if (m_left.length <= Constants["TARGET_RANGE"]) {
-			vibe += static_cast<int>(500 * (1 - m_left.length / Constants["TARGET_RANGE"]));
+		if (m_left.length <= std::get<float>(Constants["TARGET_RANGE"])) {
+			vibe += static_cast<int>(500 * (1 - m_left.length / std::get<float>(Constants["TARGET_RANGE"])));
 		}
 		// 右
-		if (m_right.length <= Constants["TARGET_RANGE"]) {
-			vibe += static_cast<int>(500 * (1 - m_right.length / Constants["TARGET_RANGE"]));
+		if (m_right.length <= std::get<float>(Constants["TARGET_RANGE"])) {
+			vibe += static_cast<int>(500 * (1 - m_right.length / std::get<float>(Constants["TARGET_RANGE"])));
 		}
 
 		//左右のスティック入力で玉を動かす
 		// 左
-		if (input.GetStickVectorLength(INPUT_LEFT_STICK) > input.Constants["STICK_INVALID_VALUE"]) {
+		if (input.GetStickVectorLength(INPUT_LEFT_STICK) > std::get<float>(input.GetConstant("STICK_INVALID_VALUE"))) {
 
 			// 移動ベクトルを作成
 			m_left.moveVec = input.GetStickUnitVector(INPUT_LEFT_STICK);
 			m_left.moveVec.z *= -1;
 
 			// 座標を移動
-			m_left.pos += m_left.moveVec * moveScaleLeft * Constants["MOVE_SCALE"];
+			m_left.pos += m_left.moveVec * moveScaleLeft * std::get<float>(Constants["MOVE_SCALE"]);
 
 			// コントローラーを振動させる
 			StartJoypadVibration(DX_INPUT_PAD1, vibe, 10);
@@ -157,23 +157,23 @@ void Direction::FaintUpdate()
 		else {
 
 			// ある程度近づいていたら移動を止める
-			if ((m_left.pos - Vec3{ Constants["FAINT_LEFT_POS_X"],0.0f,Constants["FAINT_LEFT_POS_Z"] }).Length() <= Constants["MOVE_STOP_RANGE"]) {
-				m_left.pos = Vec3{ Constants["FAINT_LEFT_POS_X"],0.0f,Constants["FAINT_LEFT_POS_Z"] };
+			if ((m_left.pos - Vec3{ std::get<float>(Constants["FAINT_LEFT_POS_X"]),0.0f,std::get<float>(Constants["FAINT_LEFT_POS_Z"]) }).Length() <= std::get<float>(Constants["MOVE_STOP_RANGE"])) {
+				m_left.pos = Vec3{ std::get<float>(Constants["FAINT_LEFT_POS_X"]),0.0f,std::get<float>(Constants["FAINT_LEFT_POS_Z"]) };
 			}
 			else {
-				m_left.moveVec = (Vec3{ Constants["FAINT_LEFT_POS_X"],0.0f,Constants["FAINT_LEFT_POS_Z"] } - m_left.pos).GetNormalized();
-				m_left.pos += m_left.moveVec * Constants["RETURN_MOVE_SCALE"];
+				m_left.moveVec = (Vec3{ std::get<float>(Constants["FAINT_LEFT_POS_X"]),0.0f,std::get<float>(Constants["FAINT_LEFT_POS_Z"]) } - m_left.pos).GetNormalized();
+				m_left.pos += m_left.moveVec * std::get<float>(Constants["RETURN_MOVE_SCALE"]);
 			}
 		}
 		// 右
-		if (input.GetStickVectorLength(INPUT_RIGHT_STICK) > input.Constants["STICK_INVALID_VALUE"]) {
+		if (input.GetStickVectorLength(INPUT_RIGHT_STICK) > std::get<float>(input.GetConstant("STICK_INVALID_VALUE"))) {
 
 			// 移動ベクトルを作成
 			m_right.moveVec = input.GetStickUnitVector(INPUT_RIGHT_STICK);
 			m_right.moveVec.z *= -1;
 
 			// 座標を移動
-			m_right.pos += m_right.moveVec * moveScaleRight * Constants["MOVE_SCALE"];
+			m_right.pos += m_right.moveVec * moveScaleRight * std::get<float>(Constants["MOVE_SCALE"]);
 
 			// コントローラーを振動させる
 			StartJoypadVibration(DX_INPUT_PAD1, vibe, 10);
@@ -183,17 +183,17 @@ void Direction::FaintUpdate()
 		else {
 
 			// ある程度近づいていたら移動を止める
-			if ((m_right.pos - Vec3{ Constants["FAINT_RIGHT_POS_X"],0.0f,Constants["FAINT_RIGHT_POS_Z"] }).Length() <= Constants["MOVE_STOP_RANGE"]) {
-				m_right.pos = Vec3{ Constants["FAINT_RIGHT_POS_X"],0.0f,Constants["FAINT_RIGHT_POS_Z"] };
+			if ((m_right.pos - Vec3{ std::get<float>(Constants["FAINT_RIGHT_POS_X"]),0.0f,std::get<float>(Constants["FAINT_RIGHT_POS_Z"]) }).Length() <= std::get<float>(Constants["MOVE_STOP_RANGE"])) {
+				m_right.pos = Vec3{ std::get<float>(Constants["FAINT_RIGHT_POS_X"]),0.0f,std::get<float>(Constants["FAINT_RIGHT_POS_Z"]) };
 			}
 			else {
-				m_right.moveVec = (Vec3{ Constants["FAINT_RIGHT_POS_X"],0.0f,Constants["FAINT_RIGHT_POS_Z"] } - m_right.pos).GetNormalized();
-				m_right.pos += m_right.moveVec * Constants["RETURN_MOVE_SCALE"];
+				m_right.moveVec = (Vec3{ std::get<float>(Constants["FAINT_RIGHT_POS_X"]),0.0f,std::get<float>(Constants["FAINT_RIGHT_POS_Z"]) } - m_right.pos).GetNormalized();
+				m_right.pos += m_right.moveVec * std::get<float>(Constants["RETURN_MOVE_SCALE"]);
 			}
 		}
 
 		// 目標にある程度近づいたら
-		if (m_left.length <= Constants["ENEMY_FAINT_LENGTH"] && m_right.length <= Constants["ENEMY_FAINT_LENGTH"]) {
+		if (m_left.length <= std::get<float>(Constants["ENEMY_FAINT_LENGTH"]) && m_right.length <= std::get<float>(Constants["ENEMY_FAINT_LENGTH"])) {
 			// 敵をキルする処理を開始させる
 			m_enemyPtr->SetStartDeadFlag();
 
@@ -216,9 +216,10 @@ void Direction::FaintDraw() const
 		DrawCircle(m_target.intX(), m_target.intZ(), 30, 0xffff00, true);
 
 		// 右の玉を描画
-		DrawCircle(m_right.pos.intX(), m_right.pos.intZ(), static_cast<int>(Constants.at("CIRCLE_RADIUS")), 0x00ff00, true);
+		DrawCircle(m_right.pos.intX(), m_right.pos.intZ(), std::get<int>(Constants.at("CIRCLE_RADIUS")), 0x00ff00, true);
 
 		// 左の玉を描画
-		DrawCircle(m_left.pos.intX(), m_left.pos.intZ(), static_cast<int>(Constants.at("CIRCLE_RADIUS")), 0x00ff00, true);
+		//DrawCircle(m_left.pos.intX(), m_left.pos.intZ(), std::get<int>(Constants["CIRCLE_RADIUS"]), 0x00ff00, true);
+		//DrawCircle(m_left.pos.intX(), m_left.pos.intZ(), std::get<int>(Constants.at("CIRCLE_RADIUS"), 0x00ff00, true);
 	}
 }
