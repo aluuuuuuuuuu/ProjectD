@@ -13,9 +13,12 @@ public:
     }
 
 protected:
-    // シングルトンとするため
+    
+    // インスタンスのコピーを制限する
     Singleton(const Singleton&) = delete;
     void operator=(const Singleton&) = delete;
+
+    // コンストラクタとデストラクタの外からのアクセスを制限する
     Singleton() {}
     ~Singleton() {}
 };

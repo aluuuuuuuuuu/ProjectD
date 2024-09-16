@@ -14,6 +14,7 @@ public:
 		y(0.0f),
 		z(0.0f)
 	{
+
 	}
 
 	Vec3(float X, float Y, float Z) :
@@ -21,6 +22,7 @@ public:
 		y(Y),
 		z(Z)
 	{
+
 	}
 
 	Vec3(int X, int Y, int Z) :
@@ -39,6 +41,14 @@ public:
 
 	}
 
+	Vec3(float num) :
+		x(num),
+		y(num),
+		z(num)
+	{
+
+	}
+
 	Vec3(VECTOR vec) :
 		x(vec.x),
 		y(vec.y),
@@ -46,10 +56,11 @@ public:
 	{
 	}
 
-	//int型にキャストして返す
+	// int型にキャストして返す
 	int intX() const {
 		return static_cast<int>(x);
 	}
+
 	int intY() const {
 		return static_cast<int>(y);
 	}
@@ -80,15 +91,12 @@ public:
 		return *this;
 	}
 
+	//足し算
+
 	Vec3 operator +() const {
 		return *this;
 	}
 
-	Vec3 operator -() const {
-		return Vec3{ -x,-y,-z };
-	}
-
-	//足し算
 	Vec3 operator +(Vec3 vec) const {
 		return Vec3{ x + vec.x,y + vec.y,z + vec.z };
 	}
@@ -123,6 +131,11 @@ public:
 	}
 
 	//引き算
+
+	Vec3 operator -() const {
+		return Vec3{ -x,-y,-z };
+	}
+
 	Vec3 operator -(Vec3 vec) const {
 		return Vec3{ x - vec.x,y - vec.y,z - vec.z };
 	}
@@ -244,6 +257,11 @@ public:
 	// 自身や他のベクトルとの内積をとる
 	float dot(const Vec3& other) const {
 		return x * other.x + y * other.y + z * other.z;
+	}
+
+	// 2つのベクトルの内積を求める
+	float dot(const Vec3& a, const Vec3& b) const {
+		return a.x * b.x + a.y * b.y + a.z * b.z;
 	}
 };
 

@@ -92,6 +92,7 @@
     <ClInclude Include="h\Singleton.h" />
     <ClInclude Include="h\StaticFunction.h" />
     <ClInclude Include="h\UI.h" />
+    <ClInclude Include="h\Vec2.h" />
     <ClInclude Include="h\Vec3.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -160,6 +161,7 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>C:\EffekseerForDXLib_170e_324b\プロジェクトに追加すべきファイル_VC用</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

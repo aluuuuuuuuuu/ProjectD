@@ -244,5 +244,6 @@
     <ClInclude Include="h\Player.h">
       <Filter>Charactor</Filter>
     </ClInclude>
+    <ClInclude Include="h\Vec2.h" />
   </ItemGroup>
 </Project>

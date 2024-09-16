@@ -1,5 +1,4 @@
 #include "Input.h"
-#include <cassert>
 
 void Input::Init()
 {
@@ -9,11 +8,12 @@ void Input::Init()
 
 void Input::Update()
 {
-	// 以前のステートを保存
+	// 以前のコントローラーの状態を保存
 	m_lastPadState = m_padState;
 
-	// 現在のステートを取得
-	GetJoypadXInputState(DX_INPUT_PAD1, &m_padState);
+	// 現在のコントローラーの状態を取得
+	GetPadXInputState();
+	
 }
 
 // 押した瞬間
@@ -237,4 +237,40 @@ float Input::GetStickThumbY(int input) const
 		return static_cast<float>(m_padState.ThumbRY);
 	}
 	return 0.0f;
+}
+
+XINPUT_STATE Input::GetXInputState(int num) const
+{
+	return m_XInputState[num].state;
+}
+
+bool Input::GetPadXInputState()
+{
+	DWORD dwResult;
+	for (DWORD i = 0; i < XUSER_MAX_COUNT; i++)
+	{
+		XINPUT_STATE st;
+		ZeroMemory(&st, sizeof(XINPUT_STATE));
+
+		// XInputの状態を受け取る
+		dwResult = XInputGetState(i, &st);
+
+		if (dwResult == ERROR_SUCCESS)
+		{
+			// コントローラーが接続されている
+
+			// 接続状態の更新
+			m_XInputState[i].connected = true;
+
+			// 状態の更新
+			m_XInputState[i].state = st;
+		}
+		else
+		{
+			// コントローラーが接続されていない
+			// 接続状態の更新
+			m_XInputState[i].connected = false;
+		}
+	}
+	return false;
 }
