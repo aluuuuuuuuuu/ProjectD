@@ -4,6 +4,7 @@
 #include "Singleton.h"
 #include "Constant.h"
 #include <Xinput.h>
+#include "DkLib.h"
 
 // 各ボタンの定数
 
@@ -33,12 +34,16 @@
 #define INPUT_PAD_NUM3 2
 #define INPUT_PAD_NUM4 3
 
-// XInputの入力状態を保存する構造体
-struct XInputState
-{
-	XINPUT_STATE state;
-	bool connected = false;
-};
+//struct DK_XINPUT_STATE
+//{
+//	bool	Buttons[14];	// ボタン１６個( 添字には DK_XINPUT_UP 等を使用する
+//	unsigned char	LeftTrigger;	// 左トリガー( 0～255 )
+//	unsigned char	RightTrigger;	// 右トリガー( 0～255 )
+//	short		ThumbLX;	// 左スティックの横軸値( -32768 ～ 32767 )
+//	short		ThumbLY;	// 左スティックの縦軸値( -32768 ～ 32767 )
+//	short		ThumbRX;	// 右スティックの横軸値( -32768 ～ 32767 )
+//	short		ThumbRY;	// 右スティックの縦軸値( -32768 ～ 32767 )
+//};
 
 // インプット情報を提供するシングルトンクラス
 class Input : 
@@ -77,25 +82,15 @@ public:
 
 	// スティックを傾けたY値を返す
 	float GetStickThumbY(int input) const;
-	
-	// 生のXInputの構造体を返す
-	XINPUT_STATE GetXInputState(int num) const;
 
 private:
 
 	// コントローラーの状態を取得する
 	bool GetPadXInputState();
 
-	// コントローラーの接続状態
-	XInputState m_XInputState[XUSER_MAX_COUNT];
-
-	// 今フレームのインプットステート
-	XINPUT_STATE m_padState;
-
-	// 前フレームのインプットステート
-	XINPUT_STATE m_lastPadState;
-
 	// プライベートコンストラクタ
 	Input():m_padState(),m_lastPadState() {};
+
+	DkLib::DK_XINPUT_STATE
 };
 

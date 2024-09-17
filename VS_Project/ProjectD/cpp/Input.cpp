@@ -239,38 +239,3 @@ float Input::GetStickThumbY(int input) const
 	return 0.0f;
 }
 
-XINPUT_STATE Input::GetXInputState(int num) const
-{
-	return m_XInputState[num].state;
-}
-
-bool Input::GetPadXInputState()
-{
-	DWORD dwResult;
-	for (DWORD i = 0; i < XUSER_MAX_COUNT; i++)
-	{
-		XINPUT_STATE st;
-		ZeroMemory(&st, sizeof(XINPUT_STATE));
-
-		// XInputの状態を受け取る
-		dwResult = XInputGetState(i, &st);
-
-		if (dwResult == ERROR_SUCCESS)
-		{
-			// コントローラーが接続されている
-
-			// 接続状態の更新
-			m_XInputState[i].connected = true;
-
-			// 状態の更新
-			m_XInputState[i].state = st;
-		}
-		else
-		{
-			// コントローラーが接続されていない
-			// 接続状態の更新
-			m_XInputState[i].connected = false;
-		}
-	}
-	return false;
-}

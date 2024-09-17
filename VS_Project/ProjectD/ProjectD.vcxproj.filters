@@ -121,6 +121,9 @@
     <ClCompile Include="cpp\MapCollisionManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="cpp\DkLib.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="data\constant\Application.csv">
@@ -245,5 +248,6 @@
       <Filter>Charactor</Filter>
     </ClInclude>
     <ClInclude Include="h\Vec2.h" />
+    <ClInclude Include="h\DkLib.h" />
   </ItemGroup>
 </Project>

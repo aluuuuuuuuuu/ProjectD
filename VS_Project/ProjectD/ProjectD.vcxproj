@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="cpp\Application.cpp" />
     <ClCompile Include="cpp\CameraBase.cpp" />
+    <ClCompile Include="cpp\DkLib.cpp" />
     <ClCompile Include="cpp\MapCollisionManager.cpp" />
     <ClCompile Include="cpp\Direction.cpp" />
     <ClCompile Include="cpp\MainActor.cpp" />
@@ -65,6 +66,7 @@
   <ItemGroup>
     <ClInclude Include="h\Application.h" />
     <ClInclude Include="h\CameraBase.h" />
+    <ClInclude Include="h\DkLib.h" />
     <ClInclude Include="h\MapCollisionManager.h" />
     <ClInclude Include="h\Direction.h" />
     <ClInclude Include="h\MainActor.h" />
