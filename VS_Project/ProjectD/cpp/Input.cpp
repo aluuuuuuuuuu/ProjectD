@@ -12,15 +12,15 @@ void Input::Update()
 	m_lastPadState = m_padState;
 
 	// 現在のコントローラーの状態を取得
-	GetPadXInputState();
+	m_padState = DkLib::GetPadXInputState(DK_INPUT_PAD1);
 	
 }
 
 // 押した瞬間
 bool Input::IsTrigger(int input) const
 {
-	if (input == INPUT_A) {
-		return (!m_lastPadState.Buttons[XINPUT_BUTTON_A] && m_padState.Buttons[XINPUT_BUTTON_A]);
+	if (input == DK_XINPUT_A) {
+		return (!m_lastPadState.Buttons[DK_PAD_A] && m_padState.Buttons[DK_PAD_A]);
 	}
 	if (input == INPUT_B) {
 		return (!m_lastPadState.Buttons[XINPUT_BUTTON_B] && m_padState.Buttons[XINPUT_BUTTON_B]);

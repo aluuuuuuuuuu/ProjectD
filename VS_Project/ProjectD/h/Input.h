@@ -3,7 +3,7 @@
 #include "Vec3.h"
 #include "Singleton.h"
 #include "Constant.h"
-#include <Xinput.h>
+#include <XInput.h>
 #include "DkLib.h"
 
 // 各ボタンの定数
@@ -91,6 +91,6 @@ private:
 	// プライベートコンストラクタ
 	Input():m_padState(),m_lastPadState() {};
 
-	DkLib::DK_XINPUT_STATE
+	DkLib::DK_XINPUT_STATE m_padState, m_lastPadState;
 };
 

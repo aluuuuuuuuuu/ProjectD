@@ -11,7 +11,7 @@ int DkLib::GetJoypadNum()
 	int num = 0;
 
 	DWORD dwResult;
-	for (DWORD i = 0; i < XUSER_MAX_COUNT; i++)
+	for (int i = 0; i < XUSER_MAX_COUNT; i++)
 	{
 		XINPUT_STATE st;
 		ZeroMemory(&st, sizeof(XINPUT_STATE));

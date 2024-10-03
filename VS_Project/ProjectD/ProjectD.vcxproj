@@ -51,6 +51,7 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="cpp.hint" />
     <None Include="data\constant\Application.csv" />
     <None Include="data\constant\Collision.csv" />
     <None Include="data\constant\Direction.csv" />
@@ -199,6 +200,7 @@
       <AdditionalIncludeDirectories>C:\EffekseerForDXLib_170e_324b\プロジェクトに追加すべきファイル_VC用</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
